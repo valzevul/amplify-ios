@@ -25,6 +25,8 @@ extension Temporal {
         }
 
         public let foundationDate: Foundation.Date
+      
+        public var localTimezone: TimeZone?
 
         public var time: Time {
             Time(foundationDate)
@@ -40,6 +42,7 @@ extension Temporal {
             guard let date = DateTime.iso8601Date(from: iso8601String) else {
                 throw DataStoreError.invalidDateFormat(iso8601String)
             }
+            localTimezone = TimeZone(iso8601String: iso8601String)
             self.foundationDate = date
         }
 

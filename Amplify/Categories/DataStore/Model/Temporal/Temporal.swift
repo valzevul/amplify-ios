@@ -34,6 +34,10 @@ public protocol TemporalSpec {
     /// The ISO-8601 formatted string in the UTC `TimeZone`.
     /// - seealso: iso8601FormattedString(TemporalFormat, TimeZone) -> String
     var iso8601String: String { get }
+  
+    /// The underlying `TimeZone` object. Specifies the format of converted ISO-8601 string.
+    /// - seealso: iso8601FormattedString(TemporalFormat, TimeZone) -> String
+    var localTimezone: TimeZone? { get set }
 
     /// Parses an ISO-8601 `String` into a `TemporalSpec`.
     ///
@@ -101,10 +105,10 @@ extension TemporalSpec {
         return formatter.string(from: foundationDate)
     }
 
-    /// The ISO8601 representation of the scalar using `.full` as the format and `.utc` as `TimeZone`.
+    /// The ISO8601 representation of the scalar using `.full` as the format and either a local timezone if set, or `.utc` as default for `TimeZone`.
     /// - seealso: iso8601FormattedString(TemporalFormat, TimeZone)
     public var iso8601String: String {
-        iso8601FormattedString(format: .full)
+      iso8601FormattedString(format: .full, timeZone: localTimezone ?? .utc)
     }
 }
 
@@ -114,4 +118,41 @@ extension TimeZone {
     public static var utc: TimeZone {
         TimeZone(abbreviation: "UTC")!
     }
+}
+
+extension TimeZone {
+
+  init?(iso8601String: String) {
+    var timeZone: TimeZone?
+    let supportedTimeZoneModifiers = ["+hh:mm", "-hh:mm", "Z"]
+    
+    guard let timeZoneSliceSize = supportedTimeZoneModifiers.map(\.count).max() else {
+      return nil
+    }
+    
+    let timeZoneSlice = iso8601String.suffix(timeZoneSliceSize)
+    
+    if timeZoneSlice.contains("Z") {
+      timeZone = TimeZone(secondsFromGMT: 0)
+    } else {
+      let signCharacter = timeZoneSlice.first
+      let time = timeZoneSlice.dropFirst()
+      let hours = time.prefix(2)
+      let minutes = time.suffix(2)
+      let sign: Int? = signCharacter == "+" ? +1 : (signCharacter == "-" ? -1 : nil)
+      
+      if let hours = Int(hours), let minutes = Int(minutes), let sign = sign {
+        let minutesInSeconds = minutes * 60
+        let hoursInSeconds = hours * 3600
+        let shiftInSeconds = sign * (minutesInSeconds + hoursInSeconds)
+        timeZone = TimeZone(secondsFromGMT: shiftInSeconds)
+      }
+    }
+    if let timeZone = timeZone {
+      self = timeZone
+    } else {
+      return nil
+    }
+  }
+
 }

@@ -25,6 +25,8 @@ extension Temporal {
         }
 
         public let foundationDate: Foundation.Date
+      
+        public var localTimezone: TimeZone?
 
         public init(_ date: Foundation.Date) {
             // sets the date to a fixed instant so time-only operations are safe
@@ -46,6 +48,7 @@ extension Temporal {
                 throw DataStoreError.invalidDateFormat(iso8601String)
             }
             self.init(date)
+            localTimezone = TimeZone(iso8601String: iso8601String)
         }
 
     }
