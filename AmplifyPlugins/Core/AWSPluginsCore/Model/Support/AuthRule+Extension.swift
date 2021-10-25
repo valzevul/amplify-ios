@@ -7,6 +7,28 @@
 
 import Amplify
 
+extension AuthRuleProvider {
+
+    /// Returns corresponding `AWSAuthorizationType` for each `AuthRuleProvider`
+    /// - Returns: AWS authorization type
+    public func toAWSAuthorizationType() -> AWSAuthorizationType {
+        var authType: AWSAuthorizationType
+        switch self {
+        case .apiKey:
+            authType = .apiKey
+        case .oidc:
+            authType = .openIDConnect
+        case .iam:
+            authType = .awsIAM
+        case .userPools:
+            authType = .amazonCognitoUserPools
+        case .function:
+            authType = .function
+        }
+        return authType
+    }
+}
+
 extension AuthRule {
     func getOwnerFieldOrDefault() -> String {
         guard let ownerField = ownerField else {

@@ -8,7 +8,7 @@ include_build_tools!
 target 'AWSAPICategoryPlugin' do
 	pod 'Amplify', :path => '../../'
   pod 'AWSPluginsCore', :path => '../../'
-  pod "AppSyncRealTimeClient", "~> 1.4.0"
+  pod "AppSyncRealTimeClient", "~> 1.4"
 
   target "AWSAPICategoryPluginTests" do
     inherit! :complete
@@ -23,7 +23,6 @@ target "HostApp" do
   include_test_utilities!
   pod 'AmplifyTestCommon', :path => '../../'
   pod 'Amplify', :path => '../../'
-  pod "AWSMobileClient", $OPTIMISTIC_AWS_SDK_VERSION
 
   target "AWSAPICategoryPluginTestCommon" do
     inherit! :complete
@@ -38,6 +37,11 @@ target "HostApp" do
     end
   
     target "GraphQLWithUserPoolIntegrationTests" do 
+      pod 'AmplifyPlugins/AWSCognitoAuthPlugin', :path => '../../'
+      inherit! :complete
+    end
+    
+    target "GraphQLWithLambdaAuthIntegrationTests" do
       pod 'AmplifyPlugins/AWSCognitoAuthPlugin', :path => '../../'
       inherit! :complete
     end

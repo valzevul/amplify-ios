@@ -9,7 +9,11 @@ import Foundation
 
 /// Errors specific to the API Category
 public enum APIError {
+
+    /// Dictionary used to store additional information
     public typealias UserInfo = [String: Any]
+
+    /// Status code Int
     public typealias StatusCode = Int
 
     /// An unknown error
@@ -43,6 +47,8 @@ extension APIError: AmplifyError {
     ) {
         if let error = error as? Self {
             self = error
+        } else if error.isOperationCancelledError {
+            self = .unknown("Operation cancelled", "", error)
         } else {
             self = .unknown(errorDescription, recoverySuggestion, error)
         }

@@ -10,7 +10,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      enableThreadSanitizer = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -36,9 +37,6 @@
                </Test>
                <Test
                   Identifier = "GraphQLConnectionScenario1Tests/testListProjectsByTeamID()">
-               </Test>
-               <Test
-                  Identifier = "GraphQLSyncBasedTests">
                </Test>
             </SkippedTests>
          </TestableReference>

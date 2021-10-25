@@ -10,6 +10,11 @@ import Amplify
 import AWSPluginsCore
 import AWSS3
 
+/// Storage Download Data Operation.
+///
+/// See: [Operations] for more details.
+///
+/// [Operations]: https://github.com/aws-amplify/amplify-ios/blob/main/OPERATIONS.md
 public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperation<
     StorageDownloadDataRequest,
     Progress,
@@ -17,20 +22,23 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
     StorageError
 >, StorageDownloadDataOperation {
 
+    let storageConfiguration: AWSS3StoragePluginConfiguration
     let storageService: AWSS3StorageServiceBehaviour
     let authService: AWSAuthServiceBehavior
 
     var storageTaskReference: StorageTaskReference?
 
-    /// Serial queue for synchronizing access to `storageTaskReference`.
+    // Serial queue for synchronizing access to `storageTaskReference`.
     private let storageTaskActionQueue = DispatchQueue(label: "com.amazonaws.amplify.StorageTaskActionQueue")
 
     init(_ request: StorageDownloadDataRequest,
+         storageConfiguration: AWSS3StoragePluginConfiguration,
          storageService: AWSS3StorageServiceBehaviour,
          authService: AWSAuthServiceBehavior,
          progressListener: InProcessListener?,
          resultListener: ResultListener?) {
 
+        self.storageConfiguration = storageConfiguration
         self.storageService = storageService
         self.authService = authService
         super.init(categoryType: .storage,
@@ -40,6 +48,7 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
                    resultListener: resultListener)
     }
 
+    /// Pauses operation.
     override public func pause() {
         storageTaskActionQueue.async {
             self.storageTaskReference?.pause()
@@ -47,6 +56,7 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
         }
     }
 
+    /// Resumes operation.
     override public func resume() {
         storageTaskActionQueue.async {
             self.storageTaskReference?.resume()
@@ -54,6 +64,7 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
         }
     }
 
+    /// Cancels operation.
     override public func cancel() {
         storageTaskActionQueue.async {
             self.storageTaskReference?.cancel()
@@ -61,6 +72,7 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
         }
     }
 
+    /// Performs the task to download data.
     override public func main() {
         if isCancelled {
             finish()
@@ -73,29 +85,19 @@ public class AWSS3StorageDownloadDataOperation: AmplifyInProcessReportingOperati
             return
         }
 
-        let identityIdResult = authService.getIdentityId()
-
-        guard case let .success(identityId) = identityIdResult else {
-            if case let .failure(error) = identityIdResult {
-                dispatch(StorageError.authError(error.errorDescription, error.recoverySuggestion))
+        let prefixResolver = storageConfiguration.prefixResolver ??
+            StorageAccessLevelAwarePrefixResolver(authService: authService)
+        let prefixResolution = prefixResolver.resolvePrefix(for: request.options.accessLevel,
+                                                            targetIdentityId: request.options.targetIdentityId)
+        switch prefixResolution {
+        case .success(let prefix):
+            let serviceKey = prefix + request.key
+            storageService.download(serviceKey: serviceKey, fileURL: nil) { [weak self] event in
+                self?.onServiceEvent(event: event)
             }
-
+        case .failure(let error):
+            dispatch(error)
             finish()
-            return
-        }
-
-        let serviceKey = StorageRequestUtils.getServiceKey(accessLevel: request.options.accessLevel,
-                                                           identityId: identityId,
-                                                           key: request.key,
-                                                           targetIdentityId: request.options.targetIdentityId)
-
-        if isCancelled {
-            finish()
-            return
-        }
-
-        storageService.download(serviceKey: serviceKey, fileURL: nil) { [weak self] event in
-            self?.onServiceEvent(event: event)
         }
     }
 

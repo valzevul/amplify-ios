@@ -18,6 +18,15 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     private var dbFilePath: URL?
     static let dbVersionKey = "com.amazonaws.DataStore.dbVersion"
 
+    // TODO benchmark whether a SELECT FROM FOO WHERE ID IN (1, 2, 3...) performs measurably
+    // better than SELECT FROM FOO WHERE ID = 1 OR ID=2 OR ID=3
+    //
+    // SQLite supports up to 1000 expressions per SQLStatement. We have chosen to use 50 expressions
+    // less (equaling 950) than the maximum because it is possible that our SQLStatement already has
+    // some expressions.  If we encounter performance problems in the future, we will want to profile
+    // our system and find an optimal value.
+    static var maxNumberOfPredicates: Int = 950
+
     convenience init(version: String,
                      databaseName: String = "database",
                      userDefaults: UserDefaults = UserDefaults.standard) throws {
@@ -224,7 +233,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
                                             sort: sort,
                                             paginationInput: paginationInput)
             let rows = try connection.prepare(statement.stringValue).run(statement.variables)
-            let result: [M] = try rows.convert(to: modelType, using: statement)
+            let result: [M] = try rows.convert(to: modelType,
+                                               withSchema: modelSchema,
+                                               using: statement)
             completion(.success(result))
         } catch {
             completion(.failure(causedBy: error))
@@ -277,6 +288,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
         let rows = try connection.prepare(sql).bind(ids)
 
         let syncMetadataList = try rows.convert(to: MutationSyncMetadata.self,
+                                                withSchema: MutationSyncMetadata.schema,
                                                 using: statement)
         let mutationSyncList = try syncMetadataList.map { syncMetadata -> MutationSync<AnyModel> in
             guard let model = modelById[syncMetadata.id] else {
@@ -289,12 +301,30 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func queryMutationSyncMetadata(for modelId: Model.Identifier) throws -> MutationSyncMetadata? {
+        let results = try queryMutationSyncMetadata(for: [modelId])
+        return try results.unique()
+    }
+
+    func queryMutationSyncMetadata(for modelIds: [Model.Identifier]) throws -> [MutationSyncMetadata] {
         let modelType = MutationSyncMetadata.self
-        let statement = SelectStatement(from: modelType.schema, predicate: field("id").eq(modelId))
-        let rows = try connection.prepare(statement.stringValue).run(statement.variables)
-        let result = try rows.convert(to: modelType,
-                                      using: statement)
-        return try result.unique()
+        let modelSchema = MutationSyncMetadata.schema
+        let fields = MutationSyncMetadata.keys
+        var results = [MutationSyncMetadata]()
+        let chunkedModelIdsArr = modelIds.chunked(into: SQLiteStorageEngineAdapter.maxNumberOfPredicates)
+        for chunkedModelIds in chunkedModelIdsArr {
+            var queryPredicates: [QueryPredicateOperation] = []
+            for id in chunkedModelIds {
+                queryPredicates.append(QueryPredicateOperation(field: fields.id.stringValue, operator: .equals(id)))
+            }
+            let groupedQueryPredicates = QueryPredicateGroup(type: .or, predicates: queryPredicates)
+            let statement = SelectStatement(from: modelSchema, predicate: groupedQueryPredicates)
+            let rows = try connection.prepare(statement.stringValue).run(statement.variables)
+            let result = try rows.convert(to: modelType,
+                                          withSchema: modelSchema,
+                                          using: statement)
+            results.append(contentsOf: result)
+        }
+        return results
     }
 
     func queryModelSyncMetadata(for modelSchema: ModelSchema) throws -> ModelSyncMetadata? {
@@ -302,6 +332,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
                                         predicate: field("id").eq(modelSchema.name))
         let rows = try connection.prepare(statement.stringValue).run(statement.variables)
         let result = try rows.convert(to: ModelSyncMetadata.self,
+                                      withSchema: ModelSyncMetadata.schema,
                                       using: statement)
         return try result.unique()
     }
@@ -327,6 +358,15 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
             completion(.failure(causedBy: DataStoreError.invalidDatabase(path: dbFilePath.absoluteString, error)))
         }
         completion(.successfulVoid)
+    }
+
+    func shouldIgnoreError(error: DataStoreError) -> Bool {
+        if let sqliteError = SQLiteResultError(from: error),
+           case .constraintViolation = sqliteError {
+            return true
+        }
+
+        return false
     }
 
     static func clearIfNewVersion(version: String,

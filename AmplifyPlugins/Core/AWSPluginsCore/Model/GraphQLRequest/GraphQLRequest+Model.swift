@@ -127,25 +127,23 @@ protocol ModelGraphQLRequestFactory {
 /// This is particularly useful when using the GraphQL API to interact
 /// with static types that conform to the `Model` protocol.
 extension GraphQLRequest: ModelGraphQLRequestFactory {
+    private static func modelSchema<M: Model>(for model: M) -> ModelSchema {
+        let modelType = ModelRegistry.modelType(from: model.modelName) ?? Swift.type(of: model)
+        return modelType.schema
+    }
 
     public static func create<M: Model>(_ model: M) -> GraphQLRequest<M> {
-        let modelType = ModelRegistry.modelType(from: model.modelName) ?? Swift.type(of: model)
-        let modelSchema = modelType.schema
-        return create(model, modelSchema: modelSchema)
+        return create(model, modelSchema: modelSchema(for: model))
     }
 
     public static func update<M: Model>(_ model: M,
                                         where predicate: QueryPredicate? = nil) -> GraphQLRequest<M> {
-        let modelType = ModelRegistry.modelType(from: model.modelName) ?? Swift.type(of: model)
-        let modelSchema = modelType.schema
-        return update(model, modelSchema: modelSchema, where: predicate)
+        return update(model, modelSchema: modelSchema(for: model), where: predicate)
     }
 
     public static func delete<M: Model>(_ model: M,
                                         where predicate: QueryPredicate? = nil) -> GraphQLRequest<M> {
-        let modelType = ModelRegistry.modelType(from: model.modelName) ?? Swift.type(of: model)
-        let modelSchema = modelType.schema
-        return delete(model, modelSchema: modelSchema, where: predicate)
+        return delete(model, modelSchema: modelSchema(for: model), where: predicate)
     }
 
     public static func create<M: Model>(_ model: M, modelSchema: ModelSchema) -> GraphQLRequest<M> {
@@ -182,7 +180,7 @@ extension GraphQLRequest: ModelGraphQLRequestFactory {
         case .create:
             documentBuilder.add(decorator: ModelDecorator(model: model))
         case .delete:
-            documentBuilder.add(decorator: ModelIdDecorator(id: model.id))
+            documentBuilder.add(decorator: ModelIdDecorator(model: model))
             if let predicate = predicate {
                 documentBuilder.add(decorator: FilterDecorator(filter: predicate.graphQLFilter(for: modelSchema)))
             }

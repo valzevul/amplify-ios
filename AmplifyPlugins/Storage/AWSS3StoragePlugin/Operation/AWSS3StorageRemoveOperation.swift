@@ -10,20 +10,28 @@ import Amplify
 import AWSPluginsCore
 import AWSS3
 
+/// Storage Remove Operation.
+///
+/// See: [Operations] for more details.
+///
+/// [Operations]: https://github.com/aws-amplify/amplify-ios/blob/main/OPERATIONS.md
 public class AWSS3StorageRemoveOperation: AmplifyOperation<
     StorageRemoveRequest,
     String,
     StorageError
 >, StorageRemoveOperation {
 
+    let storageConfiguration: AWSS3StoragePluginConfiguration
     let storageService: AWSS3StorageServiceBehaviour
     let authService: AWSAuthServiceBehavior
 
     init(_ request: StorageRemoveRequest,
+         storageConfiguration: AWSS3StoragePluginConfiguration,
          storageService: AWSS3StorageServiceBehaviour,
          authService: AWSAuthServiceBehavior,
          resultListener: ResultListener?) {
 
+        self.storageConfiguration = storageConfiguration
         self.storageService = storageService
         self.authService = authService
         super.init(categoryType: .storage,
@@ -32,10 +40,12 @@ public class AWSS3StorageRemoveOperation: AmplifyOperation<
                    resultListener: resultListener)
     }
 
+    /// Cancels operation.
     override public func cancel() {
         super.cancel()
     }
 
+    /// Perform the task to remove item.
     override public func main() {
         if isCancelled {
             finish()
@@ -48,27 +58,19 @@ public class AWSS3StorageRemoveOperation: AmplifyOperation<
             return
         }
 
-        let identityIdResult = authService.getIdentityId()
-        guard case let .success(identityId) = identityIdResult else {
-            if case let .failure(error) = identityIdResult {
-                dispatch(StorageError.authError(error.errorDescription, error.recoverySuggestion))
+        let prefixResolver = storageConfiguration.prefixResolver ??
+            StorageAccessLevelAwarePrefixResolver(authService: authService)
+        let prefixResolution = prefixResolver.resolvePrefix(for: request.options.accessLevel,
+                                                            targetIdentityId: nil)
+        switch prefixResolution {
+        case .success(let prefix):
+            let serviceKey = prefix + request.key
+            storageService.delete(serviceKey: serviceKey) { [weak self] event in
+                self?.onServiceEvent(event: event)
             }
-
+        case .failure(let error):
+            dispatch(error)
             finish()
-            return
-        }
-
-        let serviceKey = StorageRequestUtils.getServiceKey(accessLevel: request.options.accessLevel,
-                                                           identityId: identityId,
-                                                           key: request.key)
-
-        if isCancelled {
-            finish()
-            return
-        }
-
-        storageService.delete(serviceKey: serviceKey) { [weak self] event in
-            self?.onServiceEvent(event: event)
         }
     }
 

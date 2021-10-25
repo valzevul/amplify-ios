@@ -14,16 +14,21 @@ import Combine
 
 class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
 
+    static var maxNumberOfPredicates: Int = 950
+
     var responders = [ResponderKeys: Any]()
 
     var resultForQuery: DataStoreResult<[Model]>?
     var resultForSave: DataStoreResult<Model>?
 
     var resultForQueryMutationSyncMetadata: MutationSyncMetadata?
+    var resultForQueryMutationSyncMetadatas: [MutationSyncMetadata]
     var errorToThrowOnMutationSyncMetadata: DataStoreError?
+    var errorToThrowOnTransaction: Error?
 
     var shouldReturnErrorOnSaveMetadata: Bool
     var shouldReturnErrorOnDeleteMutation: Bool
+    var shouldIgnoreError: Bool
 
     var resultForQueryModelSyncMetadata: ModelSyncMetadata?
     var listenerForModelSyncMetadata: BasicClosure?
@@ -31,6 +36,8 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
     init() {
         self.shouldReturnErrorOnSaveMetadata = false
         self.shouldReturnErrorOnDeleteMutation = false
+        self.shouldIgnoreError = false
+        self.resultForQueryMutationSyncMetadatas = [MutationSyncMetadata]()
     }
 
     func setUp(modelSchemas: [ModelSchema]) throws {
@@ -47,6 +54,10 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
         resultForQueryMutationSyncMetadata = mutationSyncMetadata
     }
 
+    func returnOnQueryMutationSyncMetadatas(_ mutationSyncMetadatas: [MutationSyncMetadata]) {
+        resultForQueryMutationSyncMetadatas = mutationSyncMetadatas
+    }
+
     func returnOnSave(dataStoreResult: DataStoreResult<Model>?) {
         resultForSave = dataStoreResult
     }
@@ -58,6 +69,10 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
 
     func throwOnQueryMutationSyncMetadata(error: DataStoreError) {
         errorToThrowOnMutationSyncMetadata = error
+    }
+
+    func throwOnTransaction(error: DataStoreError) {
+        errorToThrowOnTransaction = error
     }
 
     // MARK: - StorageEngineAdapter
@@ -83,8 +98,8 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
                 predicate: QueryPredicate? = nil,
                 completion: (Result<Void, DataStoreError>) -> Void) {
         if let responder = responders[.deleteUntypedModel] as? DeleteUntypedModelCompletionResponder {
-            responder.callback((modelType, id))
-            completion(.emptyResult)
+            let result = responder.callback((modelType, id))
+            completion(result)
             return
         }
 
@@ -93,7 +108,7 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
             : completion(.emptyResult)
     }
 
-    func query(untypedModel modelType: Model.Type,
+    func query(modelSchema: ModelSchema,
                predicate: QueryPredicate?,
                completion: DataStoreCallback<[Model]>) {
         let result = resultForQuery ?? .failure(DataStoreError.invalidOperation(causedBy: nil))
@@ -194,16 +209,37 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
         return resultForQueryMutationSyncMetadata
     }
 
+    func queryMutationSyncMetadata(for modelIds: [String]) throws -> [MutationSyncMetadata] {
+        if let responder = responders[.queryMutationSyncMetadatas] as? QueryMutationSyncMetadatasResponder {
+            return try responder.callback(modelIds)
+        }
+
+        if let err = errorToThrowOnMutationSyncMetadata {
+            errorToThrowOnMutationSyncMetadata = nil
+            throw err
+        }
+        return resultForQueryMutationSyncMetadatas
+    }
+
     func queryModelSyncMetadata(for modelSchema: ModelSchema) throws -> ModelSyncMetadata? {
         listenerForModelSyncMetadata?()
         return resultForQueryModelSyncMetadata
     }
 
     func transaction(_ basicClosure: () throws -> Void) throws {
-        XCTFail("Not expected to execute")
+        if let err = errorToThrowOnTransaction {
+            errorToThrowOnTransaction = nil
+            throw err
+        }
+        try basicClosure()
     }
+
     func clear(completion: @escaping DataStoreCallback<Void>) {
         XCTFail("Not expected to execute")
+    }
+
+    func shouldIgnoreError(error: DataStoreError) -> Bool {
+        return shouldIgnoreError
     }
 }
 
@@ -279,9 +315,11 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
                          sort: [QuerySortDescriptor]?,
                          paginationInput: QueryPaginationInput?,
                          completion: DataStoreCallback<[M]>) {
-        completion(.success([]))
-        if let responder = responders[.query] as? QueryResponder {
-            return responder.callback("")
+        if let responder = responders[.query] as? QueryResponder<M> {
+            let result = responder.callback(())
+            completion(result)
+        } else {
+            completion(.success([]))
         }
     }
 
@@ -291,9 +329,12 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
                          sort: [QuerySortDescriptor]?,
                          paginationInput: QueryPaginationInput?,
                          completion: (DataStoreResult<[M]>) -> Void) {
-        completion(.success([]))
-        if let responder = responders[.query] as? QueryResponder {
-            return responder.callback("")
+
+        if let responder = responders[.query] as? QueryResponder<M> {
+            let result = responder.callback(())
+            completion(result)
+        } else {
+            completion(.success([]))
         }
     }
 

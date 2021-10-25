@@ -7,10 +7,10 @@
 #
 
 # Version definitions
-$AMPLIFY_VERSION = '1.8.1'
+$AMPLIFY_VERSION = '1.15.3'
 $AMPLIFY_RELEASE_TAG = "v#{$AMPLIFY_VERSION}"
 
-$AWS_SDK_VERSION = '2.23.3'
+$AWS_SDK_VERSION = '2.26.1'
 $OPTIMISTIC_AWS_SDK_VERSION = "~> #{$AWS_SDK_VERSION}"
 
 Pod::Spec.new do |s|
@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'AWSAPIPlugin' do |ss|
     ss.source_files = 'AmplifyPlugins/API/AWSAPICategoryPlugin/**/*.swift'
-    ss.dependency 'AppSyncRealTimeClient', "~> 1.4.0"
+    ss.dependency 'AppSyncRealTimeClient', "~> 1.4"
   end
 
   s.subspec 'AWSCognitoAuthPlugin' do |ss|
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'AWSDataStorePlugin' do |ss|
     ss.source_files = 'AmplifyPlugins/DataStore/AWSDataStoreCategoryPlugin/**/*.swift'
-    ss.dependency 'SQLite.swift', '~> 0.12.0'
+    ss.dependency 'SQLite.swift', '0.12.2'
   end
 
   s.subspec 'AWSPinpointAnalyticsPlugin' do |ss|

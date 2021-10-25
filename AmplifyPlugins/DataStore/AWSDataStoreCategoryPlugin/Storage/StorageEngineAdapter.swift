@@ -9,7 +9,9 @@ import Amplify
 import Foundation
 import AWSPluginsCore
 
-protocol StorageEngineAdapter: class, ModelStorageBehavior {
+protocol StorageEngineAdapter: AnyObject, ModelStorageBehavior, ModelStorageErrorBehavior {
+
+    static var maxNumberOfPredicates: Int { get }
 
     // MARK: - Async APIs
     func save(untypedModel: Model, completion: @escaping DataStoreCallback<Model>)
@@ -31,7 +33,7 @@ protocol StorageEngineAdapter: class, ModelStorageBehavior {
                           predicate: QueryPredicate,
                           completion: @escaping DataStoreCallback<[M]>)
 
-    func query(untypedModel modelType: Model.Type,
+    func query(modelSchema: ModelSchema,
                predicate: QueryPredicate?,
                completion: DataStoreCallback<[Model]>)
 
@@ -46,6 +48,8 @@ protocol StorageEngineAdapter: class, ModelStorageBehavior {
     func queryMutationSync(forAnyModel anyModel: AnyModel) throws -> MutationSync<AnyModel>?
 
     func queryMutationSyncMetadata(for modelId: Model.Identifier) throws -> MutationSyncMetadata?
+
+    func queryMutationSyncMetadata(for modelIds: [Model.Identifier]) throws -> [MutationSyncMetadata]
 
     func queryModelSyncMetadata(for modelSchema: ModelSchema) throws -> ModelSyncMetadata?
 

@@ -17,7 +17,7 @@ extension AWSAPIPlugin: Resettable {
 
         let waitForReset = DispatchSemaphore(value: 0)
         session.reset { waitForReset.signal() }
-        _ = waitForReset.wait()
+        waitForReset.wait()
 
         session = nil
 
@@ -26,7 +26,9 @@ extension AWSAPIPlugin: Resettable {
         authService = nil
 
         if #available(iOS 13.0, *) {
-            reachabilityMap.removeAll()
+            reachabilityMapLock.execute {
+                reachabilityMap.removeAll()
+            }
         }
 
         subscriptionConnectionFactory = nil

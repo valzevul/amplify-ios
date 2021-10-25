@@ -50,7 +50,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -107,7 +108,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -162,7 +164,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
         let finishedReceived = expectation(description: "InitialSyncOperation finished paginating and offering")
@@ -217,7 +220,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
         let finishedReceived = expectation(description: "InitialSyncOperation finished paginating and offering")
@@ -270,7 +274,7 @@ class InitialSyncOperationTests: XCTestCase {
         let reconciliationQueue = MockReconciliationQueue()
         reconciliationQueue.listeners.append { message in
             if message.hasPrefix("offer(_:)")
-                && message.contains("MutationSync<AnyModel>")
+                && message.contains("MutationSync<AWSPluginsCore.AnyModel>")
                 && message.contains(#"id: "1"#) {
                 itemSubmitted.fulfill()
             }
@@ -281,7 +285,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -297,8 +302,9 @@ class InitialSyncOperationTests: XCTestCase {
                     XCTAssertEqual(modelName, "MockSynced")
                     XCTAssertEqual(syncType, .fullSync)
                     syncStartedReceived.fulfill()
-                case .enqueued(let returnedValue):
+                case .enqueued(let returnedValue, let modelName):
                     XCTAssertTrue(returnedValue.syncMetadata == mutationSync.syncMetadata)
+                    XCTAssertEqual(modelName, "MockSynced")
                     offeredValueReceived.fulfill()
                 case .finished(modelName: let modelName):
                     XCTAssertEqual(modelName, "MockSynced")
@@ -339,7 +345,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -417,7 +424,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: configuration)
+            dataStoreConfiguration: configuration,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -491,7 +499,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -561,7 +570,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: configuration)
+            dataStoreConfiguration: configuration,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")
@@ -619,7 +629,8 @@ class InitialSyncOperationTests: XCTestCase {
             api: apiPlugin,
             reconciliationQueue: reconciliationQueue,
             storageAdapter: storageAdapter,
-            dataStoreConfiguration: configuration)
+            dataStoreConfiguration: configuration,
+            authModeStrategy: AWSDefaultAuthModeStrategy())
 
         let syncStartedReceived = expectation(description: "Sync started received, sync operation started")
         let syncCompletionReceived = expectation(description: "Sync completion received, sync operation is complete")

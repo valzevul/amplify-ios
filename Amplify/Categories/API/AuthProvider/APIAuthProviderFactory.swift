@@ -7,14 +7,30 @@
 
 import Foundation
 
+/// API Auth Provider Factory
 open class APIAuthProviderFactory {
+
+    /// Empty public initializer
     public init() {
     }
+
+    /// Retrieve the OIDC auth provider
     open func oidcAuthProvider() -> AmplifyOIDCAuthProvider? {
+        return nil
+    }
+
+    open func functionAuthProvider() -> AmplifyFunctionAuthProvider? {
         return nil
     }
 }
 
-public protocol AmplifyOIDCAuthProvider {
-    func getLatestAuthToken() -> Result<String, Error>
+public protocol AmplifyAuthTokenProvider {
+    typealias AuthToken = String
+    func getLatestAuthToken() -> Result<AuthToken, Error>
 }
+
+/// Amplify OIDC Auth Provider
+public protocol AmplifyOIDCAuthProvider: AmplifyAuthTokenProvider {}
+
+/// Amplify Function Auth Provider
+public protocol AmplifyFunctionAuthProvider: AmplifyAuthTokenProvider {}

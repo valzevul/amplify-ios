@@ -1,5 +1,149 @@
 # Changelog
 ## Unreleased
+## 1.15.3 (2021-10-21)
+
+### Bug Fixes
+
+- **DataStore**: Optimize mutation event propagation after model synced in ModelSyncEventEmitter (#1479)
+- **datastore**: Fixes SPM build error due to missing import Foundation in SyncEventEmitter.swift (#1481)
+- **auth**: Replace force unwrap to throw an error in AWS credentials (#1476)
+- **DataStore**: ModelSyncedEvent before last MutationEvent (#1472)
+- **DataStore**: Reconciliation path avoid model.modelName (#1475)
+- **DataStore**: Improve ObserveQuery for multiple sort input (#1464)
+
+## 1.15.2 (2021-10-14)
+
+### Bug Fixes
+
+- **DataStore**: Fallback when missing auth rule providers to API requirements (#1465)
+
+## 1.15.1 (2021-10-14)
+
+### Bug Fixes
+
+- **DataStore**: ObserveQueryOperation missing import for SPM (#1470)
+
+## 1.15.0 (2021-10-12)
+
+### Features
+
+- **DataStore**: ObserveQuery API (#1422)
+
+### Bug Fixes
+
+- **datastore**: require auth plugin if provider is nil in sync-requirements (#1461)
+- **datastore**: Sync engine fallback to API plugin config (#1460)
+- **DataStore**: Avoid model name from mutation sync in ModelSyncedEventEmitter (#1454)
+
+## 1.14.0 (2021-09-28)
+
+### Features
+
+- **Storage**: AWSS3PluginPrefixResolver (#1277)
+
+### Bug Fixes
+
+- **Logging**: fix concurrency issues with logLevel (#1431)
+- **Datastore**: Consecutive Updates (Save, Sync, Update and Immediately Delete Scenario) (#1407)
+- **DataStore**: ReconcileAndLocalSave schedule on internal queue (#1415)
+
+## 1.13.4 (2021-08-25)
+
+### Features
+- Update AWS SDKs to 2.25.0 (#1395)
+
+## 1.13.3 (2021-08-07)
+
+### Bug Fixes
+
+ - **DataStore**: add missing SQLite3 import (#1368)
+ - **DataStore**: storage engine doesn't need auth plugin for api key (#1366)
+
+## 1.13.1 (2021-08-05)
+
+### Bug Fixes
+
+- **Datastore**: consecutive updates nil version scenario (#1333)
+- **DataStore**: Various mutation sync fixes (#1355)
+- **DataStore**: do not send completion event to publisher on DataStore.clear() and DataStore.stop() (#1273)
+- Fix data store mutation when restoring network (#1345)
+- **DataStore**: drop failed constraint violation reconciliations (#1321)
+
+## 1.13.0 (2021-07-30)
+
+### Features
+
+- support for lambda authorizer (#1334)
+
+### Bug Fixes
+
+- **amplify-xcode**: add files to primary target (#1313)
+- **DataStore**: dynamic model support for cascade delete (#1296)
+
+## 1.12.0 (2021-06-28)
+
+### Features
+
+- **datastore**: multi-auth support (#1260)
+
+### Bug Fixes
+
+- **datastore**: initalSync should be successful in case of unauthorized errors (#1299)
+
+## 1.11.0 (2021-06-23)
+
+### Features
+
+- **api**: fix querystring encoding according to AWS SigV4 (#1068)
+
+### Bug Fixes
+
+- GraphQLBuilder use model name from schema instead of model (#1292)
+- **api**: interceptors refactoring (#1247)
+- **Model**: Apply codegen changes test models (#1145)
+
+## 1.10.0 (2021-06-10)
+
+### Features
+
+- **DataStore**: Multiple models ReconcileAndLocalSave transaction (#1237)
+- **datastore**: support for @auth provider attribute (#1258)
+- **datastore**: support mutation (deletion) with custom primary keys (#1228)
+
+### Bug Fixes
+
+- increase sync concurrency count based on associations (#1267)
+
+## 1.9.3 (2021-05-26)
+
+### Bug Fixes
+
+- Quote table names in CreateTableStatement (#1233)
+- **DataStore**: redundant local metadata query in ReconcileAndLocalSaveOperation (#1217)
+
+## 1.9.2 (2021-05-13)
+
+### Bug Fixes
+
+- **DataStore**: log metrics for ReconcileAndLocalSaveOperation (#1215)
+- Pass additional info in signIn next step (#1201)
+
+## 1.9.1 (2021-05-05)
+
+### Bug Fixes
+
+- **API**: Reachability resolve to GraphQL API (#1167)
+- **auth**: pass public challenge parameters in nextstep when authenticating with custom challenge
+- SQLLite dependency exact 0.12.2 version (#1199)
+- AppSyncRealTimeClient dependency up to next major (#1198)
+
+## 1.9.0 (2021-04-26)
+
+### Features
+
+- Update SDK to 2.24.0 and add override in AmplifyAWSServiceConfiguration (#1184)
+- **datastore**: support for readonly fields (#1133)
+
 ## 1.8.1 (2021-04-15)
 
 ### Bug Fixes

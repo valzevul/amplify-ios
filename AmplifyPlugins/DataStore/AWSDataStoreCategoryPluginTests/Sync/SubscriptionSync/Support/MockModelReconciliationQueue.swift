@@ -28,6 +28,7 @@ class MockModelReconciliationQueue: ModelReconciliationQueue {
          reconcileAndSaveQueue: ReconcileAndSaveOperationQueue,
          modelPredicate: QueryPredicate?,
          auth: AuthCategoryBehavior?,
+         authModeStrategy: AuthModeStrategy,
          incomingSubscriptionEvents: IncomingSubscriptionEventPublisher? = nil) {
         self.modelReconciliationQueueSubject = PassthroughSubject<ModelReconciliationQueueEvent, DataStoreError>()
         self.modelSchema = modelSchema
@@ -45,7 +46,7 @@ class MockModelReconciliationQueue: ModelReconciliationQueue {
         //no-op
     }
 
-    func enqueue(_ remoteModel: MutationSync<AnyModel>) {
+    func enqueue(_ remoteModels: [MutationSync<AnyModel>]) {
         //no-op
     }
 

@@ -10,7 +10,7 @@ import AWSPluginsCore
 import Combine
 import Foundation
 
-//Used for testing:
+// Used for testing:
 @available(iOS 13.0, *)
 typealias ModelReconciliationQueueFactory = (
     ModelSchema,
@@ -19,6 +19,7 @@ typealias ModelReconciliationQueueFactory = (
     ReconcileAndSaveOperationQueue,
     QueryPredicate?,
     AuthCategoryBehavior?,
+    AuthModeStrategy,
     IncomingSubscriptionEventPublisher?
 ) -> ModelReconciliationQueue
 
@@ -28,13 +29,15 @@ typealias ModelReconciliationQueueFactory = (
 /// Although subscriptions are listened to and enqueued at initialization, you must call `start` on a
 /// AWSModelReconciliationQueue to write events to the DataStore.
 ///
-/// Internally, a AWSModelReconciliationQueue manages the `incomingSubscriptionEventQueue` to buffer incoming remote
-/// events (e.g., subscriptions, mutation results), and is passed the reference of `ReconcileAndSaveOperationQueue`,
-/// used to reconcile & save mutation sync events to local storage. A reference to the `ReconcileAndSaveOperationQueue`
-/// is used here since some models have to be reconciled in dependency order and `ReconcileAndSaveOperationQueue` is responsible for managing the
-/// ordering of these events.
-/// These queues are required because each of these actions have different points in the sync lifecycle at which they
-/// may be activated.
+/// Internally, a AWSModelReconciliationQueue manages the
+/// `incomingSubscriptionEventQueue` to buffer incoming remote events (e.g.,
+/// subscriptions, mutation results), and is passed the reference of
+/// `ReconcileAndSaveOperationQueue`, used to reconcile & save mutation sync events
+/// to local storage. A reference to the `ReconcileAndSaveOperationQueue` is used
+/// here since some models have to be reconciled in dependency order and
+/// `ReconcileAndSaveOperationQueue` is responsible for managing the ordering of
+/// these events. These queues are required because each of these actions have
+/// different points in the sync lifecycle at which they may be activated.
 ///
 /// Flow:
 /// - `AWSModelReconciliationQueue` init()
@@ -81,6 +84,7 @@ final class AWSModelReconciliationQueue: ModelReconciliationQueue {
          reconcileAndSaveQueue: ReconcileAndSaveOperationQueue,
          modelPredicate: QueryPredicate?,
          auth: AuthCategoryBehavior?,
+         authModeStrategy: AuthModeStrategy,
          incomingSubscriptionEvents: IncomingSubscriptionEventPublisher? = nil) {
 
         self.modelSchema = modelSchema
@@ -101,7 +105,8 @@ final class AWSModelReconciliationQueue: ModelReconciliationQueue {
             AWSIncomingSubscriptionEventPublisher(modelSchema: modelSchema,
                                                   api: api,
                                                   modelPredicate: modelPredicate,
-                                                  auth: auth)
+                                                  auth: auth,
+                                                  authModeStrategy: authModeStrategy)
         self.incomingSubscriptionEvents = resolvedIncomingSubscriptionEvents
         self.reconcileAndLocalSaveOperationSinks = AtomicValue(initialValue: Set<AnyCancellable?>())
         self.incomingEventsSink = resolvedIncomingSubscriptionEvents
@@ -135,26 +140,39 @@ final class AWSModelReconciliationQueue: ModelReconciliationQueue {
         incomingSubscriptionEventQueue.cancelAllOperations()
     }
 
-    func enqueue(_ remoteModel: MutationSync<AnyModel>) {
+    func enqueue(_ remoteModels: [MutationSync<AnyModel>]) {
+        guard !remoteModels.isEmpty else {
+            log.debug("\(#function) skipping reconciliation, no models to enqueue.")
+            return
+        }
+
         let reconcileOp = ReconcileAndLocalSaveOperation(modelSchema: modelSchema,
-                                                         remoteModel: remoteModel,
+                                                         remoteModels: remoteModels,
                                                          storageAdapter: storageAdapter)
         var reconcileAndLocalSaveOperationSink: AnyCancellable?
-        reconcileAndLocalSaveOperationSink = reconcileOp.publisher.sink(receiveCompletion: { completion in
-            self.reconcileAndLocalSaveOperationSinks.with { $0.remove(reconcileAndLocalSaveOperationSink) }
-            if case .failure = completion {
-                self.modelReconciliationQueueSubject.send(completion: completion)
-            }
-        }, receiveValue: { value in
-            switch value {
-            case .mutationEventDropped(let modelName):
-                self.modelReconciliationQueueSubject.send(.mutationEventDropped(modelName: modelName))
-            case .mutationEvent(let event):
-                self.modelReconciliationQueueSubject.send(.mutationEvent(event))
-            }
-        })
+        reconcileAndLocalSaveOperationSink = reconcileOp
+            .publisher
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else {
+                    return
+                }
+                self.reconcileAndLocalSaveOperationSinks.with { $0.remove(reconcileAndLocalSaveOperationSink) }
+                if case .failure = completion {
+                    self.modelReconciliationQueueSubject.send(completion: completion)
+                }
+            }, receiveValue: { [weak self] value in
+                guard let self = self else {
+                    return
+                }
+                switch value {
+                case .mutationEventDropped(let modelName):
+                    self.modelReconciliationQueueSubject.send(.mutationEventDropped(modelName: modelName))
+                case .mutationEvent(let event):
+                    self.modelReconciliationQueueSubject.send(.mutationEvent(event))
+                }
+            })
         reconcileAndLocalSaveOperationSinks.with { $0.insert(reconcileAndLocalSaveOperationSink) }
-        reconcileAndSaveQueue.addOperation(reconcileOp, modelName: remoteModel.model.modelName)
+        reconcileAndSaveQueue.addOperation(reconcileOp, modelName: modelSchema.name)
     }
 
     private func receive(_ receive: IncomingSubscriptionEventPublisherEvent) {
@@ -165,8 +183,8 @@ final class AWSModelReconciliationQueue: ModelReconciliationQueue {
                     return
                 }
             }
-            incomingSubscriptionEventQueue.addOperation(CancelAwareBlockOperation {
-                self.enqueue(remoteModel)
+            incomingSubscriptionEventQueue.addOperation(CancelAwareBlockOperation { [weak self] in
+                self?.enqueue([remoteModel])
             })
         case .connectionConnected:
             modelReconciliationQueueSubject.send(.connected(modelName: modelSchema.name))
@@ -180,12 +198,14 @@ final class AWSModelReconciliationQueue: ModelReconciliationQueue {
             modelReconciliationQueueSubject.send(completion: .finished)
         case .failure(let dataStoreError):
             if case let .api(error, _) = dataStoreError,
-               case let APIError.operationError(_, _, underlyingError) = error, isUnauthorizedError(underlyingError) {
+               case let APIError.operationError(_, _, underlyingError) = error,
+               isUnauthorizedError(underlyingError) {
                 modelReconciliationQueueSubject.send(.disconnected(modelName: modelSchema.name, reason: .unauthorized))
                 return
             }
             if case let .api(error, _) = dataStoreError,
-               case let APIError.operationError(_, _, underlyingError) = error, isOperationDisabledError(underlyingError) {
+               case let APIError.operationError(_, _, underlyingError) = error,
+               isOperationDisabledError(underlyingError) {
                 modelReconciliationQueueSubject.send(.disconnected(modelName: modelSchema.name, reason: .operationDisabled))
                 return
             }
@@ -202,24 +222,26 @@ extension AWSModelReconciliationQueue: DefaultLogger { }
 @available(iOS 13.0, *)
 extension AWSModelReconciliationQueue: Resettable {
 
-    func reset(onComplete: () -> Void) {
+    func reset(onComplete: @escaping BasicClosure) {
         let group = DispatchGroup()
 
+        log.verbose("Resetting incomingEventsSink")
         incomingEventsSink?.cancel()
+        log.verbose("Resetting incomingEventsSink: finished")
 
         if let resettable = incomingSubscriptionEvents as? Resettable {
+            log.verbose("Resetting incomingSubscriptionEvents")
             group.enter()
-            DispatchQueue.global().async {
-                resettable.reset { group.leave() }
+            resettable.reset {
+                self.log.verbose("Resetting incomingSubscriptionEvents: finished")
+                group.leave()
             }
         }
 
-        group.enter()
-        DispatchQueue.global().async {
-            self.incomingSubscriptionEventQueue.cancelAllOperations()
-            self.incomingSubscriptionEventQueue.waitUntilAllOperationsAreFinished()
-            group.leave()
-        }
+        log.verbose("Resetting incomingSubscriptionEventQueue")
+        incomingSubscriptionEventQueue.cancelAllOperations()
+        incomingSubscriptionEventQueue.waitUntilAllOperationsAreFinished()
+        log.verbose("Resetting incomingSubscriptionEventQueue: finished")
 
         group.wait()
 

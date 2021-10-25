@@ -18,20 +18,13 @@ typealias IncomingEventReconciliationQueueFactory =
     StorageEngineAdapter,
     [DataStoreSyncExpression],
     AuthCategoryBehavior?,
+    AuthModeStrategy,
     ModelReconciliationQueueFactory?
 ) -> IncomingEventReconciliationQueue
 
 @available(iOS 13.0, *)
 final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueue {
 
-    static let factory: IncomingEventReconciliationQueueFactory = { modelSchemas, api, storageAdapter, syncExpressions, auth, _ in
-        AWSIncomingEventReconciliationQueue(modelSchemas: modelSchemas,
-                                            api: api,
-                                            storageAdapter: storageAdapter,
-                                            syncExpressions: syncExpressions,
-                                            auth: auth,
-                                            modelReconciliationQueueFactory: nil)
-    }
     private var modelReconciliationQueueSinks: [String: AnyCancellable]
 
     private let eventReconciliationQueueTopic: PassthroughSubject<IncomingEventReconciliationQueueEvent, DataStoreError>
@@ -54,14 +47,14 @@ final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueu
          storageAdapter: StorageEngineAdapter,
          syncExpressions: [DataStoreSyncExpression],
          auth: AuthCategoryBehavior? = nil,
+         authModeStrategy: AuthModeStrategy,
          modelReconciliationQueueFactory: ModelReconciliationQueueFactory? = nil) {
         self.modelReconciliationQueueSinks = [:]
         self.eventReconciliationQueueTopic = PassthroughSubject<IncomingEventReconciliationQueueEvent, DataStoreError>()
         self.reconciliationQueues = [:]
         self.reconciliationQueueConnectionStatus = [:]
         self.reconcileAndSaveQueue = ReconcileAndSaveQueue(modelSchemas)
-        self.modelReconciliationQueueFactory = modelReconciliationQueueFactory ??
-            AWSModelReconciliationQueue.init(modelSchema:storageAdapter:api:reconcileAndSaveQueue:modelPredicate:auth:incomingSubscriptionEvents:)
+        self.modelReconciliationQueueFactory = modelReconciliationQueueFactory ?? AWSModelReconciliationQueue.init
         // TODO: Add target for SyncEngine system to help prevent thread explosion and increase performance
         // https://github.com/aws-amplify/amplify-ios/issues/399
         self.connectionStatusSerialQueue
@@ -79,6 +72,7 @@ final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueu
                                                              reconcileAndSaveQueue,
                                                              modelPredicate,
                                                              auth,
+                                                             authModeStrategy,
                                                              nil)
             guard reconciliationQueues[modelName] == nil else {
                 Amplify.DataStore.log
@@ -102,13 +96,13 @@ final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueu
         eventReconciliationQueueTopic.send(.paused)
     }
 
-    func offer(_ remoteModel: MutationSync<AnyModel>, modelSchema: ModelSchema) {
+    func offer(_ remoteModels: [MutationSync<AnyModel>], modelSchema: ModelSchema) {
         guard let queue = reconciliationQueues[modelSchema.name] else {
             // TODO: Error handling
             return
         }
 
-        queue.enqueue(remoteModel)
+        queue.enqueue(remoteModels)
     }
 
     private func onReceiveCompletion(completed: Subscribers.Completion<DataStoreError>) {
@@ -152,11 +146,16 @@ final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueu
     }
 
     func cancel() {
+        cancel(completion: nil)
+    }
+
+    private func cancel(completion: BasicClosure?) {
         modelReconciliationQueueSinks.values.forEach { $0.cancel() }
         reconciliationQueues.values.forEach { $0.cancel()}
         connectionStatusSerialQueue.async {
             self.reconciliationQueues = [:]
             self.modelReconciliationQueueSinks = [:]
+            completion?()
         }
     }
 
@@ -167,6 +166,21 @@ final class AWSIncomingEventReconciliationQueue: IncomingEventReconciliationQueu
 
 }
 
+// MARK: - Static factory
+@available(iOS 13.0, *)
+extension AWSIncomingEventReconciliationQueue {
+    static let factory: IncomingEventReconciliationQueueFactory = { modelSchemas, api, storageAdapter, syncExpressions, auth, authModeStrategy, _ in
+        AWSIncomingEventReconciliationQueue(modelSchemas: modelSchemas,
+                                            api: api,
+                                            storageAdapter: storageAdapter,
+                                            syncExpressions: syncExpressions,
+                                            auth: auth,
+                                            authModeStrategy: authModeStrategy,
+                                            modelReconciliationQueueFactory: nil)
+    }
+}
+
+// MARK: - AWSIncomingEventReconciliationQueue + Resettable
 @available(iOS 13.0, *)
 extension AWSIncomingEventReconciliationQueue: Resettable {
 
@@ -176,16 +190,23 @@ extension AWSIncomingEventReconciliationQueue: Resettable {
             guard let queue = queue as? Resettable else {
                 continue
             }
+            Amplify.log.verbose("Resetting reconciliationQueue")
             group.enter()
-            DispatchQueue.global().async {
-                queue.reset { group.leave() }
+            queue.reset {
+                Amplify.log.verbose("Resetting reconciliationQueue: finished")
+                group.leave()
             }
         }
 
+        Amplify.log.verbose("Resetting reconcileAndSaveQueue")
+        reconcileAndSaveQueue.cancelAllOperations()
+        reconcileAndSaveQueue.waitUntilOperationsAreFinished()
+        Amplify.log.verbose("Resetting reconcileAndSaveQueue: finished")
+
+        Amplify.log.verbose("Cancelling AWSIncomingEventReconciliationQueue")
         group.enter()
-        DispatchQueue.global().async {
-            self.reconcileAndSaveQueue.cancelAllOperations()
-            self.reconcileAndSaveQueue.waitUntilOperationsAreFinished()
+        cancel {
+            Amplify.log.verbose("Cancelling AWSIncomingEventReconciliationQueue: finished")
             group.leave()
         }
 

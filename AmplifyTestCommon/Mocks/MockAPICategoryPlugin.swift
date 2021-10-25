@@ -9,8 +9,31 @@ import Amplify
 import Combine
 import Foundation
 
-class MockAPICategoryPlugin: MessageReporter, APICategoryPlugin, APICategoryReachabilityBehavior {
+class MockAPICategoryPlugin: MessageReporter,
+                             APICategoryPlugin,
+                             APICategoryReachabilityBehavior {
+
+
+
+    var authProviderFactory: APIAuthProviderFactory?
+
     var responders = [ResponderKeys: Any]()
+
+    private var _reachabilityPublisher: Any?
+
+    private var oidcProvider: Any?
+
+    @available(iOS 13.0, *)
+    init(reachabilityPublisher: AnyPublisher<ReachabilityUpdate, Never>) {
+        self._reachabilityPublisher = reachabilityPublisher
+        super.init()
+    }
+
+    // We're declaring this even though it's not strictly necessary to expose the no-arg initializer
+    // to iOS 13+ test contexts.
+    override init() {
+        super.init()
+    }
 
     // MARK: - Properties
 
@@ -41,13 +64,13 @@ class MockAPICategoryPlugin: MessageReporter, APICategoryPlugin, APICategoryReac
                 return operation
             }
         }
-        let options = GraphQLOperationRequest<R>.Options()
+        let requestOptions = GraphQLOperationRequest<R>.Options(pluginOptions: nil)
         let request = GraphQLOperationRequest<R>(apiName: request.apiName,
                                                  operationType: .mutation,
                                                  document: request.document,
                                                  variables: request.variables,
                                                  responseType: request.responseType,
-                                                 options: options)
+                                                 options: requestOptions)
         let operation = MockGraphQLOperation(request: request, responseType: request.responseType)
 
         return operation
@@ -63,13 +86,13 @@ class MockAPICategoryPlugin: MessageReporter, APICategoryPlugin, APICategoryReac
             }
         }
 
-        let options = GraphQLOperationRequest<R>.Options()
+        let requestOptions = GraphQLOperationRequest<R>.Options(pluginOptions: nil)
         let request = GraphQLOperationRequest<R>(apiName: request.apiName,
                                                  operationType: .query,
                                                  document: request.document,
                                                  variables: request.variables,
                                                  responseType: request.responseType,
-                                                 options: options)
+                                                 options: requestOptions)
         let operation = MockGraphQLOperation(request: request, responseType: request.responseType)
 
         return operation
@@ -92,25 +115,29 @@ class MockAPICategoryPlugin: MessageReporter, APICategoryPlugin, APICategoryReac
                 }
             }
 
-            let options = GraphQLOperationRequest<R>.Options()
+            let requestOptions = GraphQLOperationRequest<R>.Options(pluginOptions: nil)
             let request = GraphQLOperationRequest<R>(apiName: request.apiName,
                                                      operationType: .subscription,
                                                      document: request.document,
                                                      variables: request.variables,
                                                      responseType: request.responseType,
-                                                     options: options)
+                                                     options: requestOptions)
             let operation = MockSubscriptionGraphQLOperation(request: request, responseType: request.responseType)
             return operation
     }
 
     @available(iOS 13.0, *)
     public func reachabilityPublisher(for apiName: String?) -> AnyPublisher<ReachabilityUpdate, Never>? {
-        return nil
+        reachabilityPublisher()
     }
 
     @available(iOS 13.0, *)
     public func reachabilityPublisher() -> AnyPublisher<ReachabilityUpdate, Never>? {
-        return Just(ReachabilityUpdate(isOnline: true)).eraseToAnyPublisher()
+        if let reachabilityPublisher = _reachabilityPublisher as? AnyPublisher<ReachabilityUpdate, Never> {
+            return reachabilityPublisher
+        } else {
+            return Just(ReachabilityUpdate(isOnline: true)).eraseToAnyPublisher()
+        }
     }
 
     // MARK: - REST methods
@@ -191,8 +218,14 @@ class MockAPICategoryPlugin: MessageReporter, APICategoryPlugin, APICategoryReac
         notify("addInterceptor")
     }
 
+    // MARK: - APICategoryAuthProviderFactoryBehavior
+
     func apiAuthProviderFactory() -> APIAuthProviderFactory {
-        return APIAuthProviderFactory()
+        if let authProviderFactory = authProviderFactory {
+            return authProviderFactory
+        } else {
+            return APIAuthProviderFactory()
+        }
     }
 }
 
@@ -244,5 +277,48 @@ class MockAPIOperation: AmplifyOperation<RESTOperationRequest, Data, APIError>, 
         super.init(categoryType: .api,
                    eventName: request.operationType.hubEventName,
                    request: request)
+    }
+}
+
+class MockAPIAuthProviderFactory: APIAuthProviderFactory {
+    let oidcProvider: AmplifyOIDCAuthProvider?
+    let functionProvider: AmplifyFunctionAuthProvider?
+
+    init(oidcProvider: AmplifyOIDCAuthProvider? = nil,
+         functionProvider: AmplifyFunctionAuthProvider? = nil) {
+        self.oidcProvider = oidcProvider
+        self.functionProvider = functionProvider
+    }
+
+    override func functionAuthProvider() -> AmplifyFunctionAuthProvider? {
+        return functionProvider
+    }
+
+    override func oidcAuthProvider() -> AmplifyOIDCAuthProvider? {
+        return oidcProvider
+    }
+}
+
+class MockOIDCAuthProvider: AmplifyOIDCAuthProvider {
+    var result: Result<AuthToken, Error>?
+
+    func getLatestAuthToken() -> Result<AuthToken, Error> {
+        if let result = result {
+            return result
+        } else {
+            return .success("token")
+        }
+    }
+}
+
+class MockFunctionAuthProvider: AmplifyFunctionAuthProvider {
+    var result: Result<AuthToken, Error>?
+
+    func getLatestAuthToken() -> Result<AuthToken, Error> {
+        if let result = result {
+            return result
+        } else {
+            return .success("token")
+        }
     }
 }

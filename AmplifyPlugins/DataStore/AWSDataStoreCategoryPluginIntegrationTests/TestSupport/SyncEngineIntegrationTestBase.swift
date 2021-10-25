@@ -14,7 +14,7 @@ import AWSMobileClient
 @testable import AmplifyTestCommon
 @testable import AWSDataStoreCategoryPlugin
 
-class SyncEngineIntegrationTestBase: XCTestCase {
+class SyncEngineIntegrationTestBase: DataStoreTestBase {
 
     static let networkTimeout = TimeInterval(180)
     let networkTimeout = SyncEngineIntegrationTestBase.networkTimeout
@@ -49,8 +49,7 @@ class SyncEngineIntegrationTestBase: XCTestCase {
         }
     }
 
-    func startAmplifyAndWaitForSync() throws {
-
+    func startAmplify(_ completion: BasicClosure? = nil) throws {
         let bundle = Bundle(for: type(of: self))
         guard let configFile = bundle.url(forResource: "amplifyconfiguration", withExtension: "json") else {
             XCTFail("Could not get URL for amplifyconfiguration.json from \(bundle)")
@@ -60,14 +59,32 @@ class SyncEngineIntegrationTestBase: XCTestCase {
         let configData = try Data(contentsOf: configFile)
         let amplifyConfig = try JSONDecoder().decode(AmplifyConfiguration.self, from: configData)
 
-        let syncStarted = expectation(description: "Sync started")
+        DispatchQueue.global().async {
+            do {
+                try Amplify.configure(amplifyConfig)
+                completion?()
+            } catch {
+                XCTFail(String(describing: error))
+            }
+        }
+    }
+
+    func startAmplifyAndWaitForSync() throws {
+        try startAmplifyAndWait(for: HubPayload.EventName.DataStore.syncStarted)
+    }
+
+    func startAmplifyAndWaitForReady() throws {
+        try startAmplifyAndWait(for: HubPayload.EventName.DataStore.ready)
+    }
+
+    private func startAmplifyAndWait(for eventName: String) throws {
+        let eventReceived = expectation(description: "DataStore \(eventName) event")
 
         var token: UnsubscribeToken!
         token = Amplify.Hub.listen(to: .dataStore,
-                                   eventName: HubPayload.EventName.DataStore.syncStarted) { _ in
-                                    syncStarted.fulfill()
-                                    Amplify.Hub.removeListener(token)
-
+                                   eventName: eventName) { _ in
+            eventReceived.fulfill()
+            Amplify.Hub.removeListener(token)
         }
 
         guard try HubListenerTestUtilities.waitForListener(with: token, timeout: 5.0) else {
@@ -75,20 +92,15 @@ class SyncEngineIntegrationTestBase: XCTestCase {
             return
         }
 
-        DispatchQueue.global().async {
-            do {
-                try Amplify.configure(amplifyConfig)
-                Amplify.DataStore.start { result in
-                    if case .failure(let error) = result {
-                        XCTFail("\(error)")
-                    }
+        try startAmplify {
+            Amplify.DataStore.start { result in
+                if case .failure(let error) = result {
+                    XCTFail("\(error)")
                 }
-            } catch {
-                XCTFail(String(describing: error))
             }
         }
 
-        wait(for: [syncStarted], timeout: 15.0)
+        wait(for: [eventReceived], timeout: 100.0)
     }
 
 }

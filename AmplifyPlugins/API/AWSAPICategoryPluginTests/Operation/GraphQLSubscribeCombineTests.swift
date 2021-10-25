@@ -228,7 +228,7 @@ class GraphQLSubscribeCombineTests: OperationTestBase {
             return item
         }
 
-        let onGetOrCreateConnection: MockSubscriptionConnectionFactory.OnGetOrCreateConnection = { _, _, _ in
+        let onGetOrCreateConnection: MockSubscriptionConnectionFactory.OnGetOrCreateConnection = { _, _, _, _  in
             MockSubscriptionConnection(onSubscribe: onSubscribe, onUnsubscribe: { _ in })
         }
 
@@ -250,7 +250,7 @@ class GraphQLSubscribeCombineTests: OperationTestBase {
             responseType: JSONValue.self
         )
 
-        let operation = Amplify.API.subscribe(request: request)
+        let operation = apiPlugin.subscribe(request: request)
         connectionStateSink = operation
             .connectionStatePublisher
             .sink(
