@@ -180,12 +180,15 @@ extension AWSDataStorePlugin: DataStoreBaseBehavior {
     }
 
     public func stop(completion: @escaping DataStoreCallback<Void>) {
+        storageEngineInitSemaphore.wait()
         operationQueue.operations.forEach { operation in
             if let operation = operation as? DataStoreObserveQueryOperation {
                 operation.resetState()
             }
         }
-        storageEngineInitSemaphore.wait()
+        dispatchedModelSyncedEvents.forEach { _, dispatchedModelSynced in
+            dispatchedModelSynced.set(false)
+        }
         if storageEngine == nil {
             storageEngineInitSemaphore.signal()
             completion(.successfulVoid)
@@ -199,12 +202,15 @@ extension AWSDataStorePlugin: DataStoreBaseBehavior {
     }
 
     public func clear(completion: @escaping DataStoreCallback<Void>) {
+        storageEngineInitSemaphore.wait()
         operationQueue.operations.forEach { operation in
             if let operation = operation as? DataStoreObserveQueryOperation {
                 operation.resetState()
             }
         }
-        storageEngineInitSemaphore.wait()
+        dispatchedModelSyncedEvents.forEach { _, dispatchedModelSynced in
+            dispatchedModelSynced.set(false)
+        }
         if storageEngine == nil {
             storageEngineInitSemaphore.signal()
             completion(.successfulVoid)
@@ -241,8 +247,9 @@ extension AWSDataStorePlugin: DataStoreBaseBehavior {
             return
         }
         let metadata = MutationSyncMetadata.keys
+        let metadataId = MutationSyncMetadata.identifier(modelName: modelSchema.name, modelId: model.id)
         storageEngine.query(MutationSyncMetadata.self,
-                            predicate: metadata.id == model.id,
+                            predicate: metadata.id == metadataId,
                             sort: nil,
                             paginationInput: .firstResult) {
             do {

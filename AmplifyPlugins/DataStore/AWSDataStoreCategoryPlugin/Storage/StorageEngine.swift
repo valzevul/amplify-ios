@@ -132,14 +132,47 @@ final class StorageEngine: StorageEngineBehavior {
     }
 
     @available(iOS 13.0, *)
-    private func onReceive(receiveValue: RemoteSyncEngineEvent) {
-        if case .mutationEvent(let mutationEvent) = receiveValue {
-            self.storageEnginePublisher.send(.mutationEvent(mutationEvent))
+    func onReceive(receiveValue: RemoteSyncEngineEvent) {
+        switch receiveValue {
+        case .storageAdapterAvailable:
+            break
+        case .subscriptionsPaused:
+            break
+        case .mutationsPaused:
+            break
+        case .clearedStateOutgoingMutations:
+            break
+        case .subscriptionsInitialized:
+            break
+        case .performedInitialSync:
+            break
+        case .subscriptionsActivated:
+            break
+        case .mutationQueueStarted:
+            break
+        case .syncStarted:
+            break
+        case .cleanedUp:
+            break
+        case .cleanedUpForTermination:
+            break
+        case .mutationEvent(let mutationEvent):
+            storageEnginePublisher.send(.mutationEvent(mutationEvent))
+        case .modelSyncedEvent(let modelSyncedEvent):
+            storageEnginePublisher.send(.modelSyncedEvent(modelSyncedEvent))
+        case .syncQueriesReadyEvent:
+            storageEnginePublisher.send(.syncQueriesReadyEvent)
+        case .readyEvent:
+            storageEnginePublisher.send(.readyEvent)
         }
     }
 
     func setUp(modelSchemas: [ModelSchema]) throws {
         try storageAdapter.setUp(modelSchemas: modelSchemas)
+    }
+
+    func applyModelMigrations(modelSchemas: [ModelSchema]) throws {
+        try storageAdapter.applyModelMigrations(modelSchemas: modelSchemas)
     }
 
     public func save<M: Model>(_ model: M,
@@ -160,7 +193,8 @@ final class StorageEngine: StorageEngineBehavior {
 
         let mutationType = modelExists ? MutationEvent.MutationType.update : .create
 
-        if mutationType == .create && condition != nil {
+        // If it is `create`, and there is a condition, and that condition is not `.all`, fail the request
+        if mutationType == .create, let condition = condition, !condition.isAll {
             let dataStoreError = DataStoreError.invalidCondition(
                 "Cannot apply a condition on model which does not exist.",
                 "Save the model instance without a condition first.")

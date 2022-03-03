@@ -16,6 +16,8 @@ import AWSMobileClient
 
 class SyncEngineIntegrationTestBase: DataStoreTestBase {
 
+    static let amplifyConfigurationFile = "testconfiguration/AWSDataStoreCategoryPluginIntegrationTests-amplifyconfiguration"
+
     static let networkTimeout = TimeInterval(180)
     let networkTimeout = SyncEngineIntegrationTestBase.networkTimeout
 
@@ -49,15 +51,34 @@ class SyncEngineIntegrationTestBase: DataStoreTestBase {
         }
     }
 
-    func startAmplify(_ completion: BasicClosure? = nil) throws {
-        let bundle = Bundle(for: type(of: self))
-        guard let configFile = bundle.url(forResource: "amplifyconfiguration", withExtension: "json") else {
-            XCTFail("Could not get URL for amplifyconfiguration.json from \(bundle)")
-            return
+    func stopDataStore() {
+        let stopped = expectation(description: "DataStore stopped")
+        Amplify.DataStore.stop { result in
+            switch result {
+            case .success:
+                stopped.fulfill()
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
         }
+        wait(for: [stopped], timeout: 2)
+    }
 
-        let configData = try Data(contentsOf: configFile)
-        let amplifyConfig = try JSONDecoder().decode(AmplifyConfiguration.self, from: configData)
+    func clearDataStore() {
+        let cleared = expectation(description: "DataStore cleared")
+        Amplify.DataStore.clear { result in
+            switch result {
+            case .success:
+                cleared.fulfill()
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        wait(for: [cleared], timeout: 2)
+    }
+
+    func startAmplify(_ completion: BasicClosure? = nil) throws {
+        let amplifyConfig = try TestConfigHelper.retrieveAmplifyConfiguration(forResource: Self.amplifyConfigurationFile)
 
         DispatchQueue.global().async {
             do {

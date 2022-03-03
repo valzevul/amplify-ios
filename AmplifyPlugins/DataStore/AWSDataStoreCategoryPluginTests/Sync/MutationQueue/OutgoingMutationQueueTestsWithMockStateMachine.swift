@@ -110,7 +110,8 @@ class OutgoingMutationQueueMockStateTest: XCTestCase {
 
         let model = MockSynced(id: "id-1")
         let anyModel = try model.eraseToAnyModel()
-        let remoteSyncMetadata = MutationSyncMetadata(id: model.id,
+        let remoteSyncMetadata = MutationSyncMetadata(modelId: model.id,
+                                                      modelName: MockSynced.modelName,
                                                       deleted: false,
                                                       lastChangedAt: Date().unixSeconds,
                                                       version: 2)
@@ -132,7 +133,7 @@ class OutgoingMutationQueueMockStateTest: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRecievedStartActionWhileExpectingEventProcessedAction() throws {
+    func testReceivedStartActionWhileExpectingEventProcessedAction() throws {
         //Ensure subscription is setup
         let receivedSubscription = expectation(description: "receivedSubscription")
         stateMachine.pushExpectActionCriteria { action in
@@ -202,7 +203,8 @@ class OutgoingMutationQueueMockStateTest: XCTestCase {
 
         let model = MockSynced(id: "id-1")
         let anyModel = try model.eraseToAnyModel()
-        let remoteSyncMetadata = MutationSyncMetadata(id: model.id,
+        let remoteSyncMetadata = MutationSyncMetadata(modelId: model.id,
+                                                      modelName: MockSynced.modelName,
                                                       deleted: false,
                                                       lastChangedAt: Date().unixSeconds,
                                                       version: 2)

@@ -15,19 +15,12 @@
 		211A81D9270F78B100C5483D /* SortedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211A81D8270F78B100C5483D /* SortedListTests.swift */; };
 		211FFEDA26CC270100F0DB75 /* DataStoreObserveQueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211FFED926CC270100F0DB75 /* DataStoreObserveQueryOperation.swift */; };
 		211FFEDD26CD621400F0DB75 /* DataStoreObserveQueryOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211FFEDC26CD621300F0DB75 /* DataStoreObserveQueryOperationTests.swift */; };
-		21233DD8247591D100039337 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 21233DD7247591D100039337 /* amplifyconfiguration.json */; };
 		21233DE02475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21233DDF2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.swift */; };
 		21233DE22475935600039337 /* AWSDataStoreCategoryPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2149E59B238867E100873955 /* AWSDataStoreCategoryPlugin.framework */; };
-		21233DF02475AF6A00039337 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 21233DEF2475AF6A00039337 /* README.md */; };
-		21233DF42475BAC100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21233DF32475BAC100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift */; };
-		21233DF62475BB5900039337 /* SocialNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21233DF52475BB5900039337 /* SocialNote.swift */; };
-		21233DF72475BD4F00039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 21233DED2475AF6300039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json */; };
-		21233DF82475BD5100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 21233DF12475AFC900039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json */; };
 		21233E1324763D0700039337 /* StorageEngine+SyncRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21233E1224763D0700039337 /* StorageEngine+SyncRequirement.swift */; };
 		21233E152476EFC400039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21233E142476EFC400039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift */; };
 		2129BE4A23948A97006363A1 /* StorageAdapterMutationSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2129BE4923948A97006363A1 /* StorageAdapterMutationSyncTests.swift */; };
 		212B4686269FB10500A0AEE7 /* SQLiteResultError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B4685269FB10500A0AEE7 /* SQLiteResultError.swift */; };
-		213481BF24213E14001966DE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 213481BE24213E13001966DE /* README.md */; };
 		213481D4242ABA86001966DE /* ProcessMutationErrorFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213481D3242ABA86001966DE /* ProcessMutationErrorFromCloudOperation.swift */; };
 		2145314026CDAD6400CDEACB /* AWSDataStorePluginSubscribeBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2145313F26CDAD6400CDEACB /* AWSDataStorePluginSubscribeBehaviorTests.swift */; };
 		2149E5C52388684F00873955 /* StorageEngineBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2149E5A82388684F00873955 /* StorageEngineBehavior.swift */; };
@@ -66,6 +59,7 @@
 		2149E62D23886D3900873955 /* SyncMetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2149E62B23886D3900873955 /* SyncMetadataTests.swift */; };
 		214B6B65264B0D6700A9311D /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B6B64264B0D6700A9311D /* Stopwatch.swift */; };
 		214B6B68264B157500A9311D /* StopwatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B6B67264B157500A9311D /* StopwatchTests.swift */; };
+		215D40AD277233340077E7DA /* DataStoreConnectionScenario8V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215D40AC277233340077E7DA /* DataStoreConnectionScenario8V2Tests.swift */; };
 		216B69D326DD542D005D97AD /* Model+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B69D226DD542D005D97AD /* Model+Sort.swift */; };
 		216B69D626DD594E005D97AD /* ModelSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B69D526DD594E005D97AD /* ModelSortTests.swift */; };
 		2178C0A126D3F1E200C53065 /* DataStoreObserveQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2178C0A026D3F1E200C53065 /* DataStoreObserveQueryTests.swift */; };
@@ -74,6 +68,19 @@
 		217D622B2579E15F009F0639 /* DataStoreConnectionScenario5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217D62282579E15F009F0639 /* DataStoreConnectionScenario5Tests.swift */; };
 		217D622C2579E15F009F0639 /* DataStoreConnectionScenario4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217D62292579E15F009F0639 /* DataStoreConnectionScenario4Tests.swift */; };
 		217D622D2579E15F009F0639 /* DataStoreConnectionScenario3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217D622A2579E15F009F0639 /* DataStoreConnectionScenario3Tests.swift */; };
+		218F7887275A81410042334B /* DataStoreConnectionScenario2V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7880275A81400042334B /* DataStoreConnectionScenario2V2Tests.swift */; };
+		218F7888275A81410042334B /* DataStoreConnectionScenario6V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7881275A81400042334B /* DataStoreConnectionScenario6V2Tests.swift */; };
+		218F7889275A81410042334B /* DataStoreConnectionScenario4V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7882275A81410042334B /* DataStoreConnectionScenario4V2Tests.swift */; };
+		218F788A275A81410042334B /* DataStoreConnectionScenario3V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7883275A81410042334B /* DataStoreConnectionScenario3V2Tests.swift */; };
+		218F788B275A81410042334B /* DataStoreConnectionScenario1V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7884275A81410042334B /* DataStoreConnectionScenario1V2Tests.swift */; };
+		218F788C275A81410042334B /* DataStoreConnectionScenario5V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7885275A81410042334B /* DataStoreConnectionScenario5V2Tests.swift */; };
+		218F788D275A81410042334B /* DataStoreConnectionScenario7V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7886275A81410042334B /* DataStoreConnectionScenario7V2Tests.swift */; };
+		218F7891275A82A00042334B /* SyncEngineIntegrationV2TestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7890275A82A00042334B /* SyncEngineIntegrationV2TestBase.swift */; };
+		218F7893275A82C50042334B /* TestModelV2Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F7892275A82C50042334B /* TestModelV2Registration.swift */; };
+		218F789E275AB2990042334B /* DataStoreConnectionScenario3aV2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F789D275AB2990042334B /* DataStoreConnectionScenario3aV2Tests.swift */; };
+		218F78D4275AC7CD0042334B /* DataStoreModelWithSecondaryIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F78D1275AC7CD0042334B /* DataStoreModelWithSecondaryIndexTests.swift */; };
+		218F78D5275AC7CD0042334B /* DataStoreModelWithDefaultValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F78D2275AC7CD0042334B /* DataStoreModelWithDefaultValueTests.swift */; };
+		218F78D6275AC7CD0042334B /* DataStoreModelWithCustomTimestampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F78D3275AC7CD0042334B /* DataStoreModelWithCustomTimestampTests.swift */; };
 		219F796A25B8D268007107D3 /* StorageEngineTestsDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F796925B8D268007107D3 /* StorageEngineTestsDelete.swift */; };
 		21A4EE4B259D508600E1047D /* DataStoreListDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A4EE4A259D508600E1047D /* DataStoreListDecoder.swift */; };
 		21A4EE5C259D50C700E1047D /* DataStoreListDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A4EE5B259D50C700E1047D /* DataStoreListDecoderTests.swift */; };
@@ -83,8 +90,25 @@
 		21A905BA261651FA00EC141D /* DataStoreScalarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A905B9261651FA00EC141D /* DataStoreScalarTests.swift */; };
 		21B3AD27242BB58000C7E1DA /* ProcessMutationErrorFromCloudOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3AD26242BB58000C7E1DA /* ProcessMutationErrorFromCloudOperationTests.swift */; };
 		21B82EFA271DD2D4000EC306 /* ModelSyncedEventEmitterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B82EF9271DD2D4000EC306 /* ModelSyncedEventEmitterTests.swift */; };
+		21BBF6332728A89200B8A856 /* MutationSyncMetadataMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BBF6322728A89200B8A856 /* MutationSyncMetadataMigration.swift */; };
+		21BBF64F2729BD1900B8A856 /* ModelMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BBF64E2729BD1900B8A856 /* ModelMigrations.swift */; };
+		21BBF6522729BD6500B8A856 /* MutationSyncMetadataMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BBF6512729BD6500B8A856 /* MutationSyncMetadataMigrationTests.swift */; };
+		21DDCDFA272C822000D9B297 /* MutationSyncMetadataCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCDF9272C822000D9B297 /* MutationSyncMetadataCopy.swift */; };
+		21DDCDFC272C835B00D9B297 /* SQLStatement+DropTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCDFB272C835B00D9B297 /* SQLStatement+DropTable.swift */; };
+		21DDCDFE272C861F00D9B297 /* MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCDFD272C861F00D9B297 /* MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift */; };
+		21DDCE00272C869D00D9B297 /* SQLiteMutationSyncMetadataMigrationValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCDFF272C869D00D9B297 /* SQLiteMutationSyncMetadataMigrationValidationTests.swift */; };
+		21DDCE02272C896100D9B297 /* MutationSyncMetadataMigrationTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE01272C896100D9B297 /* MutationSyncMetadataMigrationTestBase.swift */; };
+		21DDCE0427303E5300D9B297 /* AWSDataStorePluginBaseBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE0327303E5300D9B297 /* AWSDataStorePluginBaseBehaviorTests.swift */; };
+		21DDCE06273049F200D9B297 /* StorageEnginePublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE05273049F200D9B297 /* StorageEnginePublisherTests.swift */; };
+		21DDCE262732F0B200D9B297 /* MutationSyncMetadataMigrationDelegate+SQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE252732F0B200D9B297 /* MutationSyncMetadataMigrationDelegate+SQLite.swift */; };
+		21DDCE282732F74000D9B297 /* StorageEngineMigrationAdapter+SQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE272732F74000D9B297 /* StorageEngineMigrationAdapter+SQLite.swift */; };
+		21DDCE2A27330F6000D9B297 /* SQLStatement+AlterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE2927330F6000D9B297 /* SQLStatement+AlterTable.swift */; };
+		21DDCE2C273314DB00D9B297 /* SQLiteMutationSyncMetadataMigrationDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE2B273314DB00D9B297 /* SQLiteMutationSyncMetadataMigrationDelegateTests.swift */; };
+		21DDCE2F2733266700D9B297 /* MutationSyncMetadataMigrationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE2E2733266700D9B297 /* MutationSyncMetadataMigrationDelegate.swift */; };
+		21DDCE3127332D8100D9B297 /* MockMutationSyncMigrationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDCE3027332D8100D9B297 /* MockMutationSyncMigrationDelegate.swift */; };
 		21FDBBDB2587DB7A0086FCDC /* DataStoreConnectionScenario6Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FDBBDA2587DB7A0086FCDC /* DataStoreConnectionScenario6Tests.swift */; };
 		21FE027E25890B2F00B81D72 /* DataStoreListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE027D25890B2F00B81D72 /* DataStoreListProvider.swift */; };
+		3AC75F1100634561C7A480BE /* Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3689EBBD76A66F01A7ABFF16 /* Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework */; };
 		6B01B71D23A4615900AD0E97 /* SyncMutationToCloudOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B01B71C23A4615900AD0E97 /* SyncMutationToCloudOperationTests.swift */; };
 		6B01B72023A4672500AD0E97 /* RequestRetryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B01B71E23A4672500AD0E97 /* RequestRetryable.swift */; };
 		6B01B72223A4672500AD0E97 /* RequestRetryablePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B01B71F23A4672500AD0E97 /* RequestRetryablePolicy.swift */; };
@@ -116,76 +140,87 @@
 		6BE9D6F125A6643100AB5C9A /* StorageEngineTestsHasOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9D6F025A6643100AB5C9A /* StorageEngineTestsHasOne.swift */; };
 		6BE9D6F325A665EA00AB5C9A /* StorageEngineTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9D6F225A665EA00AB5C9A /* StorageEngineTestsBase.swift */; };
 		6BE9D73E25A6800100AB5C9A /* StorageEngineTestsManyToMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9D73D25A6800100AB5C9A /* StorageEngineTestsManyToMany.swift */; };
+		7617928827558BFA001EABD6 /* TodoCustomOwnerExplicit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928627558BFA001EABD6 /* TodoCustomOwnerExplicit.swift */; };
+		7617928927558BFA001EABD6 /* TodoCustomOwnerExplicit+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928727558BFA001EABD6 /* TodoCustomOwnerExplicit+Schema.swift */; };
+		7617928B275594B8001EABD6 /* AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928A275594B8001EABD6 /* AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift */; };
+		7617929027559554001EABD6 /* TodoIAMPublic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928C27559553001EABD6 /* TodoIAMPublic.swift */; };
+		7617929127559554001EABD6 /* TodoIAMPrivate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928D27559554001EABD6 /* TodoIAMPrivate.swift */; };
+		7617929227559554001EABD6 /* TodoIAMPrivate+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928E27559554001EABD6 /* TodoIAMPrivate+Schema.swift */; };
+		7617929327559554001EABD6 /* TodoIAMPublic+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7617928F27559554001EABD6 /* TodoIAMPublic+Schema.swift */; };
+		761792A327594339001EABD6 /* TodoCognitoPrivate+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761792A127594339001EABD6 /* TodoCognitoPrivate+Schema.swift */; };
+		761792A427594339001EABD6 /* TodoCognitoPrivate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761792A227594339001EABD6 /* TodoCognitoPrivate.swift */; };
+		761792A62759443E001EABD6 /* AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761792A52759443E001EABD6 /* AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift */; };
+		762383A527501EBC00EAF1C7 /* RemoteSyncEngine+AuthModeStrategyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383A427501EBC00EAF1C7 /* RemoteSyncEngine+AuthModeStrategyDelegate.swift */; };
+		7625470C2735FCC400E5F6A3 /* AWSDataStoreAuthBaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625470B2735FCC400E5F6A3 /* AWSDataStoreAuthBaseTest.swift */; };
+		762547C02735FD0C00E5F6A3 /* GroupPublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478A2735FD0C00E5F6A3 /* GroupPublicUPAPIPost+Schema.swift */; };
+		762547C12735FD0C00E5F6A3 /* PrivatePublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478B2735FD0C00E5F6A3 /* PrivatePublicUPIAMPost+Schema.swift */; };
+		762547C22735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478C2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost.swift */; };
+		762547C32735FD0C00E5F6A3 /* PublicPublicIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478D2735FD0C00E5F6A3 /* PublicPublicIAMAPIPost.swift */; };
+		762547C42735FD0C00E5F6A3 /* GroupUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478E2735FD0C00E5F6A3 /* GroupUPPost+Schema.swift */; };
+		762547C52735FD0C00E5F6A3 /* OwnerUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625478F2735FD0C00E5F6A3 /* OwnerUPPost+Schema.swift */; };
+		762547C62735FD0C00E5F6A3 /* GroupPrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547902735FD0C00E5F6A3 /* GroupPrivateUPIAMPost.swift */; };
+		762547C72735FD0C00E5F6A3 /* OwnerPublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547912735FD0C00E5F6A3 /* OwnerPublicUPAPIPost.swift */; };
+		762547C82735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547922735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost+Schema.swift */; };
+		762547C92735FD0C00E5F6A3 /* OwnerPublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547932735FD0C00E5F6A3 /* OwnerPublicUPIAMPost+Schema.swift */; };
+		762547CA2735FD0C00E5F6A3 /* PrivateUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547942735FD0C00E5F6A3 /* PrivateUPPost.swift */; };
+		762547CB2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547952735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */; };
+		762547CC2735FD0C00E5F6A3 /* PrivatePublicComboAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547962735FD0C00E5F6A3 /* PrivatePublicComboAPIPost.swift */; };
+		762547CD2735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547972735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost.swift */; };
+		762547CE2735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547982735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */; };
+		762547CF2735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547992735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */; };
+		762547D02735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479A2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost.swift */; };
+		762547D12735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479B2735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost.swift */; };
+		762547D22735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479C2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost.swift */; };
+		762547D32735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479D2735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost.swift */; };
+		762547D42735FD0C00E5F6A3 /* OwnerUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479E2735FD0C00E5F6A3 /* OwnerUPPost.swift */; };
+		762547D52735FD0C00E5F6A3 /* PrivateIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625479F2735FD0C00E5F6A3 /* PrivateIAMPost+Schema.swift */; };
+		762547D62735FD0C00E5F6A3 /* PublicAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A02735FD0C00E5F6A3 /* PublicAPIPost+Schema.swift */; };
+		762547D72735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A12735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost.swift */; };
+		762547D82735FD0C00E5F6A3 /* OwnerPublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A22735FD0C00E5F6A3 /* OwnerPublicUPIAMPost.swift */; };
+		762547D92735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A32735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost.swift */; };
+		762547DA2735FD0C00E5F6A3 /* PrivatePublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A42735FD0C00E5F6A3 /* PrivatePublicUPAPIPost.swift */; };
+		762547DB2735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A52735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost.swift */; };
+		762547DD2735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A72735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost+Schema.swift */; };
+		762547DE2735FD0C00E5F6A3 /* PublicIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A82735FD0C00E5F6A3 /* PublicIAMPost+Schema.swift */; };
+		762547DF2735FD0C00E5F6A3 /* PublicIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547A92735FD0C00E5F6A3 /* PublicIAMPost.swift */; };
+		762547E02735FD0C00E5F6A3 /* PrivatePublicComboAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AA2735FD0C00E5F6A3 /* PrivatePublicComboAPIPost+Schema.swift */; };
+		762547E12735FD0C00E5F6A3 /* GroupPublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AB2735FD0C00E5F6A3 /* GroupPublicUPIAMPost.swift */; };
+		762547E22735FD0C00E5F6A3 /* GroupPrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AC2735FD0C00E5F6A3 /* GroupPrivateUPIAMPost+Schema.swift */; };
+		762547E32735FD0C00E5F6A3 /* OwnerOIDCPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AD2735FD0C00E5F6A3 /* OwnerOIDCPost+Schema.swift */; };
+		762547E42735FD0C00E5F6A3 /* GroupUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AE2735FD0C00E5F6A3 /* GroupUPPost.swift */; };
+		762547E52735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547AF2735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */; };
+		762547E62735FD0C00E5F6A3 /* PrivateIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B02735FD0C00E5F6A3 /* PrivateIAMPost.swift */; };
+		762547E72735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B12735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */; };
+		762547E82735FD0C00E5F6A3 /* PrivatePublicComboUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B22735FD0C00E5F6A3 /* PrivatePublicComboUPPost.swift */; };
+		762547E92735FD0C00E5F6A3 /* PublicPublicIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B32735FD0C00E5F6A3 /* PublicPublicIAMAPIPost+Schema.swift */; };
+		762547EA2735FD0C00E5F6A3 /* OwnerPublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B42735FD0C00E5F6A3 /* OwnerPublicUPAPIPost+Schema.swift */; };
+		762547EB2735FD0C00E5F6A3 /* PrivatePublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B52735FD0C00E5F6A3 /* PrivatePublicUPIAMPost.swift */; };
+		762547EC2735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B62735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost+Schema.swift */; };
+		762547ED2735FD0C00E5F6A3 /* PrivateUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B72735FD0C00E5F6A3 /* PrivateUPPost+Schema.swift */; };
+		762547EE2735FD0C00E5F6A3 /* PrivatePublicComboUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B82735FD0C00E5F6A3 /* PrivatePublicComboUPPost+Schema.swift */; };
+		762547EF2735FD0C00E5F6A3 /* GroupPublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547B92735FD0C00E5F6A3 /* GroupPublicUPAPIPost.swift */; };
+		762547F02735FD0C00E5F6A3 /* OwnerOIDCPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547BA2735FD0C00E5F6A3 /* OwnerOIDCPost.swift */; };
+		762547F12735FD0C00E5F6A3 /* PublicAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547BB2735FD0C00E5F6A3 /* PublicAPIPost.swift */; };
+		762547F22735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547BC2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost+Schema.swift */; };
+		762547F32735FD0C00E5F6A3 /* PrivatePublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547BD2735FD0C00E5F6A3 /* PrivatePublicUPAPIPost+Schema.swift */; };
+		762547F42735FD0C00E5F6A3 /* GroupPublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762547BE2735FD0C00E5F6A3 /* GroupPublicUPIAMPost+Schema.swift */; };
 		7638898F26AB56580061AF0B /* StorageEngineSyncRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638898E26AB56570061AF0B /* StorageEngineSyncRequirementsTests.swift */; };
 		7678B31025FAD93200B4917F /* InitialSyncOperationSyncExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7678B30F25FAD93200B4917F /* InitialSyncOperationSyncExpressionTests.swift */; };
 		767C398B266EE4DA00CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C398A266EE4DA00CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests.swift */; };
 		767C398D266EE59000CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C398C266EE59000CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests+Models.swift */; };
 		767C398F266EEBFD00CB64B9 /* AWSDataStoreMultiAuthCombinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C398E266EEBFD00CB64B9 /* AWSDataStoreMultiAuthCombinationTests.swift */; };
 		769B2A1C267BEF7B00A084CD /* AuthRecorderInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B2A1B267BEF7B00A084CD /* AuthRecorderInterceptor.swift */; };
-		769CF229266AF6EA007843A0 /* schema.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 769CF228266AF6EA007843A0 /* schema.graphql */; };
-		769CF24F266B05EB007843A0 /* AWSDataStoreMultiAuthBaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF24E266B05EB007843A0 /* AWSDataStoreMultiAuthBaseTest.swift */; };
 		769CF252266B069E007843A0 /* TestUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF251266B069E007843A0 /* TestUser.swift */; };
-		769CF289266B07E8007843A0 /* PrivatePrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF254266B07E6007843A0 /* PrivatePrivatePublicUPIAMAPIPost.swift */; };
-		769CF28A266B07E8007843A0 /* PublicPublicIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF255266B07E6007843A0 /* PublicPublicIAMAPIPost.swift */; };
-		769CF28B266B07E8007843A0 /* OwnerPublicOIDAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF256266B07E6007843A0 /* OwnerPublicOIDAPIPost+Schema.swift */; };
-		769CF28C266B07E8007843A0 /* GroupPublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF257266B07E6007843A0 /* GroupPublicUPAPIPost+Schema.swift */; };
-		769CF28D266B07E8007843A0 /* PrivatePrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF258266B07E6007843A0 /* PrivatePrivateUPIAMPost+Schema.swift */; };
-		769CF28E266B07E8007843A0 /* OwnerOIDCPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF259266B07E6007843A0 /* OwnerOIDCPost+Schema.swift */; };
-		769CF28F266B07E8007843A0 /* PublicIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25A266B07E6007843A0 /* PublicIAMPost+Schema.swift */; };
-		769CF290266B07E8007843A0 /* PrivatePublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25B266B07E6007843A0 /* PrivatePublicUPIAMPost.swift */; };
-		769CF291266B07E8007843A0 /* OwnerPrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25C266B07E6007843A0 /* OwnerPrivateUPIAMPost+Schema.swift */; };
-		769CF292266B07E8007843A0 /* GroupUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25D266B07E6007843A0 /* GroupUPPost.swift */; };
-		769CF293266B07E8007843A0 /* OwnerOIDCPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25E266B07E6007843A0 /* OwnerOIDCPost.swift */; };
-		769CF294266B07E8007843A0 /* PrivatePublicComboUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF25F266B07E6007843A0 /* PrivatePublicComboUPPost+Schema.swift */; };
-		769CF295266B07E8007843A0 /* GroupUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF260266B07E6007843A0 /* GroupUPPost+Schema.swift */; };
-		769CF296266B07E8007843A0 /* GroupPublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF261266B07E6007843A0 /* GroupPublicUPIAMPost+Schema.swift */; };
-		769CF297266B07E8007843A0 /* OwnerPublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF262266B07E6007843A0 /* OwnerPublicUPIAMPost+Schema.swift */; };
-		769CF298266B07E8007843A0 /* OwnerPublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF263266B07E6007843A0 /* OwnerPublicUPAPIPost.swift */; };
-		769CF299266B07E8007843A0 /* GroupPrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF264266B07E6007843A0 /* GroupPrivatePublicUPIAMAPIPost.swift */; };
-		769CF29A266B07E8007843A0 /* GroupPublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF265266B07E6007843A0 /* GroupPublicUPAPIPost.swift */; };
-		769CF29B266B07E8007843A0 /* PrivatePublicIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF266266B07E6007843A0 /* PrivatePublicIAMAPIPost+Schema.swift */; };
-		769CF29C266B07E8007843A0 /* OwnerUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF267266B07E6007843A0 /* OwnerUPPost+Schema.swift */; };
-		769CF29D266B07E8007843A0 /* PrivatePublicIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF268266B07E6007843A0 /* PrivatePublicIAMAPIPost.swift */; };
-		769CF29E266B07E8007843A0 /* OwnerPublicOIDAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF269266B07E7007843A0 /* OwnerPublicOIDAPIPost.swift */; };
-		769CF29F266B07E8007843A0 /* PublicIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26A266B07E7007843A0 /* PublicIAMPost.swift */; };
-		769CF2A0266B07E8007843A0 /* OwnerPublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26B266B07E7007843A0 /* OwnerPublicUPIAMPost.swift */; };
-		769CF2A1266B07E8007843A0 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26C266B07E7007843A0 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */; };
-		769CF2A2266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26D266B07E7007843A0 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */; };
-		769CF2A3266B07E8007843A0 /* PrivateIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26E266B07E7007843A0 /* PrivateIAMPost.swift */; };
-		769CF2A4266B07E8007843A0 /* GroupPrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF26F266B07E7007843A0 /* GroupPrivateUPIAMPost.swift */; };
-		769CF2A5266B07E8007843A0 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF270266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */; };
-		769CF2A6266B07E8007843A0 /* PrivateUPPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF271266B07E7007843A0 /* PrivateUPPost+Schema.swift */; };
-		769CF2A7266B07E8007843A0 /* OwnerUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF272266B07E7007843A0 /* OwnerUPPost.swift */; };
-		769CF2A8266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF273266B07E7007843A0 /* PrivatePublicPublicUPAPIIAMPost.swift */; };
-		769CF2A9266B07E8007843A0 /* PrivatePublicUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF274266B07E7007843A0 /* PrivatePublicUPIAMPost+Schema.swift */; };
-		769CF2AA266B07E8007843A0 /* PrivatePublicUPAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF275266B07E7007843A0 /* PrivatePublicUPAPIPost.swift */; };
-		769CF2AB266B07E8007843A0 /* PrivatePublicComboAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF276266B07E7007843A0 /* PrivatePublicComboAPIPost.swift */; };
-		769CF2AC266B07E8007843A0 /* PrivatePrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF277266B07E7007843A0 /* PrivatePrivateUPIAMPost.swift */; };
-		769CF2AD266B07E8007843A0 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF278266B07E7007843A0 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */; };
-		769CF2AE266B07E8007843A0 /* PrivateIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF279266B07E7007843A0 /* PrivateIAMPost+Schema.swift */; };
-		769CF2AF266B07E8007843A0 /* PublicPublicIAMAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27A266B07E7007843A0 /* PublicPublicIAMAPIPost+Schema.swift */; };
-		769CF2B0266B07E8007843A0 /* GroupPublicUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27B266B07E7007843A0 /* GroupPublicUPIAMPost.swift */; };
-		769CF2B1266B07E8007843A0 /* PrivatePublicComboAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27C266B07E7007843A0 /* PrivatePublicComboAPIPost+Schema.swift */; };
-		769CF2B2266B07E8007843A0 /* PrivateUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27D266B07E7007843A0 /* PrivateUPPost.swift */; };
-		769CF2B3266B07E8007843A0 /* OwnerPrivateUPIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27E266B07E7007843A0 /* OwnerPrivateUPIAMPost.swift */; };
-		769CF2B4266B07E8007843A0 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF27F266B07E7007843A0 /* AmplifyModels.swift */; };
-		769CF2B5266B07E8007843A0 /* PrivatePublicComboUPPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF280266B07E7007843A0 /* PrivatePublicComboUPPost.swift */; };
-		769CF2B6266B07E8007843A0 /* PrivatePublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF281266B07E7007843A0 /* PrivatePublicUPAPIPost+Schema.swift */; };
-		769CF2B7266B07E8007843A0 /* PrivatePrivatePublicUPIAMIAMPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF282266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost.swift */; };
-		769CF2B8266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF283266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost.swift */; };
-		769CF2B9266B07E8007843A0 /* PublicAPIPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF284266B07E8007843A0 /* PublicAPIPost.swift */; };
-		769CF2BA266B07E8007843A0 /* PublicAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF285266B07E8007843A0 /* PublicAPIPost+Schema.swift */; };
-		769CF2BB266B07E8007843A0 /* OwnerPublicUPAPIPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF286266B07E8007843A0 /* OwnerPublicUPAPIPost+Schema.swift */; };
-		769CF2BC266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF287266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */; };
-		769CF2BD266B07E8007843A0 /* GroupPrivateUPIAMPost+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF288266B07E8007843A0 /* GroupPrivateUPIAMPost+Schema.swift */; };
 		769CF2BF266B10A8007843A0 /* AWSDataStoreMultiAuthSingleRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF2BE266B10A8007843A0 /* AWSDataStoreMultiAuthSingleRuleTests.swift */; };
-		769CF2C2266B39B0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 769CF24B266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json */; };
-		769CF2C3266B39B0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 769CF24A266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json */; };
-		769CF2C4266B39C0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 769CF24B266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json */; };
-		769CF2C5266B39C0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 769CF24A266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json */; };
 		769CF2C7266D79EC007843A0 /* AWSDataStoreMultiAuthSingleRuleTests+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF2C6266D79EC007843A0 /* AWSDataStoreMultiAuthSingleRuleTests+Models.swift */; };
 		769CF2C9266D7F04007843A0 /* AWSDataStoreMultiAuthTwoRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF2C8266D7F04007843A0 /* AWSDataStoreMultiAuthTwoRulesTests.swift */; };
 		769CF2CB266D7F47007843A0 /* AWSDataStoreMultiAuthTwoRulesTests+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769CF2CA266D7F47007843A0 /* AWSDataStoreMultiAuthTwoRulesTests+Models.swift */; };
+		76C009112736061200ADA120 /* TodoExplicitOwnerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0090D2736061200ADA120 /* TodoExplicitOwnerField.swift */; };
+		76C009122736061200ADA120 /* TodoImplicitOwnerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0090E2736061200ADA120 /* TodoImplicitOwnerField.swift */; };
+		76C009132736061200ADA120 /* TodoExplicitOwnerField+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0090F2736061200ADA120 /* TodoExplicitOwnerField+Schema.swift */; };
+		76C009142736061200ADA120 /* TodoImplicitOwnerField+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C009102736061200ADA120 /* TodoImplicitOwnerField+Schema.swift */; };
+		76C0091D2736198700ADA120 /* TodoCustomOwnerImplicit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0091B2736198700ADA120 /* TodoCustomOwnerImplicit.swift */; };
+		76C0091E2736198700ADA120 /* TodoCustomOwnerImplicit+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0091C2736198700ADA120 /* TodoCustomOwnerImplicit+Schema.swift */; };
 		8141657E756CC7B2EE1CE851 /* Pods_HostApp_AWSDataStoreCategoryPluginAuthIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA320D973669D3843FDF755E /* Pods_HostApp_AWSDataStoreCategoryPluginAuthIntegrationTests.framework */; };
 		9728F2B02683D98D00A506A8 /* DataStoreConsecutiveUpdatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9728F2AF2683D98D00A506A8 /* DataStoreConsecutiveUpdatesTests.swift */; };
 		973AF1AF26E016EC00BED353 /* ModelCompareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AF1AE26E016EC00BED353 /* ModelCompareTests.swift */; };
@@ -193,6 +228,37 @@
 		97DB735426B49ED6004708B8 /* MutationEvent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB735326B49ED6004708B8 /* MutationEvent+Extensions.swift */; };
 		97DB735B26B4A229004708B8 /* MutationEventExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB735A26B4A229004708B8 /* MutationEventExtensionsTests.swift */; };
 		97ED948A26DEC90A0025FA43 /* Model+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED948926DEC90A0025FA43 /* Model+Compare.swift */; };
+		97F793BC27AC934D000153D6 /* SQLStatement+CreateIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F793BB27AC934D000153D6 /* SQLStatement+CreateIndex.swift */; };
+		97F793DC27BC7882000153D6 /* StorageEngineTestsSQLiteIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F793DB27BC7882000153D6 /* StorageEngineTestsSQLiteIndex.swift */; };
+		9C0CA4F12748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA4F02748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.swift */; };
+		9C0CA4F32748705F001C70CD /* AWSDataStoreCategoryPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2149E59B238867E100873955 /* AWSDataStoreCategoryPlugin.framework */; };
+		9C0CA52C274872D5001C70CD /* TestFlutterModelRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA52B274872D5001C70CD /* TestFlutterModelRegistration.swift */; };
+		9C0CA53527487347001C70CD /* FlutterSerializedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA53427487347001C70CD /* FlutterSerializedModel.swift */; };
+		9C0CA54327487395001C70CD /* FlutterTemporal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA54227487395001C70CD /* FlutterTemporal.swift */; };
+		9C0CA54B274873B8001C70CD /* FlutterDataStoreRequestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA54A274873B8001C70CD /* FlutterDataStoreRequestUtils.swift */; };
+		9C0CA5542748740B001C70CD /* DataStoreConnectionScenario1FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5532748740B001C70CD /* DataStoreConnectionScenario1FlutterTests.swift */; };
+		9C0CA55C274874A4001C70CD /* DataStoreFlutterConsecutiveUpdatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA55B274874A4001C70CD /* DataStoreFlutterConsecutiveUpdatesTests.swift */; };
+		9C0CA565274874F0001C70CD /* PostWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA564274874F0001C70CD /* PostWrapper.swift */; };
+		9C0CA56D2748750F001C70CD /* Blog6Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA56C2748750F001C70CD /* Blog6Wrapper.swift */; };
+		9C0CA57527487533001C70CD /* Comment3Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA57427487533001C70CD /* Comment3Wrapper.swift */; };
+		9C0CA57D2748754D001C70CD /* Comment4Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA57C2748754D001C70CD /* Comment4Wrapper.swift */; };
+		9C0CA58527487568001C70CD /* Comment6Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA58427487568001C70CD /* Comment6Wrapper.swift */; };
+		9C0CA58D2748758E001C70CD /* Post3Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA58C2748758E001C70CD /* Post3Wrapper.swift */; };
+		9C0CA595274875AB001C70CD /* Post4Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA594274875AB001C70CD /* Post4Wrapper.swift */; };
+		9C0CA59D274875CA001C70CD /* Post5Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA59C274875CA001C70CD /* Post5Wrapper.swift */; };
+		9C0CA5A5274875E2001C70CD /* Post6Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5A4274875E2001C70CD /* Post6Wrapper.swift */; };
+		9C0CA5AD27487602001C70CD /* PostEditor5Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5AC27487602001C70CD /* PostEditor5Wrapper.swift */; };
+		9C0CA5B52748762C001C70CD /* Project1Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5B42748762C001C70CD /* Project1Wrapper.swift */; };
+		9C0CA5BD27487644001C70CD /* Project2Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5BC27487644001C70CD /* Project2Wrapper.swift */; };
+		9C0CA5C52748765C001C70CD /* TeamWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5C42748765C001C70CD /* TeamWrapper.swift */; };
+		9C0CA5CD27487675001C70CD /* User5Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5CC27487675001C70CD /* User5Wrapper.swift */; };
+		9C0CA5E327487883001C70CD /* SyncEngineFlutterIntegrationTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CA5E227487883001C70CD /* SyncEngineFlutterIntegrationTestBase.swift */; };
+		9CD842182748981A00502D92 /* DataStoreConnectionScenario2FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD842172748981A00502D92 /* DataStoreConnectionScenario2FlutterTests.swift */; };
+		9CD842202748A65800502D92 /* DataStoreConnectionScenario3FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD8421F2748A65800502D92 /* DataStoreConnectionScenario3FlutterTests.swift */; };
+		9CD842282748A68800502D92 /* DataStoreConnectionScenario4FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD842272748A68800502D92 /* DataStoreConnectionScenario4FlutterTests.swift */; };
+		9CD84254274C00BA00502D92 /* DataStoreConnectionScenario5FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD84253274C00BA00502D92 /* DataStoreConnectionScenario5FlutterTests.swift */; };
+		9CD8425C274C00EB00502D92 /* DataStoreConnectionScenario6FlutterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD8425B274C00EB00502D92 /* DataStoreConnectionScenario6FlutterTests.swift */; };
+		9CD84272274C0F1300502D92 /* DataStoreFlutterEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD84271274C0F1300502D92 /* DataStoreFlutterEndToEndTests.swift */; };
 		A209418EED69D7B1BB8A55C2 /* Pods_AWSDataStoreCategoryPlugin_AWSDataStoreCategoryPluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C63AE18F2569D004E94BD550 /* Pods_AWSDataStoreCategoryPlugin_AWSDataStoreCategoryPluginTests.framework */; };
 		A569484A6FBAE7EC7ADF3FD4 /* Pods_AWSDataStoreCategoryPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1D332BE6CF885805360B3D /* Pods_AWSDataStoreCategoryPlugin.framework */; };
 		B10BF4A52A1C9840C208C8A8 /* Pods_HostApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19AFF6D00CF3AF927BA90382 /* Pods_HostApp.framework */; };
@@ -226,7 +292,6 @@
 		D8C5BA59249815A6007C3A68 /* DataStoreConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5BA58249815A6007C3A68 /* DataStoreConfigurationTests.swift */; };
 		D8D1DED4252E2CB400681DA8 /* ReadyEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D1DED3252E2CB400681DA8 /* ReadyEventEmitter.swift */; };
 		D8D1DED6252E30F800681DA8 /* ReadyEventEmitterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D1DED5252E30F800681DA8 /* ReadyEventEmitterTests.swift */; };
-		D8D2EF6A25088FE700127C52 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 21233DD7247591D100039337 /* amplifyconfiguration.json */; };
 		D8D900A4249DB599004042E7 /* QuerySort+SQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D900A3249DB599004042E7 /* QuerySort+SQLite.swift */; };
 		D8E9992425013C2F0006170A /* DataStoreHubEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E9992325013C2F0006170A /* DataStoreHubEventsTests.swift */; };
 		D8E99926250142790006170A /* HubEventsIntegrationTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E99925250142790006170A /* HubEventsIntegrationTestBase.swift */; };
@@ -337,6 +402,13 @@
 			remoteGlobalIDString = 2149E60423886C7B00873955;
 			remoteInfo = HostApp;
 		};
+		9C0CA4F42748705F001C70CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2149E592238867E100873955 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2149E59A238867E100873955;
+			remoteInfo = AWSDataStoreCategoryPlugin;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -351,15 +423,10 @@
 		211A81D8270F78B100C5483D /* SortedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedListTests.swift; sourceTree = "<group>"; };
 		211FFED926CC270100F0DB75 /* DataStoreObserveQueryOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreObserveQueryOperation.swift; sourceTree = "<group>"; };
 		211FFEDC26CD621300F0DB75 /* DataStoreObserveQueryOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreObserveQueryOperationTests.swift; sourceTree = "<group>"; };
-		21233DD7247591D100039337 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		21233DDD2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSDataStoreCategoryPluginAuthIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21233DDF2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreCategoryPluginAuthIntegrationTests.swift; sourceTree = "<group>"; };
 		21233DE12475935600039337 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		21233DED2475AF6300039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json"; sourceTree = "<group>"; };
 		21233DEF2475AF6A00039337 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		21233DF12475AFC900039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json"; sourceTree = "<group>"; };
-		21233DF32475BAC100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift"; sourceTree = "<group>"; };
-		21233DF52475BB5900039337 /* SocialNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialNote.swift; sourceTree = "<group>"; };
 		21233E1224763D0700039337 /* StorageEngine+SyncRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageEngine+SyncRequirement.swift"; sourceTree = "<group>"; };
 		21233E142476EFC400039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift"; sourceTree = "<group>"; };
 		2129BE4923948A97006363A1 /* StorageAdapterMutationSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAdapterMutationSyncTests.swift; sourceTree = "<group>"; };
@@ -409,6 +476,7 @@
 		2149E62B23886D3900873955 /* SyncMetadataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncMetadataTests.swift; sourceTree = "<group>"; };
 		214B6B64264B0D6700A9311D /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		214B6B67264B157500A9311D /* StopwatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchTests.swift; sourceTree = "<group>"; };
+		215D40AC277233340077E7DA /* DataStoreConnectionScenario8V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario8V2Tests.swift; sourceTree = "<group>"; };
 		216B69D226DD542D005D97AD /* Model+Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Sort.swift"; sourceTree = "<group>"; };
 		216B69D526DD594E005D97AD /* ModelSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSortTests.swift; sourceTree = "<group>"; };
 		2178C0A026D3F1E200C53065 /* DataStoreObserveQueryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreObserveQueryTests.swift; sourceTree = "<group>"; };
@@ -417,6 +485,20 @@
 		217D62282579E15F009F0639 /* DataStoreConnectionScenario5Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario5Tests.swift; sourceTree = "<group>"; };
 		217D62292579E15F009F0639 /* DataStoreConnectionScenario4Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario4Tests.swift; sourceTree = "<group>"; };
 		217D622A2579E15F009F0639 /* DataStoreConnectionScenario3Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario3Tests.swift; sourceTree = "<group>"; };
+		218F7880275A81400042334B /* DataStoreConnectionScenario2V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario2V2Tests.swift; sourceTree = "<group>"; };
+		218F7881275A81400042334B /* DataStoreConnectionScenario6V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario6V2Tests.swift; sourceTree = "<group>"; };
+		218F7882275A81410042334B /* DataStoreConnectionScenario4V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario4V2Tests.swift; sourceTree = "<group>"; };
+		218F7883275A81410042334B /* DataStoreConnectionScenario3V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario3V2Tests.swift; sourceTree = "<group>"; };
+		218F7884275A81410042334B /* DataStoreConnectionScenario1V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario1V2Tests.swift; sourceTree = "<group>"; };
+		218F7885275A81410042334B /* DataStoreConnectionScenario5V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario5V2Tests.swift; sourceTree = "<group>"; };
+		218F7886275A81410042334B /* DataStoreConnectionScenario7V2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario7V2Tests.swift; sourceTree = "<group>"; };
+		218F788E275A825A0042334B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		218F7890275A82A00042334B /* SyncEngineIntegrationV2TestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncEngineIntegrationV2TestBase.swift; sourceTree = "<group>"; };
+		218F7892275A82C50042334B /* TestModelV2Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModelV2Registration.swift; sourceTree = "<group>"; };
+		218F789D275AB2990042334B /* DataStoreConnectionScenario3aV2Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario3aV2Tests.swift; sourceTree = "<group>"; };
+		218F78D1275AC7CD0042334B /* DataStoreModelWithSecondaryIndexTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreModelWithSecondaryIndexTests.swift; sourceTree = "<group>"; };
+		218F78D2275AC7CD0042334B /* DataStoreModelWithDefaultValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreModelWithDefaultValueTests.swift; sourceTree = "<group>"; };
+		218F78D3275AC7CD0042334B /* DataStoreModelWithCustomTimestampTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreModelWithCustomTimestampTests.swift; sourceTree = "<group>"; };
 		219F796925B8D268007107D3 /* StorageEngineTestsDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineTestsDelete.swift; sourceTree = "<group>"; };
 		21A4EE4A259D508600E1047D /* DataStoreListDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreListDecoder.swift; sourceTree = "<group>"; };
 		21A4EE5B259D50C700E1047D /* DataStoreListDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreListDecoderTests.swift; sourceTree = "<group>"; };
@@ -426,10 +508,28 @@
 		21A905B9261651FA00EC141D /* DataStoreScalarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreScalarTests.swift; sourceTree = "<group>"; };
 		21B3AD26242BB58000C7E1DA /* ProcessMutationErrorFromCloudOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMutationErrorFromCloudOperationTests.swift; sourceTree = "<group>"; };
 		21B82EF9271DD2D4000EC306 /* ModelSyncedEventEmitterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSyncedEventEmitterTests.swift; sourceTree = "<group>"; };
+		21BBF6322728A89200B8A856 /* MutationSyncMetadataMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationSyncMetadataMigration.swift; sourceTree = "<group>"; };
+		21BBF64E2729BD1900B8A856 /* ModelMigrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelMigrations.swift; sourceTree = "<group>"; };
+		21BBF6512729BD6500B8A856 /* MutationSyncMetadataMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationSyncMetadataMigrationTests.swift; sourceTree = "<group>"; };
+		21DDCDF9272C822000D9B297 /* MutationSyncMetadataCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationSyncMetadataCopy.swift; sourceTree = "<group>"; };
+		21DDCDFB272C835B00D9B297 /* SQLStatement+DropTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLStatement+DropTable.swift"; sourceTree = "<group>"; };
+		21DDCDFD272C861F00D9B297 /* MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift"; sourceTree = "<group>"; };
+		21DDCDFF272C869D00D9B297 /* SQLiteMutationSyncMetadataMigrationValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteMutationSyncMetadataMigrationValidationTests.swift; sourceTree = "<group>"; };
+		21DDCE01272C896100D9B297 /* MutationSyncMetadataMigrationTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationSyncMetadataMigrationTestBase.swift; sourceTree = "<group>"; };
+		21DDCE0327303E5300D9B297 /* AWSDataStorePluginBaseBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStorePluginBaseBehaviorTests.swift; sourceTree = "<group>"; };
+		21DDCE05273049F200D9B297 /* StorageEnginePublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEnginePublisherTests.swift; sourceTree = "<group>"; };
+		21DDCE252732F0B200D9B297 /* MutationSyncMetadataMigrationDelegate+SQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutationSyncMetadataMigrationDelegate+SQLite.swift"; sourceTree = "<group>"; };
+		21DDCE272732F74000D9B297 /* StorageEngineMigrationAdapter+SQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageEngineMigrationAdapter+SQLite.swift"; sourceTree = "<group>"; };
+		21DDCE2927330F6000D9B297 /* SQLStatement+AlterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLStatement+AlterTable.swift"; sourceTree = "<group>"; };
+		21DDCE2B273314DB00D9B297 /* SQLiteMutationSyncMetadataMigrationDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteMutationSyncMetadataMigrationDelegateTests.swift; sourceTree = "<group>"; };
+		21DDCE2E2733266700D9B297 /* MutationSyncMetadataMigrationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationSyncMetadataMigrationDelegate.swift; sourceTree = "<group>"; };
+		21DDCE3027332D8100D9B297 /* MockMutationSyncMigrationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMutationSyncMigrationDelegate.swift; sourceTree = "<group>"; };
 		21FDBBDA2587DB7A0086FCDC /* DataStoreConnectionScenario6Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario6Tests.swift; sourceTree = "<group>"; };
 		21FE027D25890B2F00B81D72 /* DataStoreListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreListProvider.swift; sourceTree = "<group>"; };
 		280D7C45F839531215A44B34 /* Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		32AD9436C9FB473423CA9786 /* Pods-AWSDataStoreCategoryPlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSDataStoreCategoryPlugin.release.xcconfig"; path = "Target Support Files/Pods-AWSDataStoreCategoryPlugin/Pods-AWSDataStoreCategoryPlugin.release.xcconfig"; sourceTree = "<group>"; };
+		3689EBBD76A66F01A7ABFF16 /* Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B62423E457D3149264ADA1F /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6A1D332BE6CF885805360B3D /* Pods_AWSDataStoreCategoryPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSDataStoreCategoryPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B01B71C23A4615900AD0E97 /* SyncMutationToCloudOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMutationToCloudOperationTests.swift; sourceTree = "<group>"; };
 		6B01B71E23A4672500AD0E97 /* RequestRetryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRetryable.swift; sourceTree = "<group>"; };
@@ -462,6 +562,79 @@
 		6BE9D6F025A6643100AB5C9A /* StorageEngineTestsHasOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineTestsHasOne.swift; sourceTree = "<group>"; };
 		6BE9D6F225A665EA00AB5C9A /* StorageEngineTestsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineTestsBase.swift; sourceTree = "<group>"; };
 		6BE9D73D25A6800100AB5C9A /* StorageEngineTestsManyToMany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineTestsManyToMany.swift; sourceTree = "<group>"; };
+		7617928627558BFA001EABD6 /* TodoCustomOwnerExplicit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoCustomOwnerExplicit.swift; sourceTree = "<group>"; };
+		7617928727558BFA001EABD6 /* TodoCustomOwnerExplicit+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoCustomOwnerExplicit+Schema.swift"; sourceTree = "<group>"; };
+		7617928A275594B8001EABD6 /* AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift; sourceTree = "<group>"; };
+		7617928C27559553001EABD6 /* TodoIAMPublic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoIAMPublic.swift; sourceTree = "<group>"; };
+		7617928D27559554001EABD6 /* TodoIAMPrivate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoIAMPrivate.swift; sourceTree = "<group>"; };
+		7617928E27559554001EABD6 /* TodoIAMPrivate+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoIAMPrivate+Schema.swift"; sourceTree = "<group>"; };
+		7617928F27559554001EABD6 /* TodoIAMPublic+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoIAMPublic+Schema.swift"; sourceTree = "<group>"; };
+		7617929527559BD7001EABD6 /* singleauth-iam-schema.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = "singleauth-iam-schema.graphql"; sourceTree = "<group>"; };
+		7617929727559BF5001EABD6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		761792A127594339001EABD6 /* TodoCognitoPrivate+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoCognitoPrivate+Schema.swift"; sourceTree = "<group>"; };
+		761792A227594339001EABD6 /* TodoCognitoPrivate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoCognitoPrivate.swift; sourceTree = "<group>"; };
+		761792A52759443E001EABD6 /* AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift; sourceTree = "<group>"; };
+		7618ABC62728CCB300712E86 /* TodoExplicitOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoExplicitOwnerField.swift; sourceTree = "<group>"; };
+		7618ABC72728CCB300712E86 /* TodoImplicitOwnerField+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoImplicitOwnerField+Schema.swift"; sourceTree = "<group>"; };
+		7618ABC82728CCB300712E86 /* TodoImplicitOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoImplicitOwnerField.swift; sourceTree = "<group>"; };
+		7618ABC92728CCB300712E86 /* TodoExplicitOwnerField+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoExplicitOwnerField+Schema.swift"; sourceTree = "<group>"; };
+		762383A427501EBC00EAF1C7 /* RemoteSyncEngine+AuthModeStrategyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteSyncEngine+AuthModeStrategyDelegate.swift"; sourceTree = "<group>"; };
+		7625470B2735FCC400E5F6A3 /* AWSDataStoreAuthBaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSDataStoreAuthBaseTest.swift; sourceTree = "<group>"; };
+		762547132735FCD800E5F6A3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		762547142735FCD800E5F6A3 /* singleauth-cognito-schema.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "singleauth-cognito-schema.graphql"; sourceTree = "<group>"; };
+		7625478A2735FD0C00E5F6A3 /* GroupPublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		7625478B2735FD0C00E5F6A3 /* PrivatePublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		7625478C2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivatePublicUPIAMIAMPost.swift; sourceTree = "<group>"; };
+		7625478D2735FD0C00E5F6A3 /* PublicPublicIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPublicIAMAPIPost.swift; sourceTree = "<group>"; };
+		7625478E2735FD0C00E5F6A3 /* GroupUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupUPPost+Schema.swift"; sourceTree = "<group>"; };
+		7625478F2735FD0C00E5F6A3 /* OwnerUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerUPPost+Schema.swift"; sourceTree = "<group>"; };
+		762547902735FD0C00E5F6A3 /* GroupPrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPrivateUPIAMPost.swift; sourceTree = "<group>"; };
+		762547912735FD0C00E5F6A3 /* OwnerPublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicUPAPIPost.swift; sourceTree = "<group>"; };
+		762547922735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicOIDAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547932735FD0C00E5F6A3 /* OwnerPublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547942735FD0C00E5F6A3 /* PrivateUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateUPPost.swift; sourceTree = "<group>"; };
+		762547952735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547962735FD0C00E5F6A3 /* PrivatePublicComboAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicComboAPIPost.swift; sourceTree = "<group>"; };
+		762547972735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPrivateUPIAMPost.swift; sourceTree = "<group>"; };
+		762547982735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547992735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		7625479A2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
+		7625479B2735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicOIDAPIPost.swift; sourceTree = "<group>"; };
+		7625479C2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicIAMAPIPost.swift; sourceTree = "<group>"; };
+		7625479D2735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
+		7625479E2735FD0C00E5F6A3 /* OwnerUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerUPPost.swift; sourceTree = "<group>"; };
+		7625479F2735FD0C00E5F6A3 /* PrivateIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivateIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547A02735FD0C00E5F6A3 /* PublicAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547A12735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
+		762547A22735FD0C00E5F6A3 /* OwnerPublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicUPIAMPost.swift; sourceTree = "<group>"; };
+		762547A32735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivateUPIAMPost.swift; sourceTree = "<group>"; };
+		762547A42735FD0C00E5F6A3 /* PrivatePublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicUPAPIPost.swift; sourceTree = "<group>"; };
+		762547A52735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicPublicUPAPIIAMPost.swift; sourceTree = "<group>"; };
+		762547A72735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547A82735FD0C00E5F6A3 /* PublicIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547A92735FD0C00E5F6A3 /* PublicIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicIAMPost.swift; sourceTree = "<group>"; };
+		762547AA2735FD0C00E5F6A3 /* PrivatePublicComboAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicComboAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547AB2735FD0C00E5F6A3 /* GroupPublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPublicUPIAMPost.swift; sourceTree = "<group>"; };
+		762547AC2735FD0C00E5F6A3 /* GroupPrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547AD2735FD0C00E5F6A3 /* OwnerOIDCPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerOIDCPost+Schema.swift"; sourceTree = "<group>"; };
+		762547AE2735FD0C00E5F6A3 /* GroupUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUPPost.swift; sourceTree = "<group>"; };
+		762547AF2735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicPublicUPAPIIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B02735FD0C00E5F6A3 /* PrivateIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateIAMPost.swift; sourceTree = "<group>"; };
+		762547B12735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivatePublicUPIAMIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B22735FD0C00E5F6A3 /* PrivatePublicComboUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicComboUPPost.swift; sourceTree = "<group>"; };
+		762547B32735FD0C00E5F6A3 /* PublicPublicIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicPublicIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B42735FD0C00E5F6A3 /* OwnerPublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B52735FD0C00E5F6A3 /* PrivatePublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicUPIAMPost.swift; sourceTree = "<group>"; };
+		762547B62735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B72735FD0C00E5F6A3 /* PrivateUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivateUPPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B82735FD0C00E5F6A3 /* PrivatePublicComboUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicComboUPPost+Schema.swift"; sourceTree = "<group>"; };
+		762547B92735FD0C00E5F6A3 /* GroupPublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPublicUPAPIPost.swift; sourceTree = "<group>"; };
+		762547BA2735FD0C00E5F6A3 /* OwnerOIDCPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerOIDCPost.swift; sourceTree = "<group>"; };
+		762547BB2735FD0C00E5F6A3 /* PublicAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicAPIPost.swift; sourceTree = "<group>"; };
+		762547BC2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547BD2735FD0C00E5F6A3 /* PrivatePublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
+		762547BE2735FD0C00E5F6A3 /* GroupPublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
+		762547BF2735FD0C00E5F6A3 /* multiauth-schema.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "multiauth-schema.graphql"; sourceTree = "<group>"; };
 		7638898E26AB56570061AF0B /* StorageEngineSyncRequirementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineSyncRequirementsTests.swift; sourceTree = "<group>"; };
 		7678B30F25FAD93200B4917F /* InitialSyncOperationSyncExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSyncOperationSyncExpressionTests.swift; sourceTree = "<group>"; };
 		767C398A266EE4DA00CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreMultiAuthThreeRulesTests.swift; sourceTree = "<group>"; };
@@ -469,74 +642,56 @@
 		767C398E266EEBFD00CB64B9 /* AWSDataStoreMultiAuthCombinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreMultiAuthCombinationTests.swift; sourceTree = "<group>"; };
 		769B2A1B267BEF7B00A084CD /* AuthRecorderInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRecorderInterceptor.swift; sourceTree = "<group>"; };
 		769CF227266AF6BB007843A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		769CF228266AF6EA007843A0 /* schema.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.graphql; sourceTree = "<group>"; };
-		769CF24A266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json"; sourceTree = "<group>"; };
-		769CF24B266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json"; sourceTree = "<group>"; };
-		769CF24E266B05EB007843A0 /* AWSDataStoreMultiAuthBaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreMultiAuthBaseTest.swift; sourceTree = "<group>"; };
 		769CF251266B069E007843A0 /* TestUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUser.swift; sourceTree = "<group>"; };
-		769CF254266B07E6007843A0 /* PrivatePrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
-		769CF255266B07E6007843A0 /* PublicPublicIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPublicIAMAPIPost.swift; sourceTree = "<group>"; };
-		769CF256266B07E6007843A0 /* OwnerPublicOIDAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicOIDAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF257266B07E6007843A0 /* GroupPublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF258266B07E6007843A0 /* PrivatePrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF259266B07E6007843A0 /* OwnerOIDCPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerOIDCPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF25A266B07E6007843A0 /* PublicIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF25B266B07E6007843A0 /* PrivatePublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF25C266B07E6007843A0 /* OwnerPrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF25D266B07E6007843A0 /* GroupUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUPPost.swift; sourceTree = "<group>"; };
-		769CF25E266B07E6007843A0 /* OwnerOIDCPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerOIDCPost.swift; sourceTree = "<group>"; };
-		769CF25F266B07E6007843A0 /* PrivatePublicComboUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicComboUPPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF260266B07E6007843A0 /* GroupUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupUPPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF261266B07E6007843A0 /* GroupPublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF262266B07E6007843A0 /* OwnerPublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF263266B07E6007843A0 /* OwnerPublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicUPAPIPost.swift; sourceTree = "<group>"; };
-		769CF264266B07E6007843A0 /* GroupPrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
-		769CF265266B07E6007843A0 /* GroupPublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPublicUPAPIPost.swift; sourceTree = "<group>"; };
-		769CF266266B07E6007843A0 /* PrivatePublicIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF267266B07E6007843A0 /* OwnerUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerUPPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF268266B07E6007843A0 /* PrivatePublicIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicIAMAPIPost.swift; sourceTree = "<group>"; };
-		769CF269266B07E7007843A0 /* OwnerPublicOIDAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicOIDAPIPost.swift; sourceTree = "<group>"; };
-		769CF26A266B07E7007843A0 /* PublicIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicIAMPost.swift; sourceTree = "<group>"; };
-		769CF26B266B07E7007843A0 /* OwnerPublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPublicUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF26C266B07E7007843A0 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF26D266B07E7007843A0 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF26E266B07E7007843A0 /* PrivateIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateIAMPost.swift; sourceTree = "<group>"; };
-		769CF26F266B07E7007843A0 /* GroupPrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPrivateUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF270266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivatePublicUPIAMIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF271266B07E7007843A0 /* PrivateUPPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivateUPPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF272266B07E7007843A0 /* OwnerUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerUPPost.swift; sourceTree = "<group>"; };
-		769CF273266B07E7007843A0 /* PrivatePublicPublicUPAPIIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicPublicUPAPIIAMPost.swift; sourceTree = "<group>"; };
-		769CF274266B07E7007843A0 /* PrivatePublicUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF275266B07E7007843A0 /* PrivatePublicUPAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicUPAPIPost.swift; sourceTree = "<group>"; };
-		769CF276266B07E7007843A0 /* PrivatePublicComboAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicComboAPIPost.swift; sourceTree = "<group>"; };
-		769CF277266B07E7007843A0 /* PrivatePrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivateUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF278266B07E7007843A0 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePrivatePublicUPIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF279266B07E7007843A0 /* PrivateIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivateIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF27A266B07E7007843A0 /* PublicPublicIAMAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicPublicIAMAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF27B266B07E7007843A0 /* GroupPublicUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPublicUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF27C266B07E7007843A0 /* PrivatePublicComboAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicComboAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF27D266B07E7007843A0 /* PrivateUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateUPPost.swift; sourceTree = "<group>"; };
-		769CF27E266B07E7007843A0 /* OwnerPrivateUPIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPrivateUPIAMPost.swift; sourceTree = "<group>"; };
-		769CF27F266B07E7007843A0 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
-		769CF280266B07E7007843A0 /* PrivatePublicComboUPPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePublicComboUPPost.swift; sourceTree = "<group>"; };
-		769CF281266B07E7007843A0 /* PrivatePublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF282266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePrivatePublicUPIAMIAMPost.swift; sourceTree = "<group>"; };
-		769CF283266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnerPrivatePublicUPIAMAPIPost.swift; sourceTree = "<group>"; };
-		769CF284266B07E8007843A0 /* PublicAPIPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicAPIPost.swift; sourceTree = "<group>"; };
-		769CF285266B07E8007843A0 /* PublicAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PublicAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF286266B07E8007843A0 /* OwnerPublicUPAPIPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OwnerPublicUPAPIPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF287266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrivatePublicPublicUPAPIIAMPost+Schema.swift"; sourceTree = "<group>"; };
-		769CF288266B07E8007843A0 /* GroupPrivateUPIAMPost+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GroupPrivateUPIAMPost+Schema.swift"; sourceTree = "<group>"; };
 		769CF2BE266B10A8007843A0 /* AWSDataStoreMultiAuthSingleRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreMultiAuthSingleRuleTests.swift; sourceTree = "<group>"; };
 		769CF2C6266D79EC007843A0 /* AWSDataStoreMultiAuthSingleRuleTests+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWSDataStoreMultiAuthSingleRuleTests+Models.swift"; sourceTree = "<group>"; };
 		769CF2C8266D7F04007843A0 /* AWSDataStoreMultiAuthTwoRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreMultiAuthTwoRulesTests.swift; sourceTree = "<group>"; };
 		769CF2CA266D7F47007843A0 /* AWSDataStoreMultiAuthTwoRulesTests+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWSDataStoreMultiAuthTwoRulesTests+Models.swift"; sourceTree = "<group>"; };
+		76C0090D2736061200ADA120 /* TodoExplicitOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoExplicitOwnerField.swift; sourceTree = "<group>"; };
+		76C0090E2736061200ADA120 /* TodoImplicitOwnerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoImplicitOwnerField.swift; sourceTree = "<group>"; };
+		76C0090F2736061200ADA120 /* TodoExplicitOwnerField+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoExplicitOwnerField+Schema.swift"; sourceTree = "<group>"; };
+		76C009102736061200ADA120 /* TodoImplicitOwnerField+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoImplicitOwnerField+Schema.swift"; sourceTree = "<group>"; };
+		76C0091B2736198700ADA120 /* TodoCustomOwnerImplicit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoCustomOwnerImplicit.swift; sourceTree = "<group>"; };
+		76C0091C2736198700ADA120 /* TodoCustomOwnerImplicit+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TodoCustomOwnerImplicit+Schema.swift"; sourceTree = "<group>"; };
 		9728F2AF2683D98D00A506A8 /* DataStoreConsecutiveUpdatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConsecutiveUpdatesTests.swift; sourceTree = "<group>"; };
 		973AF1AE26E016EC00BED353 /* ModelCompareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCompareTests.swift; sourceTree = "<group>"; };
 		97406B372666DC0200C41E19 /* DataStoreCustomPrimaryKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreCustomPrimaryKeyTests.swift; sourceTree = "<group>"; };
 		97DB735326B49ED6004708B8 /* MutationEvent+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutationEvent+Extensions.swift"; sourceTree = "<group>"; };
 		97DB735A26B4A229004708B8 /* MutationEventExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationEventExtensionsTests.swift; sourceTree = "<group>"; };
 		97ED948926DEC90A0025FA43 /* Model+Compare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Compare.swift"; sourceTree = "<group>"; };
+		97F793BB27AC934D000153D6 /* SQLStatement+CreateIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SQLStatement+CreateIndex.swift"; sourceTree = "<group>"; };
+		97F793DB27BC7882000153D6 /* StorageEngineTestsSQLiteIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEngineTestsSQLiteIndex.swift; sourceTree = "<group>"; };
+		9C0CA4EE2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSDataStoreCategoryPluginFlutterIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0CA4F02748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSDataStoreCategoryPluginFlutterIntegrationTests.swift; sourceTree = "<group>"; };
+		9C0CA4F22748705F001C70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C0CA52B274872D5001C70CD /* TestFlutterModelRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFlutterModelRegistration.swift; sourceTree = "<group>"; };
+		9C0CA53427487347001C70CD /* FlutterSerializedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterSerializedModel.swift; sourceTree = "<group>"; };
+		9C0CA54227487395001C70CD /* FlutterTemporal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterTemporal.swift; sourceTree = "<group>"; };
+		9C0CA54A274873B8001C70CD /* FlutterDataStoreRequestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterDataStoreRequestUtils.swift; sourceTree = "<group>"; };
+		9C0CA5532748740B001C70CD /* DataStoreConnectionScenario1FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario1FlutterTests.swift; sourceTree = "<group>"; };
+		9C0CA55B274874A4001C70CD /* DataStoreFlutterConsecutiveUpdatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreFlutterConsecutiveUpdatesTests.swift; sourceTree = "<group>"; };
+		9C0CA564274874F0001C70CD /* PostWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWrapper.swift; sourceTree = "<group>"; };
+		9C0CA56C2748750F001C70CD /* Blog6Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blog6Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA57427487533001C70CD /* Comment3Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment3Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA57C2748754D001C70CD /* Comment4Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment4Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA58427487568001C70CD /* Comment6Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment6Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA58C2748758E001C70CD /* Post3Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post3Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA594274875AB001C70CD /* Post4Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post4Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA59C274875CA001C70CD /* Post5Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post5Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5A4274875E2001C70CD /* Post6Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post6Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5AC27487602001C70CD /* PostEditor5Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditor5Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5B42748762C001C70CD /* Project1Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project1Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5BC27487644001C70CD /* Project2Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project2Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5C42748765C001C70CD /* TeamWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamWrapper.swift; sourceTree = "<group>"; };
+		9C0CA5CC27487675001C70CD /* User5Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User5Wrapper.swift; sourceTree = "<group>"; };
+		9C0CA5E227487883001C70CD /* SyncEngineFlutterIntegrationTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngineFlutterIntegrationTestBase.swift; sourceTree = "<group>"; };
+		9CD842172748981A00502D92 /* DataStoreConnectionScenario2FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario2FlutterTests.swift; sourceTree = "<group>"; };
+		9CD8421F2748A65800502D92 /* DataStoreConnectionScenario3FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario3FlutterTests.swift; sourceTree = "<group>"; };
+		9CD842272748A68800502D92 /* DataStoreConnectionScenario4FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario4FlutterTests.swift; sourceTree = "<group>"; };
+		9CD84253274C00BA00502D92 /* DataStoreConnectionScenario5FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario5FlutterTests.swift; sourceTree = "<group>"; };
+		9CD8425B274C00EB00502D92 /* DataStoreConnectionScenario6FlutterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreConnectionScenario6FlutterTests.swift; sourceTree = "<group>"; };
+		9CD84271274C0F1300502D92 /* DataStoreFlutterEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreFlutterEndToEndTests.swift; sourceTree = "<group>"; };
+		9CECD26F274C324C0031F775 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9D42A96449A4B73735566C07 /* Pods-AWSDataStoreCategoryPlugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSDataStoreCategoryPlugin.debug.xcconfig"; path = "Target Support Files/Pods-AWSDataStoreCategoryPlugin/Pods-AWSDataStoreCategoryPlugin.debug.xcconfig"; sourceTree = "<group>"; };
 		9F987EC33AAD7C0904A598CA /* Pods_HostApp_AWSDataStoreCategoryPluginIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostApp_AWSDataStoreCategoryPluginIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EF02724BF68C900F2264C /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
@@ -556,6 +711,7 @@
 		B9FAA13F238C600A009414B4 /* ListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTests.swift; sourceTree = "<group>"; };
 		B9FAA141238C6082009414B4 /* BaseDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataStoreTests.swift; sourceTree = "<group>"; };
 		C63AE18F2569D004E94BD550 /* Pods_AWSDataStoreCategoryPlugin_AWSDataStoreCategoryPluginTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSDataStoreCategoryPlugin_AWSDataStoreCategoryPluginTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3F25419403F14E7B77BE98B /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		D4BB518039D7C264E092363E /* Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		D59B63DF64CCA73C910ADD66 /* Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D80064F52499297800935DA3 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
@@ -693,6 +849,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9C0CA4EB2748705F001C70CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0CA4F32748705F001C70CD /* AWSDataStoreCategoryPlugin.framework in Frameworks */,
+				3AC75F1100634561C7A480BE /* Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -709,7 +874,8 @@
 			isa = PBXGroup;
 			children = (
 				769CF250266B0607007843A0 /* Common */,
-				769CF226266AF63E007843A0 /* DefaultAuth */,
+				769CF226266AF63E007843A0 /* DefaultAuthCognito */,
+				7617929427559B85001EABD6 /* DefaultAuthIAM */,
 				769CF225266AF5C5007843A0 /* MultiAuth */,
 				21233DE12475935600039337 /* Info.plist */,
 			);
@@ -725,6 +891,7 @@
 				21233DDE2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests */,
 				2149E60623886C7B00873955 /* HostApp */,
 				9B5889A231ECAD33B03B5DF6 /* Pods */,
+				9C0CA4EF2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests */,
 				2149E59C238867E100873955 /* Products */,
 				FA9C743C238CB493009DAFCF /* Recovered References */,
 				B158D86B8144CD1BD9589BA7 /* Frameworks */,
@@ -739,6 +906,7 @@
 				2149E60523886C7B00873955 /* HostApp.app */,
 				2149E61D23886CEE00873955 /* AWSDataStoreCategoryPluginIntegrationTests.xctest */,
 				21233DDD2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.xctest */,
+				9C0CA4EE2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -754,6 +922,7 @@
 				B9334BA12433AF3E00C9F407 /* DataStoreConfiguration.swift */,
 				6BB0162F255B1B4D00190897 /* DataStoreSyncExpression.swift */,
 				2149E5C32388684F00873955 /* Info.plist */,
+				21BBF6312728A88300B8A856 /* Migration */,
 				2149E5A72388684F00873955 /* Storage */,
 				2149E5B82388684F00873955 /* Subscribe */,
 				2149E5BA2388684F00873955 /* Sync */,
@@ -786,9 +955,11 @@
 				D8D900A3249DB599004042E7 /* QuerySort+SQLite.swift */,
 				B47532EF2540DF640032098E /* QuerySortDescriptor.swift */,
 				2149E5AC2388684F00873955 /* SQLStatement.swift */,
+				21DDCE2927330F6000D9B297 /* SQLStatement+AlterTable.swift */,
 				2149E5B62388684F00873955 /* SQLStatement+Condition.swift */,
 				2149E5B22388684F00873955 /* SQLStatement+CreateTable.swift */,
 				2149E5B32388684F00873955 /* SQLStatement+Delete.swift */,
+				21DDCDFB272C835B00D9B297 /* SQLStatement+DropTable.swift */,
 				2149E5AD2388684F00873955 /* SQLStatement+Insert.swift */,
 				2149E5B02388684F00873955 /* SQLStatement+Select.swift */,
 				2149E5B12388684F00873955 /* SQLStatement+Update.swift */,
@@ -796,6 +967,8 @@
 				2149E5B72388684F00873955 /* Statement+Model.swift */,
 				2149E5B52388684F00873955 /* StorageEngineAdapter+SQLite.swift */,
 				FAED573D238B4C2F008EBED8 /* StorageEngineAdapter+UntypedModel.swift */,
+				21DDCE272732F74000D9B297 /* StorageEngineMigrationAdapter+SQLite.swift */,
+				97F793BB27AC934D000153D6 /* SQLStatement+CreateIndex.swift */,
 			);
 			path = SQLite;
 			sourceTree = "<group>";
@@ -813,20 +986,21 @@
 		2149E5BA2388684F00873955 /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				D838AB4224FF260A00BF4940 /* Events */,
+				FA60461123980A6A009E4B97 /* InitialSync */,
+				FAED5736238B2DFA008EBED8 /* MutationSync */,
 				2149E5BE2388684F00873955 /* RemoteSyncEngine.swift */,
 				6B3CC61023F5E6210008ECBC /* RemoteSyncEngine+Action.swift */,
-				6B3CC61423F5E63F0008ECBC /* RemoteSyncEngine+Resolver.swift */,
-				6B3CC61823F5E64F0008ECBC /* RemoteSyncEngine+State.swift */,
+				762383A427501EBC00EAF1C7 /* RemoteSyncEngine+AuthModeStrategyDelegate.swift */,
 				6B3CC67B23F86D680008ECBC /* RemoteSyncEngine+IncomingEventReconciliationQueueEvent.swift */,
+				6B3CC61423F5E63F0008ECBC /* RemoteSyncEngine+Resolver.swift */,
 				6B3CC67F23F87FA10008ECBC /* RemoteSyncEngine+Retryable.swift */,
+				6B3CC61823F5E64F0008ECBC /* RemoteSyncEngine+State.swift */,
 				FAF7CECE238C93A50095547B /* RemoteSyncEngineBehavior.swift */,
 				6B01B71E23A4672500AD0E97 /* RequestRetryable.swift */,
 				6B01B71F23A4672500AD0E97 /* RequestRetryablePolicy.swift */,
-				FA60461123980A6A009E4B97 /* InitialSync */,
-				FAED5736238B2DFA008EBED8 /* MutationSync */,
 				FAED5735238B2DEC008EBED8 /* SubscriptionSync */,
 				FA8F4D1C2395AF5E00861D91 /* Support */,
-				D838AB4224FF260A00BF4940 /* Events */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -834,9 +1008,11 @@
 		2149E5E42388692E00873955 /* AWSDataStoreCategoryPluginTests */ = {
 			isa = PBXGroup;
 			children = (
+				21DDCE0327303E5300D9B297 /* AWSDataStorePluginBaseBehaviorTests.swift */,
 				2145313F26CDAD6400CDEACB /* AWSDataStorePluginSubscribeBehaviorTests.swift */,
 				FAD2BDF423957F35006EB065 /* Core */,
 				2149E5E72388692E00873955 /* Info.plist */,
+				21BBF6502729BD5300B8A856 /* Migration */,
 				B996FC4523FF3C41006D0F68 /* Models */,
 				6B7743E5259071AB001469F5 /* Storage */,
 				211FFEDB26CD61DD00F0DB75 /* Subscribe */,
@@ -875,9 +1051,9 @@
 		2149E61E23886CEE00873955 /* AWSDataStoreCategoryPluginIntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
-				21233DD7247591D100039337 /* amplifyconfiguration.json */,
 				FA6B0EA9249445D50062AA59 /* AWSDataStorePluginConfigurationTests.swift */,
 				217D61552578AEB0009F0639 /* Connection */,
+				218F787F275A80F50042334B /* TransformerV2 */,
 				D8C5BA58249815A6007C3A68 /* DataStoreConfigurationTests.swift */,
 				9728F2AF2683D98D00A506A8 /* DataStoreConsecutiveUpdatesTests.swift */,
 				97406B372666DC0200C41E19 /* DataStoreCustomPrimaryKeyTests.swift */,
@@ -937,6 +1113,51 @@
 			path = Connection;
 			sourceTree = "<group>";
 		};
+		218F787F275A80F50042334B /* TransformerV2 */ = {
+			isa = PBXGroup;
+			children = (
+				218F7884275A81410042334B /* DataStoreConnectionScenario1V2Tests.swift */,
+				218F7880275A81400042334B /* DataStoreConnectionScenario2V2Tests.swift */,
+				218F789D275AB2990042334B /* DataStoreConnectionScenario3aV2Tests.swift */,
+				218F7883275A81410042334B /* DataStoreConnectionScenario3V2Tests.swift */,
+				218F7882275A81410042334B /* DataStoreConnectionScenario4V2Tests.swift */,
+				218F7885275A81410042334B /* DataStoreConnectionScenario5V2Tests.swift */,
+				218F7881275A81400042334B /* DataStoreConnectionScenario6V2Tests.swift */,
+				218F7886275A81410042334B /* DataStoreConnectionScenario7V2Tests.swift */,
+				215D40AC277233340077E7DA /* DataStoreConnectionScenario8V2Tests.swift */,
+				218F78D3275AC7CD0042334B /* DataStoreModelWithCustomTimestampTests.swift */,
+				218F78D2275AC7CD0042334B /* DataStoreModelWithDefaultValueTests.swift */,
+				218F78D1275AC7CD0042334B /* DataStoreModelWithSecondaryIndexTests.swift */,
+				218F788E275A825A0042334B /* README.md */,
+			);
+			path = TransformerV2;
+			sourceTree = "<group>";
+		};
+		21BBF6312728A88300B8A856 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				21BBF6322728A89200B8A856 /* MutationSyncMetadataMigration.swift */,
+				21DDCE252732F0B200D9B297 /* MutationSyncMetadataMigrationDelegate+SQLite.swift */,
+				21DDCDFD272C861F00D9B297 /* MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift */,
+				21BBF64E2729BD1900B8A856 /* ModelMigrations.swift */,
+				21DDCDF9272C822000D9B297 /* MutationSyncMetadataCopy.swift */,
+				21DDCE2E2733266700D9B297 /* MutationSyncMetadataMigrationDelegate.swift */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
+		21BBF6502729BD5300B8A856 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				21DDCE3027332D8100D9B297 /* MockMutationSyncMigrationDelegate.swift */,
+				21DDCE01272C896100D9B297 /* MutationSyncMetadataMigrationTestBase.swift */,
+				21BBF6512729BD6500B8A856 /* MutationSyncMetadataMigrationTests.swift */,
+				21DDCE2B273314DB00D9B297 /* SQLiteMutationSyncMetadataMigrationDelegateTests.swift */,
+				21DDCDFF272C869D00D9B297 /* SQLiteMutationSyncMetadataMigrationValidationTests.swift */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
 		21FE027C25890AFB00B81D72 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,33 +1170,104 @@
 		6B7743E5259071AB001469F5 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				21DDCE05273049F200D9B297 /* StorageEnginePublisherTests.swift */,
 				6BE9D6F225A665EA00AB5C9A /* StorageEngineTestsBase.swift */,
 				219F796925B8D268007107D3 /* StorageEngineTestsDelete.swift */,
 				6B7743E6259071C8001469F5 /* StorageEngineTestsHasMany.swift */,
 				6BE9D6F025A6643100AB5C9A /* StorageEngineTestsHasOne.swift */,
 				6BE9D73D25A6800100AB5C9A /* StorageEngineTestsManyToMany.swift */,
+				97F793DB27BC7882000153D6 /* StorageEngineTestsSQLiteIndex.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		769B2A1D267BEF8400A084CD /* Support */ = {
+		7617929427559B85001EABD6 /* DefaultAuthIAM */ = {
 			isa = PBXGroup;
 			children = (
-				769B2A1B267BEF7B00A084CD /* AuthRecorderInterceptor.swift */,
+				7617929827559BFD001EABD6 /* Models */,
+				7617929727559BF5001EABD6 /* README.md */,
+				7617929527559BD7001EABD6 /* singleauth-iam-schema.graphql */,
+				7617928A275594B8001EABD6 /* AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift */,
 			);
-			path = Support;
+			path = DefaultAuthIAM;
+			sourceTree = "<group>";
+		};
+		7617929827559BFD001EABD6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7617928D27559554001EABD6 /* TodoIAMPrivate.swift */,
+				7617928E27559554001EABD6 /* TodoIAMPrivate+Schema.swift */,
+				7617928C27559553001EABD6 /* TodoIAMPublic.swift */,
+				7617928F27559554001EABD6 /* TodoIAMPublic+Schema.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		762547892735FD0C00E5F6A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7625479D2735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost.swift */,
+				762547982735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */,
+				762547902735FD0C00E5F6A3 /* GroupPrivateUPIAMPost.swift */,
+				762547AC2735FD0C00E5F6A3 /* GroupPrivateUPIAMPost+Schema.swift */,
+				762547B92735FD0C00E5F6A3 /* GroupPublicUPAPIPost.swift */,
+				7625478A2735FD0C00E5F6A3 /* GroupPublicUPAPIPost+Schema.swift */,
+				762547AB2735FD0C00E5F6A3 /* GroupPublicUPIAMPost.swift */,
+				762547BE2735FD0C00E5F6A3 /* GroupPublicUPIAMPost+Schema.swift */,
+				762547AE2735FD0C00E5F6A3 /* GroupUPPost.swift */,
+				7625478E2735FD0C00E5F6A3 /* GroupUPPost+Schema.swift */,
+				762547BA2735FD0C00E5F6A3 /* OwnerOIDCPost.swift */,
+				762547AD2735FD0C00E5F6A3 /* OwnerOIDCPost+Schema.swift */,
+				762547A12735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost.swift */,
+				762547992735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */,
+				762547972735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost.swift */,
+				762547B62735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost+Schema.swift */,
+				7625479B2735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost.swift */,
+				762547922735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost+Schema.swift */,
+				762547912735FD0C00E5F6A3 /* OwnerPublicUPAPIPost.swift */,
+				762547B42735FD0C00E5F6A3 /* OwnerPublicUPAPIPost+Schema.swift */,
+				762547A22735FD0C00E5F6A3 /* OwnerPublicUPIAMPost.swift */,
+				762547932735FD0C00E5F6A3 /* OwnerPublicUPIAMPost+Schema.swift */,
+				7625479E2735FD0C00E5F6A3 /* OwnerUPPost.swift */,
+				7625478F2735FD0C00E5F6A3 /* OwnerUPPost+Schema.swift */,
+				762547B02735FD0C00E5F6A3 /* PrivateIAMPost.swift */,
+				7625479F2735FD0C00E5F6A3 /* PrivateIAMPost+Schema.swift */,
+				7625479A2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost.swift */,
+				762547952735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */,
+				7625478C2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost.swift */,
+				762547B12735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */,
+				762547A32735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost.swift */,
+				762547A72735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost+Schema.swift */,
+				762547962735FD0C00E5F6A3 /* PrivatePublicComboAPIPost.swift */,
+				762547AA2735FD0C00E5F6A3 /* PrivatePublicComboAPIPost+Schema.swift */,
+				762547B22735FD0C00E5F6A3 /* PrivatePublicComboUPPost.swift */,
+				762547B82735FD0C00E5F6A3 /* PrivatePublicComboUPPost+Schema.swift */,
+				7625479C2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost.swift */,
+				762547BC2735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost+Schema.swift */,
+				762547A52735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost.swift */,
+				762547AF2735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */,
+				762547A42735FD0C00E5F6A3 /* PrivatePublicUPAPIPost.swift */,
+				762547BD2735FD0C00E5F6A3 /* PrivatePublicUPAPIPost+Schema.swift */,
+				762547B52735FD0C00E5F6A3 /* PrivatePublicUPIAMPost.swift */,
+				7625478B2735FD0C00E5F6A3 /* PrivatePublicUPIAMPost+Schema.swift */,
+				762547942735FD0C00E5F6A3 /* PrivateUPPost.swift */,
+				762547B72735FD0C00E5F6A3 /* PrivateUPPost+Schema.swift */,
+				762547BB2735FD0C00E5F6A3 /* PublicAPIPost.swift */,
+				762547A02735FD0C00E5F6A3 /* PublicAPIPost+Schema.swift */,
+				762547A92735FD0C00E5F6A3 /* PublicIAMPost.swift */,
+				762547A82735FD0C00E5F6A3 /* PublicIAMPost+Schema.swift */,
+				7625478D2735FD0C00E5F6A3 /* PublicPublicIAMAPIPost.swift */,
+				762547B32735FD0C00E5F6A3 /* PublicPublicIAMAPIPost+Schema.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		769CF225266AF5C5007843A0 /* MultiAuth */ = {
 			isa = PBXGroup;
 			children = (
-				769B2A1D267BEF8400A084CD /* Support */,
-				769CF253266B0780007843A0 /* Models */,
-				769CF24B266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json */,
-				769CF24A266B04F3007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json */,
+				762547892735FD0C00E5F6A3 /* Models */,
 				769CF227266AF6BB007843A0 /* README.md */,
-				769CF228266AF6EA007843A0 /* schema.graphql */,
-				769CF24E266B05EB007843A0 /* AWSDataStoreMultiAuthBaseTest.swift */,
+				762547BF2735FD0C00E5F6A3 /* multiauth-schema.graphql */,
 				769CF2BE266B10A8007843A0 /* AWSDataStoreMultiAuthSingleRuleTests.swift */,
 				769CF2C6266D79EC007843A0 /* AWSDataStoreMultiAuthSingleRuleTests+Models.swift */,
 				769CF2C8266D7F04007843A0 /* AWSDataStoreMultiAuthTwoRulesTests.swift */,
@@ -987,84 +1279,42 @@
 			path = MultiAuth;
 			sourceTree = "<group>";
 		};
-		769CF226266AF63E007843A0 /* DefaultAuth */ = {
+		769CF226266AF63E007843A0 /* DefaultAuthCognito */ = {
 			isa = PBXGroup;
 			children = (
-				21233DED2475AF6300039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json */,
-				21233DF12475AFC900039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json */,
 				21233DDF2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.swift */,
-				21233DF32475BAC100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift */,
 				21233E142476EFC400039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift */,
-				21233DEF2475AF6A00039337 /* README.md */,
-				21233DF52475BB5900039337 /* SocialNote.swift */,
+				761792A52759443E001EABD6 /* AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift */,
+				76C0090C2736061200ADA120 /* Models */,
+				762547132735FCD800E5F6A3 /* README.md */,
+				762547142735FCD800E5F6A3 /* singleauth-cognito-schema.graphql */,
 			);
-			path = DefaultAuth;
+			path = DefaultAuthCognito;
 			sourceTree = "<group>";
 		};
 		769CF250266B0607007843A0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7625470B2735FCC400E5F6A3 /* AWSDataStoreAuthBaseTest.swift */,
+				769B2A1B267BEF7B00A084CD /* AuthRecorderInterceptor.swift */,
 				769CF251266B069E007843A0 /* TestUser.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
 		};
-		769CF253266B0780007843A0 /* Models */ = {
+		76C0090C2736061200ADA120 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				769CF27F266B07E7007843A0 /* AmplifyModels.swift */,
-				769CF264266B07E6007843A0 /* GroupPrivatePublicUPIAMAPIPost.swift */,
-				769CF26C266B07E7007843A0 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift */,
-				769CF26F266B07E7007843A0 /* GroupPrivateUPIAMPost.swift */,
-				769CF288266B07E8007843A0 /* GroupPrivateUPIAMPost+Schema.swift */,
-				769CF265266B07E6007843A0 /* GroupPublicUPAPIPost.swift */,
-				769CF257266B07E6007843A0 /* GroupPublicUPAPIPost+Schema.swift */,
-				769CF27B266B07E7007843A0 /* GroupPublicUPIAMPost.swift */,
-				769CF261266B07E6007843A0 /* GroupPublicUPIAMPost+Schema.swift */,
-				769CF25D266B07E6007843A0 /* GroupUPPost.swift */,
-				769CF260266B07E6007843A0 /* GroupUPPost+Schema.swift */,
-				769CF25E266B07E6007843A0 /* OwnerOIDCPost.swift */,
-				769CF259266B07E6007843A0 /* OwnerOIDCPost+Schema.swift */,
-				769CF283266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost.swift */,
-				769CF26D266B07E7007843A0 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift */,
-				769CF27E266B07E7007843A0 /* OwnerPrivateUPIAMPost.swift */,
-				769CF25C266B07E6007843A0 /* OwnerPrivateUPIAMPost+Schema.swift */,
-				769CF269266B07E7007843A0 /* OwnerPublicOIDAPIPost.swift */,
-				769CF256266B07E6007843A0 /* OwnerPublicOIDAPIPost+Schema.swift */,
-				769CF263266B07E6007843A0 /* OwnerPublicUPAPIPost.swift */,
-				769CF286266B07E8007843A0 /* OwnerPublicUPAPIPost+Schema.swift */,
-				769CF26B266B07E7007843A0 /* OwnerPublicUPIAMPost.swift */,
-				769CF262266B07E6007843A0 /* OwnerPublicUPIAMPost+Schema.swift */,
-				769CF272266B07E7007843A0 /* OwnerUPPost.swift */,
-				769CF267266B07E6007843A0 /* OwnerUPPost+Schema.swift */,
-				769CF26E266B07E7007843A0 /* PrivateIAMPost.swift */,
-				769CF279266B07E7007843A0 /* PrivateIAMPost+Schema.swift */,
-				769CF254266B07E6007843A0 /* PrivatePrivatePublicUPIAMAPIPost.swift */,
-				769CF278266B07E7007843A0 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift */,
-				769CF282266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost.swift */,
-				769CF270266B07E7007843A0 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift */,
-				769CF277266B07E7007843A0 /* PrivatePrivateUPIAMPost.swift */,
-				769CF258266B07E6007843A0 /* PrivatePrivateUPIAMPost+Schema.swift */,
-				769CF276266B07E7007843A0 /* PrivatePublicComboAPIPost.swift */,
-				769CF27C266B07E7007843A0 /* PrivatePublicComboAPIPost+Schema.swift */,
-				769CF280266B07E7007843A0 /* PrivatePublicComboUPPost.swift */,
-				769CF25F266B07E6007843A0 /* PrivatePublicComboUPPost+Schema.swift */,
-				769CF268266B07E6007843A0 /* PrivatePublicIAMAPIPost.swift */,
-				769CF266266B07E6007843A0 /* PrivatePublicIAMAPIPost+Schema.swift */,
-				769CF273266B07E7007843A0 /* PrivatePublicPublicUPAPIIAMPost.swift */,
-				769CF287266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift */,
-				769CF275266B07E7007843A0 /* PrivatePublicUPAPIPost.swift */,
-				769CF281266B07E7007843A0 /* PrivatePublicUPAPIPost+Schema.swift */,
-				769CF25B266B07E6007843A0 /* PrivatePublicUPIAMPost.swift */,
-				769CF274266B07E7007843A0 /* PrivatePublicUPIAMPost+Schema.swift */,
-				769CF27D266B07E7007843A0 /* PrivateUPPost.swift */,
-				769CF271266B07E7007843A0 /* PrivateUPPost+Schema.swift */,
-				769CF284266B07E8007843A0 /* PublicAPIPost.swift */,
-				769CF285266B07E8007843A0 /* PublicAPIPost+Schema.swift */,
-				769CF26A266B07E7007843A0 /* PublicIAMPost.swift */,
-				769CF25A266B07E6007843A0 /* PublicIAMPost+Schema.swift */,
-				769CF255266B07E6007843A0 /* PublicPublicIAMAPIPost.swift */,
-				769CF27A266B07E7007843A0 /* PublicPublicIAMAPIPost+Schema.swift */,
+				761792A227594339001EABD6 /* TodoCognitoPrivate.swift */,
+				761792A127594339001EABD6 /* TodoCognitoPrivate+Schema.swift */,
+				7617928627558BFA001EABD6 /* TodoCustomOwnerExplicit.swift */,
+				7617928727558BFA001EABD6 /* TodoCustomOwnerExplicit+Schema.swift */,
+				76C0091B2736198700ADA120 /* TodoCustomOwnerImplicit.swift */,
+				76C0091C2736198700ADA120 /* TodoCustomOwnerImplicit+Schema.swift */,
+				76C0090D2736061200ADA120 /* TodoExplicitOwnerField.swift */,
+				76C0090F2736061200ADA120 /* TodoExplicitOwnerField+Schema.swift */,
+				76C0090E2736061200ADA120 /* TodoImplicitOwnerField.swift */,
+				76C009102736061200ADA120 /* TodoImplicitOwnerField+Schema.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1082,8 +1332,79 @@
 				280D7C45F839531215A44B34 /* Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests.release.xcconfig */,
 				D59B63DF64CCA73C910ADD66 /* Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.debug.xcconfig */,
 				D4BB518039D7C264E092363E /* Pods-HostApp-AWSDataStoreCategoryPluginIntegrationTests.release.xcconfig */,
+				5B62423E457D3149264ADA1F /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.debug.xcconfig */,
+				D3F25419403F14E7B77BE98B /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9C0CA4EF2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C0CA552274873F3001C70CD /* Connection */,
+				9C0CA52A274872C0001C70CD /* TestSupport */,
+				9C0CA4F02748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.swift */,
+				9C0CA4F22748705F001C70CD /* Info.plist */,
+				9C0CA55B274874A4001C70CD /* DataStoreFlutterConsecutiveUpdatesTests.swift */,
+				9CD84271274C0F1300502D92 /* DataStoreFlutterEndToEndTests.swift */,
+				9CECD26F274C324C0031F775 /* README.md */,
+			);
+			path = AWSDataStoreCategoryPluginFlutterIntegrationTests;
+			sourceTree = "<group>";
+		};
+		9C0CA52A274872C0001C70CD /* TestSupport */ = {
+			isa = PBXGroup;
+			children = (
+				9C0CA563274874C2001C70CD /* SerializedModelWrappers */,
+				9C0CA53327487332001C70CD /* AmplifyFlutterHelpers */,
+				9C0CA52B274872D5001C70CD /* TestFlutterModelRegistration.swift */,
+				9C0CA5E227487883001C70CD /* SyncEngineFlutterIntegrationTestBase.swift */,
+			);
+			path = TestSupport;
+			sourceTree = "<group>";
+		};
+		9C0CA53327487332001C70CD /* AmplifyFlutterHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				9C0CA53427487347001C70CD /* FlutterSerializedModel.swift */,
+				9C0CA54227487395001C70CD /* FlutterTemporal.swift */,
+				9C0CA54A274873B8001C70CD /* FlutterDataStoreRequestUtils.swift */,
+			);
+			path = AmplifyFlutterHelpers;
+			sourceTree = "<group>";
+		};
+		9C0CA552274873F3001C70CD /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				9C0CA5532748740B001C70CD /* DataStoreConnectionScenario1FlutterTests.swift */,
+				9CD842172748981A00502D92 /* DataStoreConnectionScenario2FlutterTests.swift */,
+				9CD8421F2748A65800502D92 /* DataStoreConnectionScenario3FlutterTests.swift */,
+				9CD842272748A68800502D92 /* DataStoreConnectionScenario4FlutterTests.swift */,
+				9CD84253274C00BA00502D92 /* DataStoreConnectionScenario5FlutterTests.swift */,
+				9CD8425B274C00EB00502D92 /* DataStoreConnectionScenario6FlutterTests.swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		9C0CA563274874C2001C70CD /* SerializedModelWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				9C0CA564274874F0001C70CD /* PostWrapper.swift */,
+				9C0CA56C2748750F001C70CD /* Blog6Wrapper.swift */,
+				9C0CA57427487533001C70CD /* Comment3Wrapper.swift */,
+				9C0CA57C2748754D001C70CD /* Comment4Wrapper.swift */,
+				9C0CA58427487568001C70CD /* Comment6Wrapper.swift */,
+				9C0CA58C2748758E001C70CD /* Post3Wrapper.swift */,
+				9C0CA594274875AB001C70CD /* Post4Wrapper.swift */,
+				9C0CA59C274875CA001C70CD /* Post5Wrapper.swift */,
+				9C0CA5A4274875E2001C70CD /* Post6Wrapper.swift */,
+				9C0CA5AC27487602001C70CD /* PostEditor5Wrapper.swift */,
+				9C0CA5B42748762C001C70CD /* Project1Wrapper.swift */,
+				9C0CA5BC27487644001C70CD /* Project2Wrapper.swift */,
+				9C0CA5C42748765C001C70CD /* TeamWrapper.swift */,
+				9C0CA5CC27487675001C70CD /* User5Wrapper.swift */,
+			);
+			path = SerializedModelWrappers;
 			sourceTree = "<group>";
 		};
 		B158D86B8144CD1BD9589BA7 /* Frameworks */ = {
@@ -1094,6 +1415,7 @@
 				19AFF6D00CF3AF927BA90382 /* Pods_HostApp.framework */,
 				EA320D973669D3843FDF755E /* Pods_HostApp_AWSDataStoreCategoryPluginAuthIntegrationTests.framework */,
 				9F987EC33AAD7C0904A598CA /* Pods_HostApp_AWSDataStoreCategoryPluginIntegrationTests.framework */,
+				3689EBBD76A66F01A7ABFF16 /* Pods_HostApp_AWSDataStoreCategoryPluginFlutterIntegrationTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1190,6 +1512,11 @@
 		FA9C743C238CB493009DAFCF /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				7618ABC72728CCB300712E86 /* TodoImplicitOwnerField+Schema.swift */,
+				7618ABC92728CCB300712E86 /* TodoExplicitOwnerField+Schema.swift */,
+				7618ABC82728CCB300712E86 /* TodoImplicitOwnerField.swift */,
+				7618ABC62728CCB300712E86 /* TodoExplicitOwnerField.swift */,
+				21233DEF2475AF6A00039337 /* README.md */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1258,7 +1585,9 @@
 				D8E99925250142790006170A /* HubEventsIntegrationTestBase.swift */,
 				D888E80B24A65DC200F4CE3E /* LocalStoreIntegrationTestBase.swift */,
 				FAB5713F23958C210006A5F8 /* SyncEngineIntegrationTestBase.swift */,
+				218F7890275A82A00042334B /* SyncEngineIntegrationV2TestBase.swift */,
 				FAD2BDF5239583B2006EB065 /* TestModelRegistration.swift */,
+				218F7892275A82C50042334B /* TestModelV2Registration.swift */,
 			);
 			path = TestSupport;
 			sourceTree = "<group>";
@@ -1490,13 +1819,33 @@
 			productReference = 2149E61D23886CEE00873955 /* AWSDataStoreCategoryPluginIntegrationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9C0CA4ED2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C0CA4F62748705F001C70CD /* Build configuration list for PBXNativeTarget "AWSDataStoreCategoryPluginFlutterIntegrationTests" */;
+			buildPhases = (
+				5700884EC67DFAB6CF3F8D55 /* [CP] Check Pods Manifest.lock */,
+				9C0CA4EA2748705F001C70CD /* Sources */,
+				9C0CA4EB2748705F001C70CD /* Frameworks */,
+				9C0CA4EC2748705F001C70CD /* Resources */,
+				CBD26EA4EE99D059295AC9E2 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C0CA4F52748705F001C70CD /* PBXTargetDependency */,
+			);
+			name = AWSDataStoreCategoryPluginFlutterIntegrationTests;
+			productName = AWSDataStoreCategoryPluginFlutterIntegrationTests;
+			productReference = 9C0CA4EE2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2149E592238867E100873955 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Amazon Web Services";
 				TargetAttributes = {
@@ -1519,6 +1868,9 @@
 						LastSwiftMigration = 1120;
 						TestTargetID = 2149E60423886C7B00873955;
 					};
+					9C0CA4ED2748705F001C70CD = {
+						CreatedOnToolsVersion = 12.4;
+					};
 				};
 			};
 			buildConfigurationList = 2149E595238867E100873955 /* Build configuration list for PBXProject "DataStoreCategoryPlugin" */;
@@ -1539,6 +1891,7 @@
 				2149E61C23886CEE00873955 /* AWSDataStoreCategoryPluginIntegrationTests */,
 				21233DDC2475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests */,
 				2149E60423886C7B00873955 /* HostApp */,
+				9C0CA4ED2748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1548,10 +1901,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				769CF2C2266B39B0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json in Resources */,
-				769CF2C3266B39B0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json in Resources */,
-				769CF229266AF6EA007843A0 /* schema.graphql in Resources */,
-				21233DF02475AF6A00039337 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1573,14 +1922,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				769CF2C4266B39C0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-amplifyconfiguration.json in Resources */,
-				769CF2C5266B39C0007843A0 /* AWSDataStoreCategoryPluginMultiAuthIntegrationTests-credentials.json in Resources */,
 				2149E61423886C7F00873955 /* LaunchScreen.storyboard in Resources */,
-				D8D2EF6A25088FE700127C52 /* amplifyconfiguration.json in Resources */,
 				2149E61123886C7F00873955 /* Assets.xcassets in Resources */,
 				2149E60F23886C7B00873955 /* Main.storyboard in Resources */,
-				21233DF72475BD4F00039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-amplifyconfiguration.json in Resources */,
-				21233DF82475BD5100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests-credentials.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1588,8 +1932,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				213481BF24213E14001966DE /* README.md in Resources */,
-				21233DD8247591D100039337 /* amplifyconfiguration.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0CA4EC2748705F001C70CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +2056,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginAuthIntegrationTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5700884EC67DFAB6CF3F8D55 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7271A3236003399AB5B44010 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1788,6 +2159,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBD26EA4EE99D059295AC9E2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests/Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF72DE9644BC321291D5C479 /* [CP] Embed Pods Frameworks */ = {
@@ -1925,73 +2313,86 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				769CF289266B07E8007843A0 /* PrivatePrivatePublicUPIAMAPIPost.swift in Sources */,
-				769CF2A3266B07E8007843A0 /* PrivateIAMPost.swift in Sources */,
-				21233DF62475BB5900039337 /* SocialNote.swift in Sources */,
-				769CF2A9266B07E8007843A0 /* PrivatePublicUPIAMPost+Schema.swift in Sources */,
-				769CF24F266B05EB007843A0 /* AWSDataStoreMultiAuthBaseTest.swift in Sources */,
+				762547D72735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost.swift in Sources */,
 				767C398F266EEBFD00CB64B9 /* AWSDataStoreMultiAuthCombinationTests.swift in Sources */,
-				769CF2A2266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
-				769CF2AE266B07E8007843A0 /* PrivateIAMPost+Schema.swift in Sources */,
-				769CF2AA266B07E8007843A0 /* PrivatePublicUPAPIPost.swift in Sources */,
-				769CF2BA266B07E8007843A0 /* PublicAPIPost+Schema.swift in Sources */,
-				769CF28F266B07E8007843A0 /* PublicIAMPost+Schema.swift in Sources */,
-				769CF2AC266B07E8007843A0 /* PrivatePrivateUPIAMPost.swift in Sources */,
-				769CF2A1266B07E8007843A0 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
+				762547EE2735FD0C00E5F6A3 /* PrivatePublicComboUPPost+Schema.swift in Sources */,
+				762547D02735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost.swift in Sources */,
+				762547CB2735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
+				76C0091E2736198700ADA120 /* TodoCustomOwnerImplicit+Schema.swift in Sources */,
+				7617928827558BFA001EABD6 /* TodoCustomOwnerExplicit.swift in Sources */,
+				761792A62759443E001EABD6 /* AWSDataStoreCategoryPluginAuthOwnerIntegrationTests.swift in Sources */,
+				762547E42735FD0C00E5F6A3 /* GroupUPPost.swift in Sources */,
+				762547EF2735FD0C00E5F6A3 /* GroupPublicUPAPIPost.swift in Sources */,
+				762547E22735FD0C00E5F6A3 /* GroupPrivateUPIAMPost+Schema.swift in Sources */,
+				76C009112736061200ADA120 /* TodoExplicitOwnerField.swift in Sources */,
+				762547F42735FD0C00E5F6A3 /* GroupPublicUPIAMPost+Schema.swift in Sources */,
 				769CF2C9266D7F04007843A0 /* AWSDataStoreMultiAuthTwoRulesTests.swift in Sources */,
-				769CF293266B07E8007843A0 /* OwnerOIDCPost.swift in Sources */,
-				769CF2B7266B07E8007843A0 /* PrivatePrivatePublicUPIAMIAMPost.swift in Sources */,
-				769CF292266B07E8007843A0 /* GroupUPPost.swift in Sources */,
-				769CF29A266B07E8007843A0 /* GroupPublicUPAPIPost.swift in Sources */,
-				769CF2BD266B07E8007843A0 /* GroupPrivateUPIAMPost+Schema.swift in Sources */,
-				769CF28C266B07E8007843A0 /* GroupPublicUPAPIPost+Schema.swift in Sources */,
-				769CF2A8266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost.swift in Sources */,
+				762547E82735FD0C00E5F6A3 /* PrivatePublicComboUPPost.swift in Sources */,
+				762547D52735FD0C00E5F6A3 /* PrivateIAMPost+Schema.swift in Sources */,
+				762547CF2735FD0C00E5F6A3 /* OwnerPrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
+				762547D22735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost.swift in Sources */,
+				7617929027559554001EABD6 /* TodoIAMPublic.swift in Sources */,
+				762547D92735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost.swift in Sources */,
+				762547C02735FD0C00E5F6A3 /* GroupPublicUPAPIPost+Schema.swift in Sources */,
+				76C009132736061200ADA120 /* TodoExplicitOwnerField+Schema.swift in Sources */,
+				762547CE2735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
+				762547C62735FD0C00E5F6A3 /* GroupPrivateUPIAMPost.swift in Sources */,
 				769CF252266B069E007843A0 /* TestUser.swift in Sources */,
-				769CF2B0266B07E8007843A0 /* GroupPublicUPIAMPost.swift in Sources */,
-				769CF29C266B07E8007843A0 /* OwnerUPPost+Schema.swift in Sources */,
-				769CF28E266B07E8007843A0 /* OwnerOIDCPost+Schema.swift in Sources */,
-				769CF2B9266B07E8007843A0 /* PublicAPIPost.swift in Sources */,
-				769CF2AB266B07E8007843A0 /* PrivatePublicComboAPIPost.swift in Sources */,
-				769CF2AF266B07E8007843A0 /* PublicPublicIAMAPIPost+Schema.swift in Sources */,
-				769CF295266B07E8007843A0 /* GroupUPPost+Schema.swift in Sources */,
-				769CF298266B07E8007843A0 /* OwnerPublicUPAPIPost.swift in Sources */,
-				769CF299266B07E8007843A0 /* GroupPrivatePublicUPIAMAPIPost.swift in Sources */,
+				762547CD2735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost.swift in Sources */,
+				762547EA2735FD0C00E5F6A3 /* OwnerPublicUPAPIPost+Schema.swift in Sources */,
+				762547F12735FD0C00E5F6A3 /* PublicAPIPost.swift in Sources */,
+				762547D82735FD0C00E5F6A3 /* OwnerPublicUPIAMPost.swift in Sources */,
+				762547C92735FD0C00E5F6A3 /* OwnerPublicUPIAMPost+Schema.swift in Sources */,
+				762547DA2735FD0C00E5F6A3 /* PrivatePublicUPAPIPost.swift in Sources */,
+				762547E92735FD0C00E5F6A3 /* PublicPublicIAMAPIPost+Schema.swift in Sources */,
+				762547DE2735FD0C00E5F6A3 /* PublicIAMPost+Schema.swift in Sources */,
+				76C009122736061200ADA120 /* TodoImplicitOwnerField.swift in Sources */,
+				762547C42735FD0C00E5F6A3 /* GroupUPPost+Schema.swift in Sources */,
+				762547E32735FD0C00E5F6A3 /* OwnerOIDCPost+Schema.swift in Sources */,
+				762547C82735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost+Schema.swift in Sources */,
 				767C398D266EE59000CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests+Models.swift in Sources */,
-				769CF28B266B07E8007843A0 /* OwnerPublicOIDAPIPost+Schema.swift in Sources */,
-				769CF2A0266B07E8007843A0 /* OwnerPublicUPIAMPost.swift in Sources */,
-				769CF2A6266B07E8007843A0 /* PrivateUPPost+Schema.swift in Sources */,
-				769CF2B5266B07E8007843A0 /* PrivatePublicComboUPPost.swift in Sources */,
-				769CF2BC266B07E8007843A0 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift in Sources */,
-				769CF2BB266B07E8007843A0 /* OwnerPublicUPAPIPost+Schema.swift in Sources */,
-				769CF28D266B07E8007843A0 /* PrivatePrivateUPIAMPost+Schema.swift in Sources */,
+				762547F02735FD0C00E5F6A3 /* OwnerOIDCPost.swift in Sources */,
+				762547C52735FD0C00E5F6A3 /* OwnerUPPost+Schema.swift in Sources */,
+				762547E72735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift in Sources */,
+				762547D12735FD0C00E5F6A3 /* OwnerPublicOIDAPIPost.swift in Sources */,
+				762547DD2735FD0C00E5F6A3 /* PrivatePrivateUPIAMPost+Schema.swift in Sources */,
+				761792A327594339001EABD6 /* TodoCognitoPrivate+Schema.swift in Sources */,
+				762547E12735FD0C00E5F6A3 /* GroupPublicUPIAMPost.swift in Sources */,
+				762547EC2735FD0C00E5F6A3 /* OwnerPrivateUPIAMPost+Schema.swift in Sources */,
+				76C0091D2736198700ADA120 /* TodoCustomOwnerImplicit.swift in Sources */,
 				769CF2CB266D7F47007843A0 /* AWSDataStoreMultiAuthTwoRulesTests+Models.swift in Sources */,
-				769CF29B266B07E8007843A0 /* PrivatePublicIAMAPIPost+Schema.swift in Sources */,
-				769CF2B1266B07E8007843A0 /* PrivatePublicComboAPIPost+Schema.swift in Sources */,
-				769CF294266B07E8007843A0 /* PrivatePublicComboUPPost+Schema.swift in Sources */,
+				762547DF2735FD0C00E5F6A3 /* PublicIAMPost.swift in Sources */,
 				769CF2BF266B10A8007843A0 /* AWSDataStoreMultiAuthSingleRuleTests.swift in Sources */,
-				769CF2B8266B07E8007843A0 /* OwnerPrivatePublicUPIAMAPIPost.swift in Sources */,
-				769CF2B6266B07E8007843A0 /* PrivatePublicUPAPIPost+Schema.swift in Sources */,
-				769CF290266B07E8007843A0 /* PrivatePublicUPIAMPost.swift in Sources */,
-				769CF291266B07E8007843A0 /* OwnerPrivateUPIAMPost+Schema.swift in Sources */,
-				769CF2B3266B07E8007843A0 /* OwnerPrivateUPIAMPost.swift in Sources */,
-				769CF28A266B07E8007843A0 /* PublicPublicIAMAPIPost.swift in Sources */,
-				769CF297266B07E8007843A0 /* OwnerPublicUPIAMPost+Schema.swift in Sources */,
-				769CF2B2266B07E8007843A0 /* PrivateUPPost.swift in Sources */,
-				769CF2A4266B07E8007843A0 /* GroupPrivateUPIAMPost.swift in Sources */,
-				769CF2A7266B07E8007843A0 /* OwnerUPPost.swift in Sources */,
-				769CF2B4266B07E8007843A0 /* AmplifyModels.swift in Sources */,
-				21233DF42475BAC100039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Auth.swift in Sources */,
-				769CF29D266B07E8007843A0 /* PrivatePublicIAMAPIPost.swift in Sources */,
+				762547C22735FD0C00E5F6A3 /* PrivatePrivatePublicUPIAMIAMPost.swift in Sources */,
+				762547EB2735FD0C00E5F6A3 /* PrivatePublicUPIAMPost.swift in Sources */,
 				769CF2C7266D79EC007843A0 /* AWSDataStoreMultiAuthSingleRuleTests+Models.swift in Sources */,
-				769CF29E266B07E8007843A0 /* OwnerPublicOIDAPIPost.swift in Sources */,
 				21233DE02475935600039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests.swift in Sources */,
-				769CF29F266B07E8007843A0 /* PublicIAMPost.swift in Sources */,
-				769CF296266B07E8007843A0 /* GroupPublicUPIAMPost+Schema.swift in Sources */,
+				762547C12735FD0C00E5F6A3 /* PrivatePublicUPIAMPost+Schema.swift in Sources */,
+				762547D32735FD0C00E5F6A3 /* GroupPrivatePublicUPIAMAPIPost.swift in Sources */,
+				7617929127559554001EABD6 /* TodoIAMPrivate.swift in Sources */,
+				762547D42735FD0C00E5F6A3 /* OwnerUPPost.swift in Sources */,
 				767C398B266EE4DA00CB64B9 /* AWSDataStoreMultiAuthThreeRulesTests.swift in Sources */,
-				769CF2AD266B07E8007843A0 /* PrivatePrivatePublicUPIAMAPIPost+Schema.swift in Sources */,
-				769CF2A5266B07E8007843A0 /* PrivatePrivatePublicUPIAMIAMPost+Schema.swift in Sources */,
+				762547C32735FD0C00E5F6A3 /* PublicPublicIAMAPIPost.swift in Sources */,
+				762547C72735FD0C00E5F6A3 /* OwnerPublicUPAPIPost.swift in Sources */,
+				76C009142736061200ADA120 /* TodoImplicitOwnerField+Schema.swift in Sources */,
+				762547DB2735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost.swift in Sources */,
+				762547E62735FD0C00E5F6A3 /* PrivateIAMPost.swift in Sources */,
+				7625470C2735FCC400E5F6A3 /* AWSDataStoreAuthBaseTest.swift in Sources */,
+				762547F32735FD0C00E5F6A3 /* PrivatePublicUPAPIPost+Schema.swift in Sources */,
+				762547ED2735FD0C00E5F6A3 /* PrivateUPPost+Schema.swift in Sources */,
+				762547CA2735FD0C00E5F6A3 /* PrivateUPPost.swift in Sources */,
 				21233E152476EFC400039337 /* AWSDataStoreCategoryPluginAuthIntegrationTests+Support.swift in Sources */,
 				769B2A1C267BEF7B00A084CD /* AuthRecorderInterceptor.swift in Sources */,
+				762547E02735FD0C00E5F6A3 /* PrivatePublicComboAPIPost+Schema.swift in Sources */,
+				761792A427594339001EABD6 /* TodoCognitoPrivate.swift in Sources */,
+				7617928927558BFA001EABD6 /* TodoCustomOwnerExplicit+Schema.swift in Sources */,
+				762547D62735FD0C00E5F6A3 /* PublicAPIPost+Schema.swift in Sources */,
+				762547E52735FD0C00E5F6A3 /* PrivatePublicPublicUPAPIIAMPost+Schema.swift in Sources */,
+				762547CC2735FD0C00E5F6A3 /* PrivatePublicComboAPIPost.swift in Sources */,
+				762547F22735FD0C00E5F6A3 /* PrivatePublicIAMAPIPost+Schema.swift in Sources */,
+				7617929327559554001EABD6 /* TodoIAMPublic+Schema.swift in Sources */,
+				7617929227559554001EABD6 /* TodoIAMPrivate+Schema.swift in Sources */,
+				7617928B275594B8001EABD6 /* AWSDataStoreCategoryPluginIAMAuthIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2011,6 +2412,8 @@
 				D8D900A4249DB599004042E7 /* QuerySort+SQLite.swift in Sources */,
 				FA3841E923889D440070AD5B /* StateMachine.swift in Sources */,
 				FACD624A2397415C004AF037 /* ModelReconciliationQueue.swift in Sources */,
+				21DDCE282732F74000D9B297 /* StorageEngineMigrationAdapter+SQLite.swift in Sources */,
+				21BBF64F2729BD1900B8A856 /* ModelMigrations.swift in Sources */,
 				FA3B3EFF238F13B2002EFDB3 /* MutationEventIngester.swift in Sources */,
 				D8D1DED4252E2CB400681DA8 /* ReadyEventEmitter.swift in Sources */,
 				214B6B65264B0D6700A9311D /* Stopwatch.swift in Sources */,
@@ -2019,12 +2422,16 @@
 				213481D4242ABA86001966DE /* ProcessMutationErrorFromCloudOperation.swift in Sources */,
 				D8C3182225302B790032FA44 /* InitialSyncOperationEvent.swift in Sources */,
 				2149E5D12388684F00873955 /* StorageEngineAdapter+SQLite.swift in Sources */,
+				21BBF6332728A89200B8A856 /* MutationSyncMetadataMigration.swift in Sources */,
 				FA5D4CED238AFC4D00D2F54A /* AWSDataStorePlugin+DefaultLogger.swift in Sources */,
 				21A4EE4B259D508600E1047D /* DataStoreListDecoder.swift in Sources */,
 				2149E5CA2388684F00873955 /* ModelSchema+SQLite.swift in Sources */,
+				21DDCE2F2733266700D9B297 /* MutationSyncMetadataMigrationDelegate.swift in Sources */,
 				6BB01630255B1B4D00190897 /* DataStoreSyncExpression.swift in Sources */,
 				2149E5CD2388684F00873955 /* SQLStatement+Update.swift in Sources */,
 				FAF7CEC9238C6A940095547B /* SyncMutationToCloudOperation.swift in Sources */,
+				762383A527501EBC00EAF1C7 /* RemoteSyncEngine+AuthModeStrategyDelegate.swift in Sources */,
+				21DDCDFE272C861F00D9B297 /* MutationSyncMetadataMigrationDelegate+SQLiteValidation.swift in Sources */,
 				FA8F4D1E2395AF7600861D91 /* DataStoreError+Plugin.swift in Sources */,
 				FA6C3FEE239890B500A73110 /* AWSMutationEventPublisher.swift in Sources */,
 				2149E5D02388684F00873955 /* QueryPredicate+SQLite.swift in Sources */,
@@ -2058,6 +2465,7 @@
 				FAED573E238B4C2F008EBED8 /* StorageEngineAdapter+UntypedModel.swift in Sources */,
 				B9334BA22433AF3E00C9F407 /* DataStoreConfiguration.swift in Sources */,
 				FA4A9559239ACC1B008E876E /* IncomingSubscriptionEventPublisher.swift in Sources */,
+				21DDCE262732F0B200D9B297 /* MutationSyncMetadataMigrationDelegate+SQLite.swift in Sources */,
 				211FFEDA26CC270100F0DB75 /* DataStoreObserveQueryOperation.swift in Sources */,
 				FA8F4D222395B11700861D91 /* MutationEvent+Query.swift in Sources */,
 				FAF7CECB238C72830095547B /* OutgoingMutationQueue.swift in Sources */,
@@ -2068,14 +2476,17 @@
 				FAAA58902396BC5A008A4DB6 /* CancelAwareBlockOperation.swift in Sources */,
 				97ED948A26DEC90A0025FA43 /* Model+Compare.swift in Sources */,
 				D86B6F7E25167F3A008AC948 /* ModelSyncedEventEmitter.swift in Sources */,
+				21DDCE2A27330F6000D9B297 /* SQLStatement+AlterTable.swift in Sources */,
 				FA3B3F03238F22CF002EFDB3 /* OutgoingMutationQueue+State.swift in Sources */,
 				FA5D4CEF238AFCBC00D2F54A /* AWSDataStorePlugin+DataStoreSubscribeBehavior.swift in Sources */,
 				FAAFAF3923905F35002CF932 /* MutationEventPublisher.swift in Sources */,
 				6BB93F07244BA44B00ED1FC3 /* MutationEventClearState.swift in Sources */,
+				97F793BC27AC934D000153D6 /* SQLStatement+CreateIndex.swift in Sources */,
 				D8FF6207250EB4C3000BFB4B /* NetworkStatusEvent.swift in Sources */,
 				2149E5C82388684F00873955 /* SQLStatement.swift in Sources */,
 				211A81D7270F787200C5483D /* SortedList.swift in Sources */,
 				D838AB4C2500330000BF4940 /* ModelSyncedEvent.swift in Sources */,
+				21DDCDFA272C822000D9B297 /* MutationSyncMetadataCopy.swift in Sources */,
 				FAED5742238B52CE008EBED8 /* ModelStorageBehavior.swift in Sources */,
 				2149E5C62388684F00873955 /* StorageEngineAdapter.swift in Sources */,
 				FA55A5492391EA89002AFF2D /* MutationEventSubscription.swift in Sources */,
@@ -2094,6 +2505,7 @@
 				FACBB2AE238AFAE800C29602 /* AWSDataStorePlugin+DataStoreBaseBehavior.swift in Sources */,
 				6B3CC61523F5E63F0008ECBC /* RemoteSyncEngine+Resolver.swift in Sources */,
 				2149E5D32388684F00873955 /* Statement+Model.swift in Sources */,
+				21DDCDFC272C835B00D9B297 /* SQLStatement+DropTable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2108,6 +2520,7 @@
 				2149E5FD238869CF00873955 /* OutgoingMutationQueueTests.swift in Sources */,
 				6B91DEBF238B9CE0004D6BEE /* ReconcileAndLocalSaveOperationTests.swift in Sources */,
 				6BDC224223E27324007C8410 /* MockAWSInitialSyncOrchestrator.swift in Sources */,
+				21DDCE3127332D8100D9B297 /* MockMutationSyncMigrationDelegate.swift in Sources */,
 				6B01B71D23A4615900AD0E97 /* SyncMutationToCloudOperationTests.swift in Sources */,
 				D8D1DED6252E30F800681DA8 /* ReadyEventEmitterTests.swift in Sources */,
 				FA3841ED23889D8F0070AD5B /* StateMachineTests.swift in Sources */,
@@ -2122,8 +2535,10 @@
 				2129BE4A23948A97006363A1 /* StorageAdapterMutationSyncTests.swift in Sources */,
 				B4D59DDD2554BBE7009B9235 /* LocalSubscriptionWithJSONModelTests.swift in Sources */,
 				FAABC227239B1B9100740F9F /* ReconciliationQueueTestBase.swift in Sources */,
+				21DDCE00272C869D00D9B297 /* SQLiteMutationSyncMetadataMigrationValidationTests.swift in Sources */,
 				FA0427CC2396C7E400D25AB0 /* InitialSyncOrchestratorTests.swift in Sources */,
 				FAE4146F239AA71300CE94C2 /* EquatableExtensions.swift in Sources */,
+				21DDCE0427303E5300D9B297 /* AWSDataStorePluginBaseBehaviorTests.swift in Sources */,
 				2149E5FF238869CF00873955 /* SQLStatementTests.swift in Sources */,
 				6B64027923E3584300001FD7 /* MockAWSIncomingEventReconciliationQueue.swift in Sources */,
 				7638898F26AB56580061AF0B /* StorageEngineSyncRequirementsTests.swift in Sources */,
@@ -2134,6 +2549,7 @@
 				6BDC224023E21A4E007C8410 /* RemoteSyncEngineTests.swift in Sources */,
 				FA4B8E962391C609009FC10F /* XCTest+AmplifyExtensions.swift in Sources */,
 				6B7743E9259071F5001469F5 /* MockRemoteSyncEngine.swift in Sources */,
+				97F793DC27BC7882000153D6 /* StorageEngineTestsSQLiteIndex.swift in Sources */,
 				FAE4146C239AA40600CE94C2 /* MockSQLiteStorageEngineAdapter.swift in Sources */,
 				97DB735B26B4A229004708B8 /* MutationEventExtensionsTests.swift in Sources */,
 				B4D9B9E424DF90CD0049484F /* DynamicModel.swift in Sources */,
@@ -2149,6 +2565,7 @@
 				FA59A21B23995CD9008B8A5C /* InitialSyncOperationTests.swift in Sources */,
 				2149E5F9238869CF00873955 /* QueryPredicateTests.swift in Sources */,
 				FAC010F2239570D300FCE7BB /* SyncEngineTestBase.swift in Sources */,
+				21DDCE2C273314DB00D9B297 /* SQLiteMutationSyncMetadataMigrationDelegateTests.swift in Sources */,
 				2149E5FA238869CF00873955 /* APICategoryDependencyTests.swift in Sources */,
 				219F796A25B8D268007107D3 /* StorageEngineTestsDelete.swift in Sources */,
 				211FFEDD26CD621400F0DB75 /* DataStoreObserveQueryOperationTests.swift in Sources */,
@@ -2162,9 +2579,11 @@
 				FAE4146A239AA2B700CE94C2 /* RemoteSyncReconcilerTests.swift in Sources */,
 				973AF1AF26E016EC00BED353 /* ModelCompareTests.swift in Sources */,
 				B4B3794B2551CF87007781D6 /* QuerySortDescriptorTests.swift in Sources */,
+				21DDCE06273049F200D9B297 /* StorageEnginePublisherTests.swift in Sources */,
 				6BE9D73E25A6800100AB5C9A /* StorageEngineTestsManyToMany.swift in Sources */,
 				2149E5FE238869CF00873955 /* RemoteSyncAPIInvocationTests.swift in Sources */,
 				B9FAA142238C6082009414B4 /* BaseDataStoreTests.swift in Sources */,
+				21DDCE02272C896100D9B297 /* MutationSyncMetadataMigrationTestBase.swift in Sources */,
 				6B7743E7259071C8001469F5 /* StorageEngineTestsHasMany.swift in Sources */,
 				6BE9D6F125A6643100AB5C9A /* StorageEngineTestsHasOne.swift in Sources */,
 				2145314026CDAD6400CDEACB /* AWSDataStorePluginSubscribeBehaviorTests.swift in Sources */,
@@ -2173,6 +2592,7 @@
 				FA4A955B239AD3F4008E876E /* Foundation+TestExtensions.swift in Sources */,
 				21A4EE77259D510400E1047D /* DataStoreListProviderFunctionalTests.swift in Sources */,
 				210E218226601C1C00D90ED8 /* MutationEventQueryTests.swift in Sources */,
+				21BBF6522729BD6500B8A856 /* MutationSyncMetadataMigrationTests.swift in Sources */,
 				7678B31025FAD93200B4917F /* InitialSyncOperationSyncExpressionTests.swift in Sources */,
 				6BE9D6F325A665EA00AB5C9A /* StorageEngineTestsBase.swift in Sources */,
 				FA1C819F25868D17006160E9 /* AWSDataStorePluginAmplifyVersionableTests.swift in Sources */,
@@ -2201,10 +2621,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				218F7888275A81410042334B /* DataStoreConnectionScenario6V2Tests.swift in Sources */,
 				D8E9992425013C2F0006170A /* DataStoreHubEventsTests.swift in Sources */,
 				D8C5BA59249815A6007C3A68 /* DataStoreConfigurationTests.swift in Sources */,
 				2178C0A126D3F1E200C53065 /* DataStoreObserveQueryTests.swift in Sources */,
 				2149E62D23886D3900873955 /* SyncMetadataTests.swift in Sources */,
+				218F788A275A81410042334B /* DataStoreConnectionScenario3V2Tests.swift in Sources */,
 				217D622D2579E15F009F0639 /* DataStoreConnectionScenario3Tests.swift in Sources */,
 				FAD2BDF6239583B2006EB065 /* TestModelRegistration.swift in Sources */,
 				9728F2B02683D98D00A506A8 /* DataStoreConsecutiveUpdatesTests.swift in Sources */,
@@ -2213,16 +2635,63 @@
 				217D61752578AF85009F0639 /* DataStoreConnectionScenario2Tests.swift in Sources */,
 				D888E80C24A65DC200F4CE3E /* LocalStoreIntegrationTestBase.swift in Sources */,
 				97406B382666DC0200C41E19 /* DataStoreCustomPrimaryKeyTests.swift in Sources */,
+				218F7889275A81410042334B /* DataStoreConnectionScenario4V2Tests.swift in Sources */,
 				FA3841EB23889D6C0070AD5B /* SubscriptionEndToEndTests.swift in Sources */,
+				218F788B275A81410042334B /* DataStoreConnectionScenario1V2Tests.swift in Sources */,
 				217D622B2579E15F009F0639 /* DataStoreConnectionScenario5Tests.swift in Sources */,
+				218F7887275A81410042334B /* DataStoreConnectionScenario2V2Tests.swift in Sources */,
+				218F788C275A81410042334B /* DataStoreConnectionScenario5V2Tests.swift in Sources */,
+				218F7891275A82A00042334B /* SyncEngineIntegrationV2TestBase.swift in Sources */,
 				21FDBBDB2587DB7A0086FCDC /* DataStoreConnectionScenario6Tests.swift in Sources */,
+				218F78D4275AC7CD0042334B /* DataStoreModelWithSecondaryIndexTests.swift in Sources */,
 				FAB571422395A3E80006A5F8 /* DataStoreEndToEndTests.swift in Sources */,
 				21A905BA261651FA00EC141D /* DataStoreScalarTests.swift in Sources */,
 				217D622C2579E15F009F0639 /* DataStoreConnectionScenario4Tests.swift in Sources */,
+				215D40AD277233340077E7DA /* DataStoreConnectionScenario8V2Tests.swift in Sources */,
 				D8E99926250142790006170A /* HubEventsIntegrationTestBase.swift in Sources */,
+				218F78D5275AC7CD0042334B /* DataStoreModelWithDefaultValueTests.swift in Sources */,
+				218F7893275A82C50042334B /* TestModelV2Registration.swift in Sources */,
 				21A905AE26164F7D00EC141D /* DataStoreTestBase.swift in Sources */,
 				FAB5714023958C210006A5F8 /* SyncEngineIntegrationTestBase.swift in Sources */,
+				218F78D6275AC7CD0042334B /* DataStoreModelWithCustomTimestampTests.swift in Sources */,
+				218F788D275A81410042334B /* DataStoreConnectionScenario7V2Tests.swift in Sources */,
 				FA2E6B8D2497C17500779D2F /* AWSDataStorePluginConfigurationTests.swift in Sources */,
+				218F789E275AB2990042334B /* DataStoreConnectionScenario3aV2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0CA4EA2748705F001C70CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0CA58D2748758E001C70CD /* Post3Wrapper.swift in Sources */,
+				9C0CA5542748740B001C70CD /* DataStoreConnectionScenario1FlutterTests.swift in Sources */,
+				9C0CA5CD27487675001C70CD /* User5Wrapper.swift in Sources */,
+				9C0CA59D274875CA001C70CD /* Post5Wrapper.swift in Sources */,
+				9CD8425C274C00EB00502D92 /* DataStoreConnectionScenario6FlutterTests.swift in Sources */,
+				9C0CA53527487347001C70CD /* FlutterSerializedModel.swift in Sources */,
+				9C0CA5C52748765C001C70CD /* TeamWrapper.swift in Sources */,
+				9C0CA58527487568001C70CD /* Comment6Wrapper.swift in Sources */,
+				9C0CA4F12748705F001C70CD /* AWSDataStoreCategoryPluginFlutterIntegrationTests.swift in Sources */,
+				9CD84254274C00BA00502D92 /* DataStoreConnectionScenario5FlutterTests.swift in Sources */,
+				9C0CA57527487533001C70CD /* Comment3Wrapper.swift in Sources */,
+				9C0CA565274874F0001C70CD /* PostWrapper.swift in Sources */,
+				9C0CA54B274873B8001C70CD /* FlutterDataStoreRequestUtils.swift in Sources */,
+				9C0CA56D2748750F001C70CD /* Blog6Wrapper.swift in Sources */,
+				9C0CA5A5274875E2001C70CD /* Post6Wrapper.swift in Sources */,
+				9C0CA55C274874A4001C70CD /* DataStoreFlutterConsecutiveUpdatesTests.swift in Sources */,
+				9CD84272274C0F1300502D92 /* DataStoreFlutterEndToEndTests.swift in Sources */,
+				9C0CA54327487395001C70CD /* FlutterTemporal.swift in Sources */,
+				9CD842202748A65800502D92 /* DataStoreConnectionScenario3FlutterTests.swift in Sources */,
+				9C0CA5B52748762C001C70CD /* Project1Wrapper.swift in Sources */,
+				9C0CA57D2748754D001C70CD /* Comment4Wrapper.swift in Sources */,
+				9C0CA5E327487883001C70CD /* SyncEngineFlutterIntegrationTestBase.swift in Sources */,
+				9C0CA595274875AB001C70CD /* Post4Wrapper.swift in Sources */,
+				9C0CA5BD27487644001C70CD /* Project2Wrapper.swift in Sources */,
+				9C0CA5AD27487602001C70CD /* PostEditor5Wrapper.swift in Sources */,
+				9C0CA52C274872D5001C70CD /* TestFlutterModelRegistration.swift in Sources */,
+				9CD842182748981A00502D92 /* DataStoreConnectionScenario2FlutterTests.swift in Sources */,
+				9CD842282748A68800502D92 /* DataStoreConnectionScenario4FlutterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2722,11 @@
 			isa = PBXTargetDependency;
 			target = 2149E60423886C7B00873955 /* HostApp */;
 			targetProxy = 2149E62823886CF500873955 /* PBXContainerItemProxy */;
+		};
+		9C0CA4F52748705F001C70CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2149E59A238867E100873955 /* AWSDataStoreCategoryPlugin */;
+			targetProxy = 9C0CA4F42748705F001C70CD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2616,6 +3090,48 @@
 			};
 			name = Release;
 		};
+		9C0CA4F72748705F001C70CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B62423E457D3149264ADA1F /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3DRXD72QU;
+				INFOPLIST_FILE = AWSDataStoreCategoryPluginFlutterIntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.amazonaws.AWSDataStoreCategoryPluginFlutterIntegrationTests.AWSDataStoreCategoryPluginFlutterIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9C0CA4F82748705F001C70CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3F25419403F14E7B77BE98B /* Pods-HostApp-AWSDataStoreCategoryPluginFlutterIntegrationTests.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3DRXD72QU;
+				INFOPLIST_FILE = AWSDataStoreCategoryPluginFlutterIntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.amazonaws.AWSDataStoreCategoryPluginFlutterIntegrationTests.AWSDataStoreCategoryPluginFlutterIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2669,6 +3185,15 @@
 			buildConfigurations = (
 				2149E62623886CEE00873955 /* Debug */,
 				2149E62723886CEE00873955 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C0CA4F62748705F001C70CD /* Build configuration list for PBXNativeTarget "AWSDataStoreCategoryPluginFlutterIntegrationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C0CA4F72748705F001C70CD /* Debug */,
+				9C0CA4F82748705F001C70CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

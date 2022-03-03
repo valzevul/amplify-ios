@@ -30,6 +30,8 @@ public struct MutationSync<ModelType: Model>: Decodable {
         let modelType = ModelType.self
         let json = try JSONValue(from: decoder)
 
+        var resolvedModelName = modelType.modelName
+
         // in case of `AnyModel`, decode the underlying type and erase to `AnyModel`
         if modelType == AnyModel.self {
             guard case let .string(modelName) = json["__typename"] else {
@@ -53,6 +55,7 @@ public struct MutationSync<ModelType: Model>: Decodable {
                     """)
             }
             self.model = anyModel
+            resolvedModelName = modelName
         } else {
             self.model = try modelType.init(from: decoder)
         }
@@ -61,20 +64,21 @@ public struct MutationSync<ModelType: Model>: Decodable {
               case let .number(lastChangedAt) = json["_lastChangedAt"],
               case let .number(version) = json["_version"] else {
 
-            // TODO query name could be useful for the message, but re-creating it here is not great
-            let queryName = "sync\(modelType.schema.pluralName ?? modelType.modelName)"
-            throw DataStoreError.decodingError(
+                  // TODO query name could be useful for the message, but re-creating it here is not great
+                  let queryName = modelType.schema.syncPluralName ?? modelType.schema.pluralName ?? modelType.modelName
+                  throw DataStoreError.decodingError(
                 """
                 Error decoding the the sync metadata from the delta sync query result.
                 """,
                 """
                 The sync metadata should contain fields named `_deleted`, `_lastChangedAt` and `_version`.
-                Check your `\(queryName)` query and make sure it returns the correct set of sync fields.
+                Check your sync`\(queryName)` query and make sure it returns the correct set of sync fields.
                 """
-            )
-        }
+                  )
+              }
 
-        self.syncMetadata = MutationSyncMetadata(id: model.id,
+        self.syncMetadata = MutationSyncMetadata(modelId: model.id,
+                                                 modelName: resolvedModelName,
                                                  deleted: deleted,
                                                  lastChangedAt: Int(lastChangedAt),
                                                  version: Int(version))

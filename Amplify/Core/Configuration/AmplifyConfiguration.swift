@@ -14,6 +14,7 @@ public struct AmplifyConfiguration: Codable {
         case api
         case auth
         case dataStore
+        case geo
         case hub
         case logging
         case predictions
@@ -32,6 +33,9 @@ public struct AmplifyConfiguration: Codable {
     /// Configurations for the Amplify DataStore category
     let dataStore: DataStoreCategoryConfiguration?
 
+    /// Configurations for the Amplify Geo category
+    let geo: GeoCategoryConfiguration?
+
     /// Configurations for the Amplify Hub category
     let hub: HubCategoryConfiguration?
 
@@ -48,6 +52,7 @@ public struct AmplifyConfiguration: Codable {
                 api: APICategoryConfiguration? = nil,
                 auth: AuthCategoryConfiguration? = nil,
                 dataStore: DataStoreCategoryConfiguration? = nil,
+                geo: GeoCategoryConfiguration? = nil,
                 hub: HubCategoryConfiguration? = nil,
                 logging: LoggingCategoryConfiguration? = nil,
                 predictions: PredictionsCategoryConfiguration? = nil,
@@ -56,6 +61,7 @@ public struct AmplifyConfiguration: Codable {
         self.api = api
         self.auth = auth
         self.dataStore = dataStore
+        self.geo = geo
         self.hub = hub
         self.logging = logging
         self.predictions = predictions
@@ -89,6 +95,10 @@ extension Amplify {
     ///
     /// - Parameter configuration: The AmplifyConfiguration for specified Categories
     public static func configure(_ configuration: AmplifyConfiguration? = nil) throws {
+        guard !isRunningForSwiftUIPreviews else {
+            log.info("Running for SwiftUI reviews, skipping configuration.")
+            return
+        }
         log.info("Configuring")
         log.debug("Configuration: \(String(describing: configuration))")
         guard !isConfigured else {
@@ -120,6 +130,8 @@ extension Amplify {
                 try configure(API, using: configuration)
             case .dataStore:
                 try configure(DataStore, using: configuration)
+            case .geo:
+                try configure(Geo, using: configuration)
             case .predictions:
                 try configure(Predictions, using: configuration)
             case .storage:
@@ -168,6 +180,11 @@ extension Amplify {
                 log.warn("No plugin found for configuration key `\(unusedPluginKey)`. Add a plugin for that key.")
             }
         }
+    }
+
+    //// Indicates is the runtime is for SwiftUI Previews
+    private static var isRunningForSwiftUIPreviews: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
     }
 
 }

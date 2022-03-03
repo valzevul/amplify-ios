@@ -37,6 +37,14 @@ public class MockAWSAuthService: AWSAuthServiceBehavior {
         return .success(identityId ?? "IdentityId")
     }
 
+    public func getIdentityID(completion: @escaping (Result<String, AuthError>) -> Void) {
+        if let error = getIdentityIdError {
+            completion(.failure(error))
+        }
+
+        completion(.success(identityId ?? "IdentityId"))
+    }
+
     public func getToken() -> Result<String, AuthError> {
         if let error = getTokenError {
             return .failure(error)

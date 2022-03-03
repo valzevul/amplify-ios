@@ -1,5 +1,114 @@
 # Changelog
 ## Unreleased
+## 1.21.0 (2022-02-23)
+
+### Features
+
+- **auth**: handle errors returned from Social SignIn sessions (#1642)
+
+## 1.20.0 (2022-02-23)
+
+### Features
+
+- **API**: Set AppSyncRTClient log level from Amplify log level (#1637)
+
+### Bug Fixes
+
+- Handle .all predicate for create/update (#1640)
+
+## 1.19.2 (2022-02-07)
+
+### Bug Fixes
+
+- **datastore**: Add DateTime, Date, Time, Int, Float, Enum field in indexes to GraphQL input correctly for mutations (#1612)
+
+## 1.19.1 (2022-02-01)
+
+### Bug Fixes
+
+- **auth**: handle deleted account when fetching signed in session (#1604)
+
+## 1.19.0 (2022-01-20)
+
+### Features
+
+- **auth**: add deleteUser API (#1598) [skip-ci]
+
+## 1.18.3 (2022-01-20)
+
+### Features
+
+- **auth**: add deleteUser API (#1582)
+- Update AWS SDKs to 2.27.0 (#1596)
+
+## 1.18.2 (2022-01-19)
+
+### Bug Fixes
+
+- **datastore**: quote table name in create table-references SQL statement (#1485)
+
+## 1.18.1 (2021-12-15)
+
+## 1.18.0 (2021-12-15)
+
+### Features
+
+- **AWSPluginsCore**: Add non-blocking methods to AWSAuthServiceBehavior / deprecate existing blocking methods   (#1502)
+
+### Bug Fixes
+
+- **API**: Memory leak in GraphQLOperation (#1562)
+- **Storage**: Use async getidentityid (#1544)
+
+## 1.17.0 (2021-12-07)
+
+### Features
+
+- **Storage**: Add async resolvePrefix (#1539)
+
+### Bug Fixes
+
+- **datastore**: fix owner based subscriptions queries w/ multiauth (#1553)
+- **auth**: Update the Auth plugin to enforce ordering of api calls (#1549)
+- **DataStore**: Remove from snapshot when item no longer matches predicate (#1522)
+
+
+### Features
+
+- **Core**: Supports SwiftUI by not running `Amplify.configure` while running for Previews #1509
+
+
+## 1.16.1 (2021-11-19)
+
+## 1.16.0 (2021-11-18)
+
+### Features
+
+- **Geo**: Add Amplify Geo Category. Amplify Geo provides APIs for mobile app development such that you can add maps and search to your app with just a few lines of code.
+
+### Bug Fixes
+
+- **DataStore**: support predicate evaluation on model with Enum (#1516)
+
+## 1.15.6 (2021-11-15)
+
+### Bug Fixes
+
+- **DataStore**: clear ModelSyncMetadata on duplicate ids found (#1515)
+- **DataStore**: Allow different model types with the same ID (#1490)
+
+## 1.15.5 (2021-11-04)
+
+### Bug Fixes
+
+- **DataStore**: ModelSyncedEventEmitter event order (#1494)
+
+## 1.15.4 (2021-11-03)
+
+### Bug Fixes
+
+- Support new list name pluralization (#1451)
+
 ## 1.15.3 (2021-10-21)
 
 ### Bug Fixes

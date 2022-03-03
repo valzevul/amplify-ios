@@ -1,14 +1,14 @@
 # Version definitions
 
 # Amplify release version
-$AMPLIFY_VERSION = '1.15.3'
+$AMPLIFY_VERSION = '1.21.0'
 
 # GitHub tag name for Amplify releases
 $AMPLIFY_RELEASE_TAG = "v#{$AMPLIFY_VERSION}"
 
 # AWS SDK version
 # http://guides.cocoapods.org/using/the-podfile.html#specifying-pod-versions
-$AWS_SDK_VERSION = '2.26.1'
+$AWS_SDK_VERSION = '2.27.0'
 $OPTIMISTIC_AWS_SDK_VERSION = "~> #{$AWS_SDK_VERSION}"
 
 # Include common tooling
@@ -22,8 +22,5 @@ end
 def include_test_utilities!
   pod 'CwlPreconditionTesting',
     git: 'https://github.com/mattgallagher/CwlPreconditionTesting.git',
-    tag: '1.2.0'
-  pod 'CwlCatchException',
-    git: 'https://github.com/mattgallagher/CwlCatchException.git',
-    tag: '1.2.0'
+    tag: '2.1.0'
 end

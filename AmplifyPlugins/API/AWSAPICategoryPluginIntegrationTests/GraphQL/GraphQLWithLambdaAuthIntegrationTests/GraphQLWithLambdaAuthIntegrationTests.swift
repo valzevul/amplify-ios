@@ -14,7 +14,7 @@ import AmplifyPlugins
 @testable import AWSAPICategoryPluginTestCommon
 
 class GraphQLWithLambdaAuthIntegrationTests: XCTestCase {
-    let amplifyConfigurationFile = "GraphQLWithLambdaAuthIntegrationTests-amplifyconfiguration"
+    let amplifyConfigurationFile = "testconfiguration/GraphQLWithLambdaAuthIntegrationTests-amplifyconfiguration"
     override func setUp() {
         do {
             try Amplify.add(plugin: AWSAPIPlugin(apiAuthProviderFactory: TestAPIAuthProviderFactory()))
@@ -224,7 +224,8 @@ class GraphQLWithLambdaAuthIntegrationTests: XCTestCase {
         static let schema = defineSchema { model in
             let todo = Todo.keys
 
-            model.pluralName = "Todos"
+            model.listPluralName = "Todos"
+            model.syncPluralName = "Todos"
 
             model.fields(
                 .id(),

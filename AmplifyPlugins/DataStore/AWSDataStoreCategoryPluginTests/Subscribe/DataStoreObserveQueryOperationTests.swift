@@ -14,6 +14,7 @@ import Combine
 @testable import AWSPluginsCore
 @testable import AWSDataStoreCategoryPlugin
 
+// swiftlint:disable type_body_length
 class DataStoreObserveQueryOperationTests: XCTestCase {
 
     var storageEngine: MockStorageEngineBehavior!
@@ -44,7 +45,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let sink = operation.publisher.sink { completed in
             switch completed {
@@ -95,7 +97,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let sink = operation.publisher.sink { completed in
             switch completed {
@@ -153,7 +156,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let sink = operation.publisher.sink { completed in
             switch completed {
@@ -210,7 +214,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let sink = operation.publisher.sink { completed in
             switch completed {
@@ -262,7 +267,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let sink = operation.publisher.sink { completed in
             switch completed {
@@ -306,7 +312,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         var sink = operation.publisher.sink { completed in
             switch completed {
@@ -352,7 +359,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         var sink = operation.publisher.sink { completed in
             switch completed {
@@ -387,7 +395,6 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
     func testObserveQueryOperationIsRemovedWhenPreviousSubscriptionIsRemoved() {
         let firstSnapshot = expectation(description: "first query snapshot")
         var querySnapshots = [DataStoreQuerySnapshot<Post>]()
-
         let operation1 = AWSDataStoreObserveQueryOperation(
             modelType: Post.self,
             modelSchema: Post.schema,
@@ -395,7 +402,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         let operation2 = AWSDataStoreObserveQueryOperation(
             modelType: Post.self,
@@ -404,7 +412,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
 
         var sink = operation1.publisher.sink { completed in
             switch completed {
@@ -452,7 +461,8 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
             sortInput: nil,
             storageEngine: storageEngine,
             dataStorePublisher: dataStorePublisher,
-            dataStoreConfiguration: .default)
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: false))
         let post = Post(title: "model1",
                         content: "content1",
                         createdAt: .now())
@@ -479,7 +489,7 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
                 do {
                     let itemChange = try createPost(id: post.id)
                     let itemChange2 = try createPost()
-                    operation.onItemsChange(mutationEvents: [itemChange, itemChange2])
+                    operation.onItemsChangeDuringSync(mutationEvents: [itemChange, itemChange2])
                 } catch {
                     XCTFail("Failed to create post")
                 }
@@ -489,11 +499,82 @@ class DataStoreObserveQueryOperationTests: XCTestCase {
         sink.cancel()
     }
 
+    /// When a predicate like `title.beginsWith("title")` is given, the models that matched the predicate
+    /// should be added to the snapshots, like `post` and `post2`. When `post2.title` is updated to no longer
+    /// match the predicate, it should be removed from the snapshot.
+    func testUpdatedModelNoLongerMatchesPredicateRemovedFromSnapshot() throws {
+        let firstSnapshot = expectation(description: "first query snapshots")
+        let secondSnapshot = expectation(description: "second query snapshots")
+        let thirdSnapshot = expectation(description: "third query snapshots")
+        let fourthSnapshot = expectation(description: "fourth query snapshots")
+        var querySnapshots = [DataStoreQuerySnapshot<Post>]()
+        let operation = AWSDataStoreObserveQueryOperation(
+            modelType: Post.self,
+            modelSchema: Post.schema,
+            predicate: Post.keys.title.beginsWith("title"),
+            sortInput: QuerySortInput.ascending(Post.keys.id).asSortDescriptors(),
+            storageEngine: storageEngine,
+            dataStorePublisher: dataStorePublisher,
+            dataStoreConfiguration: .default,
+            dispatchedModelSyncedEvent: AtomicValue(initialValue: true))
+
+        let sink = operation.publisher.sink { completed in
+            switch completed {
+            case .finished:
+                break
+            case .failure(let error):
+                XCTFail("Failed with error \(error)")
+            }
+        } receiveValue: { querySnapshot in
+            querySnapshots.append(querySnapshot)
+            if querySnapshots.count == 1 {
+                firstSnapshot.fulfill()
+            } else if querySnapshots.count == 2 {
+                secondSnapshot.fulfill()
+            } else if querySnapshots.count == 3 {
+                thirdSnapshot.fulfill()
+            } else if querySnapshots.count == 4 {
+                fourthSnapshot.fulfill()
+            }
+        }
+        let queue = OperationQueue()
+        queue.addOperation(operation)
+
+        let post = try createPost(id: "1", title: "title 1")
+        dataStorePublisher.send(input: post)
+        let post2 = try createPost(id: "2", title: "title 2")
+        dataStorePublisher.send(input: post2)
+        var updatedPost2 = try createPost(id: "2", title: "Does not match predicate")
+        updatedPost2.mutationType = MutationEvent.MutationType.update.rawValue
+        dataStorePublisher.send(input: updatedPost2)
+        waitForExpectations(timeout: 1)
+
+        XCTAssertEqual(querySnapshots.count, 4)
+
+        // First snapshot is empty from the initial query
+        XCTAssertEqual(querySnapshots[0].items.count, 0)
+
+        // Second snapshot contains `post` since it matches the predicate
+        XCTAssertEqual(querySnapshots[1].items.count, 1)
+        XCTAssertEqual(querySnapshots[1].items[0].id, "1")
+
+        // Third snapshot contains both posts since they both match the predicate
+        XCTAssertEqual(querySnapshots[2].items.count, 2)
+        XCTAssertEqual(querySnapshots[2].items[0].id, "1")
+        XCTAssertEqual(querySnapshots[2].items[1].id, "2")
+
+        // Fourth snapshot no longer has the post2 since it was updated to not match the predicate
+        // and deleted at the same time.
+        XCTAssertEqual(querySnapshots[3].items.count, 1)
+        XCTAssertEqual(querySnapshots[3].items[0].id, "1")
+        sink.cancel()
+    }
+
     // MARK: - Helpers
 
-    func createPost(id: String = UUID().uuidString) throws -> MutationEvent {
+    func createPost(id: String = UUID().uuidString, title: String? = nil) throws -> MutationEvent {
         try MutationEvent(model: Post(id: id,
-                                      title: "model1",
+                                      title: title ?? "model1",
                                       content: "content1",
                                       createdAt: .now()),
                           modelSchema: Post.schema,

@@ -14,10 +14,11 @@ import XCTest
 // swiftlint:disable type_body_length
 class GraphQLModelBasedTests: XCTestCase {
 
-    static let amplifyConfiguration = "GraphQLModelBasedTests-amplifyconfiguration"
+    static let amplifyConfiguration = "testconfiguration/GraphQLModelBasedTests-amplifyconfiguration"
 
     override func setUp() {
         Amplify.reset()
+        Amplify.Logging.logLevel = .verbose
         let plugin = AWSAPIPlugin(modelRegistration: PostCommentModelRegistration())
 
         do {

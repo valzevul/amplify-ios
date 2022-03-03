@@ -7,10 +7,10 @@
 #
 
 # Version definitions
-$AMPLIFY_VERSION = '1.15.3'
+$AMPLIFY_VERSION = '1.21.0'
 $AMPLIFY_RELEASE_TAG = "v#{$AMPLIFY_VERSION}"
 
-$AWS_SDK_VERSION = '2.26.1'
+$AWS_SDK_VERSION = '2.27.0'
 $OPTIMISTIC_AWS_SDK_VERSION = "~> #{$AWS_SDK_VERSION}"
 
 Pod::Spec.new do |s|
@@ -31,7 +31,34 @@ Pod::Spec.new do |s|
   s.source_files = 'AmplifyTestCommon/**/*.swift'
 
   s.dependency 'Amplify', $AMPLIFY_VERSION
+  s.dependency 'CwlPreconditionTesting', "~> 2.0"
 
+  s.pod_target_xcconfig = { 
+    'ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES' => 'YES',
+    'ENABLE_TESTING_SEARCH_PATHS' => 'YES',
+    'SYSTEM_FRAMEWORK_SEARCH_PATHS' => '$(CORRESPONDING_DEVICE_PLATFORM_DIR)/Developer/Library/Frameworks $(inherited)'
+  }
+
+  s.script_phases = [
+    { 
+      :name => 'Copy Configuration folder', 
+      :script => '
+      TEMP_FILE=$HOME/.aws-amplify/amplify-ios/testconfiguration/.
+      DEST_PATH="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/testconfiguration/"
+
+      if [[ ! -d $TEMP_FILE ]] ; then
+          echo "${TEMP_FILE} does not exist. Using empty configuration."
+          exit 0
+      fi
+      
+      if [[ -f $DEST_PATH ]] ; then
+          rm $DEST_PATH
+      fi
+      
+      cp -r $TEMP_FILE $DEST_PATH
+      ' 
+    }
+  ]
   s.subspec 'AWSPluginsTestCommon' do |ss|
     ss.source_files = 'AmplifyPlugins/Core/AWSPluginsTestCommon/**/*.swift'
     ss.dependency 'AWSPluginsCore', $AMPLIFY_VERSION

@@ -26,6 +26,11 @@ struct TestModelRegistration: AmplifyModelRegistration {
 
         // Models for data conversion testing
         registry.register(modelType: ExampleWithEveryType.self)
+
+        // Reserved words models
+        registry.register(modelType: Group.self)
+        registry.register(modelType: Row.self)
+        registry.register(modelType: Transaction.self)
     }
 
     let version: String = "1"
@@ -50,7 +55,8 @@ struct TestJsonModelRegistration: AmplifyModelRegistration {
                                   isRequired: false,
                                   association: .hasMany(associatedFieldName: "post"))
         let postSchema = ModelSchema(name: "Post",
-                                     pluralName: "Posts",
+                                     listPluralName: "Posts",
+                                     syncPluralName: "Posts",
                                      fields: [id.name: id,
                                               title.name: title,
                                               content.name: content,
@@ -76,7 +82,8 @@ struct TestJsonModelRegistration: AmplifyModelRegistration {
                                    isRequired: true,
                                    association: .belongsTo(associatedWith: nil, targetName: "postId"))
         let commentSchema = ModelSchema(name: "Comment",
-                                        pluralName: "Comments",
+                                        listPluralName: "Comments",
+                                        syncPluralName: "Comments",
                                         fields: [
                                             commentId.name: commentId,
                                             commentContent.name: commentContent,

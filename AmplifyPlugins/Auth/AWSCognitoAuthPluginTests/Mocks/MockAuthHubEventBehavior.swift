@@ -17,9 +17,11 @@ class MockAuthHubEventBehavior: AuthHubEventBehavior {
         // Incomplete implementation
     }
 
-    func sendSessionExpiredEvent() {
+    func sendUserDeletedEvent() {
         // Incomplete implementation
     }
 
-
+    func sendSessionExpiredEvent() {
+        // Incomplete implementation
+    }
 }

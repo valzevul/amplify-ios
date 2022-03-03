@@ -234,9 +234,11 @@ type CustomerOrder @model
    orderId: String!
    email: String!
 }
+
 ```
 3. `amplify push`
 
-4. Copy `amplifyconfiguration.json` over to the Config folder
+4. Copy `amplifyconfiguration.json` to a new file named `AWSDataStoreCategoryPluginIntegrationTests-amplifyconfiguration.json` inside `~/.aws-amplify/amplify-ios/testconfiguration/`
+
 
 You should now be able to run all of the tests 

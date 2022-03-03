@@ -148,8 +148,8 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
                     )
                     .store(in: &cancellables)
             }
-        } catch let dataSotoreError as DataStoreError {
-            stateMachine.notify(action: .errored(dataSotoreError))
+        } catch let dataStoreError as DataStoreError {
+            stateMachine.notify(action: .errored(dataStoreError))
         } catch {
             let dataStoreError = DataStoreError.invalidOperation(causedBy: error)
             stateMachine.notify(action: .errored(dataStoreError))
@@ -228,7 +228,8 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
 
             do {
                 let localMetadatas = try storageAdapter.queryMutationSyncMetadata(
-                    for: remoteModels.map { $0.model.id })
+                    for: remoteModels.map { $0.model.id },
+                       modelName: self.modelSchema.name)
                 result = .success((remoteModels, localMetadatas))
             } catch {
                 result = .failure(DataStoreError(error: error))

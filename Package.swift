@@ -23,6 +23,9 @@ let package = Package(
         .library(name: "AWSDataStorePlugin",
                  targets: ["AWSDataStorePlugin"]),
         
+        .library(name: "AWSLocationGeoPlugin",
+                 targets: ["AWSLocationGeoPlugin"]),
+        
         .library(name: "AWSPinpointAnalyticsPlugin",
                  targets: ["AWSPinpointAnalyticsPlugin"]),
         
@@ -31,8 +34,8 @@ let package = Package(
         
     ],
     dependencies: [
-        .package(name: "AWSiOSSDKV2", url: "https://github.com/aws-amplify/aws-sdk-ios-spm.git", .upToNextMinor(from: "2.26.1")),
-        .package(name: "AppSyncRealTimeClient", url: "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git", from: "1.4.3"),
+        .package(name: "AWSiOSSDKV2", url: "https://github.com/aws-amplify/aws-sdk-ios-spm.git", .upToNextMinor(from: "2.27.0")),
+        .package(name: "AppSyncRealTimeClient", url: "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git", from: "1.8.0"),
         .package(url: "https://github.com/stephencelis/SQLite.swift.git", .exact("0.12.2"))
     ],
     targets: [
@@ -91,6 +94,19 @@ let package = Package(
             path: "AmplifyPlugins/DataStore/AWSDataStoreCategoryPlugin",
             exclude: [
                 "Info.plist"
+            ]
+        ),
+        .target(
+            name: "AWSLocationGeoPlugin",
+            dependencies: [
+                .target(name: "Amplify"),
+                .target(name: "AWSPluginsCore"),
+                .product(name: "AWSCore", package: "AWSiOSSDKV2"),
+                .product(name: "AWSLocationXCF", package: "AWSiOSSDKV2")
+            ],
+            path: "AmplifyPlugins/Geo/AWSLocationGeoPlugin",
+            exclude: [
+                "Resources/Info.plist"
             ]
         ),
         .target(

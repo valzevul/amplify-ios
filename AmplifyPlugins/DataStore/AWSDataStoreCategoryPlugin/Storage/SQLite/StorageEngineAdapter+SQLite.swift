@@ -96,8 +96,27 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
             .map { CreateTableStatement(modelSchema: $0).stringValue }
             .joined(separator: "\n")
 
+        let createIndexStatements = modelSchemas
+            .sortByDependencyOrder()
+            .map { $0.createIndexStatements() }
+            .joined(separator: "\n")
+
         do {
             try connection.execute(createTableStatements)
+            try connection.execute(createIndexStatements)
+        } catch {
+            throw DataStoreError.invalidOperation(causedBy: error)
+        }
+
+    }
+
+    func applyModelMigrations(modelSchemas: [ModelSchema]) throws {
+        let delegate = SQLiteMutationSyncMetadataMigrationDelegate(storageAdapter: self,
+                                                                                 modelSchemas: modelSchemas)
+        let modelMigration = MutationSyncMetadataMigration(delegate: delegate)
+        let modelMigrations = ModelMigrations(modelMigrations: [modelMigration])
+        do {
+            try modelMigrations.apply()
         } catch {
             throw DataStoreError.invalidOperation(causedBy: error)
         }
@@ -116,7 +135,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
             let modelExists = try exists(modelSchema, withId: model.id)
 
             if !modelExists {
-                if condition != nil {
+                if let condition = condition, !condition.isAll {
                     let dataStoreError = DataStoreError.invalidCondition(
                         "Cannot apply a condition on model which does not exist.",
                         "Save the model instance without a condition first.")
@@ -129,7 +148,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
             }
 
             if modelExists {
-                if condition != nil {
+                if let condition = condition, !condition.isAll {
                     let modelExistsWithCondition = try exists(modelSchema, withId: model.id, predicate: condition)
                     if !modelExistsWithCondition {
                         let dataStoreError = DataStoreError.invalidCondition(
@@ -246,7 +265,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
                 withId id: Model.Identifier,
                 predicate: QueryPredicate? = nil) throws -> Bool {
         let primaryKey = modelSchema.primaryKey.sqlName
-        var sql = "select count(\(primaryKey)) from \(modelSchema.name) where \(primaryKey) = ?"
+        var sql = "select count(\(primaryKey)) from \"\(modelSchema.name)\" where \(primaryKey) = ?"
         var variables: [Binding?] = [id]
         if let predicate = predicate {
             let conditionStatement = ConditionStatement(modelSchema: modelSchema, predicate: predicate)
@@ -270,11 +289,11 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
 
     func queryMutationSync(forAnyModel anyModel: AnyModel) throws -> MutationSync<AnyModel>? {
         let model = anyModel.instance
-        let results = try queryMutationSync(for: [model])
+        let results = try queryMutationSync(for: [model], modelName: anyModel.modelName)
         return results.first
     }
 
-    func queryMutationSync(for models: [Model]) throws -> [MutationSync<AnyModel>] {
+    func queryMutationSync(for models: [Model], modelName: String) throws -> [MutationSync<AnyModel>] {
         let statement = SelectStatement(from: MutationSyncMetadata.schema)
         let primaryKey = MutationSyncMetadata.schema.primaryKey.sqlName
         // This is a temp workaround since we don't currently support the "in" operator
@@ -283,7 +302,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
         let sql = statement.stringValue + "\nwhere \(primaryKey) in (\(placeholders))"
 
         // group models by id for fast access when creating the tuple
-        let modelById = Dictionary(grouping: models, by: { $0.id }).mapValues { $0.first! }
+        let modelById = Dictionary(grouping: models,
+                                   by: { MutationSyncMetadata.identifier(modelName: modelName, modelId: $0.id) })
+            .mapValues { $0.first! }
         let ids = [String](modelById.keys)
         let rows = try connection.prepare(sql).bind(ids)
 
@@ -300,12 +321,12 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
         return mutationSyncList
     }
 
-    func queryMutationSyncMetadata(for modelId: Model.Identifier) throws -> MutationSyncMetadata? {
-        let results = try queryMutationSyncMetadata(for: [modelId])
+    func queryMutationSyncMetadata(for modelId: Model.Identifier, modelName: String) throws -> MutationSyncMetadata? {
+        let results = try queryMutationSyncMetadata(for: [modelId], modelName: modelName)
         return try results.unique()
     }
 
-    func queryMutationSyncMetadata(for modelIds: [Model.Identifier]) throws -> [MutationSyncMetadata] {
+    func queryMutationSyncMetadata(for modelIds: [Model.Identifier], modelName: String) throws -> [MutationSyncMetadata] {
         let modelType = MutationSyncMetadata.self
         let modelSchema = MutationSyncMetadata.schema
         let fields = MutationSyncMetadata.keys
@@ -314,7 +335,10 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
         for chunkedModelIds in chunkedModelIdsArr {
             var queryPredicates: [QueryPredicateOperation] = []
             for id in chunkedModelIds {
-                queryPredicates.append(QueryPredicateOperation(field: fields.id.stringValue, operator: .equals(id)))
+                let mutationSyncMetadataId = MutationSyncMetadata.identifier(modelName: modelName,
+                                                                             modelId: id)
+                queryPredicates.append(QueryPredicateOperation(field: fields.id.stringValue,
+                                                               operator: .equals(mutationSyncMetadataId)))
             }
             let groupedQueryPredicates = QueryPredicateGroup(type: .or, predicates: queryPredicates)
             let statement = SelectStatement(from: modelSchema, predicate: groupedQueryPredicates)
@@ -372,18 +396,18 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     static func clearIfNewVersion(version: String,
                                   dbFilePath: URL,
                                   userDefaults: UserDefaults = UserDefaults.standard,
-                                  fileManager: FileManager = FileManager.default) throws {
+                                  fileManager: FileManager = FileManager.default) throws -> Bool {
 
         guard let previousVersion = userDefaults.string(forKey: dbVersionKey) else {
-            return
+            return false
         }
 
         if previousVersion == version {
-            return
+            return false
         }
 
         guard fileManager.fileExists(atPath: dbFilePath.path) else {
-            return
+            return false
         }
 
         log.verbose("\(#function) Warning: Schema change detected, removing your previous database")
@@ -393,6 +417,7 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
             log.error("\(#function) Failed to delete database file located at: \(dbFilePath), error: \(error)")
             throw DataStoreError.invalidDatabase(path: dbFilePath.path, error)
         }
+        return true
     }
 }
 
