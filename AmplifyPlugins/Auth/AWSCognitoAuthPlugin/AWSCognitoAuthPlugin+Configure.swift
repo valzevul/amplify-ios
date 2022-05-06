@@ -49,6 +49,7 @@ extension AWSCognitoAuthPlugin {
                       userService: userService,
                       deviceService: deviceService,
                       hubEventHandler: hubEventHandler,
+                      authConfig: jsonValueConfiguration,
                       queue: operationQueue)
         } catch let authError as AuthError {
             throw authError
@@ -161,12 +162,14 @@ extension AWSCognitoAuthPlugin {
                    userService: AuthUserServiceBehavior,
                    deviceService: AuthDeviceServiceBehavior,
                    hubEventHandler: AuthHubEventBehavior,
+                   authConfig: JSONValue = JSONValue.object([:]),
                    queue: OperationQueue = OperationQueue()) {
         self.authenticationProvider = authenticationProvider
         self.authorizationProvider = authorizationProvider
         self.userService = userService
         self.deviceService = deviceService
         self.hubEventHandler = hubEventHandler
+        configuration = authConfig
         self.queue = queue
     }
 }
