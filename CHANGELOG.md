@@ -1,5 +1,67 @@
 # Changelog
 ## Unreleased
+## 1.24.0 (2022-05-05)
+
+### Features
+
+- **auth**: Add support of custom endpoint for CognitoUserPool (#1715)
+
+## 1.23.2 (2022-05-04)
+
+### Bug Fixes
+
+- **DataStore**: Nesting DataStore integration tests (#1757)
+
+## 1.23.1 (2022-04-25)
+
+### Bug Fixes
+
+- **DataStore**: Cascade delete sync from children to parent models (#1731)
+
+## 1.23.0 (2022-04-12)
+
+### Features
+
+- **DataStore**: DataStore.delete(modelType:where:) API (#1723)
+
+### Bug Fixes
+
+- **build**: remove ungated  >= Swift 5.4 features to allow building on Xcode 12 (#1737)
+
+## 1.22.4 (2022-04-07)
+
+### Bug Fixes
+
+- **analytics**: Set pinpointConfiguration.debug on debug mode (#1689)
+- **DataStore**: Reconcile locally sourced mutations while subscriptions are disabled (#1712)
+
+## 1.22.3 (2022-04-02)
+
+## 1.22.2 (2022-03-29)
+
+### Bug Fixes
+
+- update SQLite dependency to 0.13.2 (#1696)
+
+## 1.22.1 (2022-03-23)
+
+## 1.22.0 (2022-03-16)
+
+### Features
+
+- **DataStore**: Create SQLite indexes when setting up datastore (#1634)
+
+### Bug Fixes
+
+- **DataStore**: Clear API should delete local store (#1685)
+- **API**: DataRace - subscription cancel and OperationTaskMapper on reset (#1684)
+- **DataStore**: Debugging - Access DB File path (#1678)
+- **DataStore**: ObserveQuery InitialQuery empty modelIds set (#1663)
+- **DataStore**: FatalError accessing SQLite connection (#1671)
+- **DataStore**: add logging with model name for failed subscription request (#1665)
+- **DataStore**: enable thread sanitzer, fix data races (#1656)
+- **auth**: fix deleteUser Combine support (#1652)
+
 ## 1.21.0 (2022-02-23)
 
 ### Features

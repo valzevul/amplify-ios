@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-appsync-realtime-client-ios.git",
         "state": {
           "branch": null,
-          "revision": "57d5df1590e9ead5a0c3677ffa8d83688bd48608",
-          "version": "1.9.0"
+          "revision": "810a305a8e2200db90d3a237c687b20cfc610268",
+          "version": "1.9.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "2fbb2199cee0124c584e58c5753c05e10e7d7348",
-          "version": "2.27.1"
+          "revision": "2e492ce100d30813c3e491778ed5496c329e14aa",
+          "version": "2.27.7"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
           "branch": null,
-          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
-          "version": "0.12.2"
+          "revision": "5f5ad81ac0d0a0f3e56e39e646e8423c617df523",
+          "version": "0.13.2"
         }
       },
       {

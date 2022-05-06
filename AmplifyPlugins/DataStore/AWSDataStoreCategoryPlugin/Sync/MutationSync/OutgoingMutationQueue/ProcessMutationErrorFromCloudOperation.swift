@@ -280,7 +280,7 @@ class ProcessMutationErrorFromCloudOperation: AsynchronousOperation {
             self.log.verbose("sendMutationToCloud received asyncEvent: \(result)")
             self.validate(cloudResult: result, request: apiRequest)
         }
-        mutationOperation = AtomicValue(initialValue: graphQLOperation)
+        mutationOperation.set(graphQLOperation)
     }
 
     private func validate(cloudResult: MutationSyncCloudResult, request: MutationSyncAPIRequest) {
@@ -322,7 +322,7 @@ class ProcessMutationErrorFromCloudOperation: AsynchronousOperation {
         storageAdapter.delete(untypedModelType: modelType,
                               modelSchema: modelSchema,
                               withId: id,
-                              predicate: nil) { response in
+                              condition: nil) { response in
             switch response {
             case .failure(let dataStoreError):
                 let error = DataStoreError.unknown("Delete failed \(dataStoreError)", "")

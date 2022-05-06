@@ -14,8 +14,8 @@ import AWSPluginsCore
 /// an integration layer between the AppSyncLocal `StorageEngine` and SQLite for local storage.
 final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
 
-    internal var connection: Connection!
-    private var dbFilePath: URL?
+    var connection: Connection?
+    var dbFilePath: URL?
     static let dbVersionKey = "com.amazonaws.DataStore.dbVersion"
 
     // TODO benchmark whether a SELECT FROM FOO WHERE ID IN (1, 2, 3...) performs measurably
@@ -89,6 +89,10 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func setUp(modelSchemas: [ModelSchema]) throws {
+        guard let connection = connection else {
+            throw DataStoreError.invalidOperation(causedBy: nil)
+        }
+
         log.debug("Setting up \(modelSchemas.count) models")
 
         let createTableStatements = modelSchemas
@@ -130,6 +134,10 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
                         modelSchema: ModelSchema,
                         condition: QueryPredicate? = nil,
                         completion: DataStoreCallback<M>) {
+        guard let connection = connection else {
+            completion(.failure(DataStoreError.nilSQLiteConnection()))
+            return
+        }
         do {
             let modelType = type(of: model)
             let modelExists = try exists(modelSchema, withId: model.id)
@@ -187,10 +195,14 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
 
     func delete<M: Model>(_ modelType: M.Type,
                           modelSchema: ModelSchema,
-                          predicate: QueryPredicate,
+                          filter: QueryPredicate,
                           completion: (DataStoreResult<[M]>) -> Void) {
+        guard let connection = connection else {
+            completion(.failure(DataStoreError.nilSQLiteConnection()))
+            return
+        }
         do {
-            let statement = DeleteStatement(modelSchema: modelSchema, predicate: predicate)
+            let statement = DeleteStatement(modelSchema: modelSchema, predicate: filter)
             _ = try connection.prepare(statement.stringValue).run(statement.variables)
             completion(.success([]))
         } catch {
@@ -201,9 +213,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     func delete<M: Model>(_ modelType: M.Type,
                           modelSchema: ModelSchema,
                           withId id: Model.Identifier,
-                          predicate: QueryPredicate? = nil,
+                          condition: QueryPredicate? = nil,
                           completion: (DataStoreResult<M?>) -> Void) {
-        delete(untypedModelType: modelType, modelSchema: modelSchema, withId: id, predicate: predicate) { result in
+        delete(untypedModelType: modelType, modelSchema: modelSchema, withId: id, condition: condition) { result in
             switch result {
             case .success:
                 completion(.success(nil))
@@ -216,10 +228,14 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     func delete(untypedModelType modelType: Model.Type,
                 modelSchema: ModelSchema,
                 withId id: Model.Identifier,
-                predicate: QueryPredicate? = nil,
+                condition: QueryPredicate? = nil,
                 completion: DataStoreCallback<Void>) {
+        guard let connection = connection else {
+            completion(.failure(DataStoreError.nilSQLiteConnection()))
+            return
+        }
         do {
-            let statement = DeleteStatement(modelSchema: modelSchema, withId: id, predicate: predicate)
+            let statement = DeleteStatement(modelSchema: modelSchema, withId: id, predicate: condition)
             _ = try connection.prepare(statement.stringValue).run(statement.variables)
             completion(.emptyResult)
         } catch {
@@ -246,6 +262,10 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
                          sort: [QuerySortDescriptor]? = nil,
                          paginationInput: QueryPaginationInput? = nil,
                          completion: DataStoreCallback<[M]>) {
+        guard let connection = connection else {
+            completion(.failure(DataStoreError.nilSQLiteConnection()))
+            return
+        }
         do {
             let statement = SelectStatement(from: modelSchema,
                                             predicate: predicate,
@@ -264,6 +284,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     func exists(_ modelSchema: ModelSchema,
                 withId id: Model.Identifier,
                 predicate: QueryPredicate? = nil) throws -> Bool {
+        guard let connection = connection else {
+            throw DataStoreError.nilSQLiteConnection()
+        }
         let primaryKey = modelSchema.primaryKey.sqlName
         var sql = "select count(\(primaryKey)) from \"\(modelSchema.name)\" where \(primaryKey) = ?"
         var variables: [Binding?] = [id]
@@ -294,6 +317,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func queryMutationSync(for models: [Model], modelName: String) throws -> [MutationSync<AnyModel>] {
+        guard let connection = connection else {
+            throw DataStoreError.nilSQLiteConnection()
+        }
         let statement = SelectStatement(from: MutationSyncMetadata.schema)
         let primaryKey = MutationSyncMetadata.schema.primaryKey.sqlName
         // This is a temp workaround since we don't currently support the "in" operator
@@ -327,6 +353,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func queryMutationSyncMetadata(for modelIds: [Model.Identifier], modelName: String) throws -> [MutationSyncMetadata] {
+        guard let connection = connection else {
+            throw DataStoreError.nilSQLiteConnection()
+        }
         let modelType = MutationSyncMetadata.self
         let modelSchema = MutationSyncMetadata.schema
         let fields = MutationSyncMetadata.keys
@@ -352,6 +381,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func queryModelSyncMetadata(for modelSchema: ModelSchema) throws -> ModelSyncMetadata? {
+        guard let connection = connection else {
+            throw DataStoreError.nilSQLiteConnection()
+        }
         let statement = SelectStatement(from: ModelSyncMetadata.schema,
                                         predicate: field("id").eq(modelSchema.name))
         let rows = try connection.prepare(statement.stringValue).run(statement.variables)
@@ -362,6 +394,9 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func transaction(_ transactionBlock: BasicThrowableClosure) throws {
+        guard let connection = connection else {
+            throw DataStoreError.nilSQLiteConnection()
+        }
         try connection.transaction {
             try transactionBlock()
         }
@@ -429,6 +464,17 @@ final class SQLiteStorageEngineAdapter: StorageEngineAdapter {
 /// - Returns: the path to the user document directory.
 private func getDocumentPath() -> URL? {
     return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+}
+
+extension DataStoreError {
+
+    static func nilSQLiteConnection() -> DataStoreError {
+        .internalOperation("SQLite connection is `nil`",
+            """
+            This is expected if DataStore.clear is called while syncing as the SQLite connection is closed.
+            Call DataStore.start to restart the sync process.
+            """, nil)
+    }
 }
 
 extension SQLiteStorageEngineAdapter: DefaultLogger { }

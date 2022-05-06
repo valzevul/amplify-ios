@@ -7,7 +7,7 @@
 #
 
 # Version definitions
-$AMPLIFY_VERSION = '1.21.0'
+$AMPLIFY_VERSION = '1.24.0'
 $AMPLIFY_RELEASE_TAG = "v#{$AMPLIFY_VERSION}"
 
 $AWS_SDK_VERSION = '2.27.0'
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'AWSDataStorePlugin' do |ss|
     ss.source_files = 'AmplifyPlugins/DataStore/AWSDataStoreCategoryPlugin/**/*.swift'
-    ss.dependency 'SQLite.swift', '0.12.2'
+    ss.dependency 'SQLite.swift', '0.13.2'
   end
 
   s.subspec 'AWSLocationGeoPlugin' do |ss|
