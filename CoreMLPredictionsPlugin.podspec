@@ -1,6 +1,6 @@
 # Version definitions
-$AMPLIFY_VERSION = '1.24.0'
-$AMPLIFY_RELEASE_TAG = "v#{$AMPLIFY_VERSION}"
+$AMPLIFY_VERSION = '1.30.4'
+$AMPLIFY_RELEASE_TAG = "#{$AMPLIFY_VERSION}"
 
 Pod::Spec.new do |s|
   s.name         = 'CoreMLPredictionsPlugin'

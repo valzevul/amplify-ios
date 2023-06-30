@@ -38,7 +38,8 @@ public struct GraphQLFilterConverter {
     }
 
     @available(*, deprecated, message: """
-    Use `toJSON(_:modelSchema:options)` instead. See https://github.com/aws-amplify/amplify-ios/pull/965 for more details.
+    Use `toJSON(_:modelSchema:options)` instead.
+    See https://github.com/aws-amplify/amplify-ios/pull/965 for more details.
     """)
     /// Serialize the translated GraphQL query variable object to JSON string.
     public static func toJSON(_ queryPredicate: QueryPredicate,
@@ -125,10 +126,18 @@ extension QueryPredicateOperation: GraphQLFilterConvertible {
         }
         let defaultFieldName = modelSchema.name.camelCased() + field.pascalCased() + "Id"
         switch modelField.association {
-        case .belongsTo(_, let targetName):
-            return targetName ?? defaultFieldName
-        case .hasOne(_, let targetName):
-            return targetName ?? defaultFieldName
+        case .belongsTo(_, let targetNames):
+            guard targetNames.count == 1 else {
+                preconditionFailure("QueryPredicate not supported on associated field with composite key: \(field)")
+            }
+            let targetName = targetNames.first ?? defaultFieldName
+            return targetName
+        case .hasOne(_, let targetNames):
+            guard targetNames.count == 1 else {
+                preconditionFailure("QueryPredicate not supported on associated field with composite key: \(field)")
+            }
+            let targetName = targetNames.first ?? defaultFieldName
+            return targetName
         default:
             return field
         }

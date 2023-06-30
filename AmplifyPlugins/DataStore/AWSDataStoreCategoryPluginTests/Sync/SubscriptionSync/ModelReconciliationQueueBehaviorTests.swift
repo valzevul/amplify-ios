@@ -13,6 +13,7 @@ import Combine
 @testable import AWSDataStoreCategoryPlugin
 @testable import AWSPluginsCore
 
+// swiftlint:disable:next type_body_length
 class ModelReconciliationQueueBehaviorTests: ReconciliationQueueTestBase {
 
     /// - Given: A new AWSModelReconciliationQueue
@@ -64,7 +65,7 @@ class ModelReconciliationQueueBehaviorTests: ReconciliationQueueTestBase {
         let event2Saved = expectation(description: "Event 2 saved")
         let event3Saved = expectation(description: "Event 3 saved")
         storageAdapter.responders[.saveUntypedModel] = SaveUntypedModelResponder { model, completion in
-            switch model.id {
+            switch model.identifier(schema: MockSynced.schema).stringValue {
             case "id-1":
                 event1Saved.fulfill()
             case "id-2":
@@ -137,7 +138,7 @@ class ModelReconciliationQueueBehaviorTests: ReconciliationQueueTestBase {
         let event1Saved = expectation(description: "Event 1 saved")
         let event3Saved = expectation(description: "Event 3 saved")
         storageAdapter.responders[.saveUntypedModel] = SaveUntypedModelResponder { model, completion in
-            switch model.id {
+            switch model.identifier(schema: MockSynced.schema).stringValue {
             case "id-1":
                 event1Saved.fulfill()
             case "id-2":
@@ -300,7 +301,7 @@ class ModelReconciliationQueueBehaviorTests: ReconciliationQueueTestBase {
     ///    - I submit a new event
     /// - Then:
     ///    - The new event immediately processes
-    func testProcessesNewEvents() throws {
+    func testProcessesNewEvents() throws { // swiftlint:disable:this cyclomatic_complexity
         // Return a successful MockSynced save
         storageAdapter.responders[.saveUntypedModel] = SaveUntypedModelResponder { model, completion in
             completion(.success(model))
@@ -440,8 +441,13 @@ extension ModelReconciliationQueueBehaviorTests {
 
         let queueSink = queue.publisher.sink(receiveCompletion: { value in
             XCTFail("Not expecting a call to completion, received \(value)")
-        }, receiveValue: { _ in
-            eventSentViaPublisher.fulfill()
+        }, receiveValue: { event in
+            switch event {
+            case .idle:
+                break
+            default:
+                eventSentViaPublisher.fulfill()
+            }
         })
 
         subscriptionEventsSubject.send(completion: completion)
@@ -462,8 +468,13 @@ extension ModelReconciliationQueueBehaviorTests {
 
         let queueSink = queue.publisher.sink(receiveCompletion: { value in
             XCTFail("Not expecting a call to completion, received \(value)")
-        }, receiveValue: { _ in
-            eventSentViaPublisher.fulfill()
+        }, receiveValue: { event in
+            switch event {
+            case .idle:
+                break
+            default:
+                eventSentViaPublisher.fulfill()
+            }
         })
 
         subscriptionEventsSubject.send(completion: completion)
@@ -485,7 +496,12 @@ extension ModelReconciliationQueueBehaviorTests {
         let queueSink = queue.publisher.sink(receiveCompletion: { _ in
             eventSentViaPublisher.fulfill()
         }, receiveValue: { value in
-            XCTFail("Not expecting a successful call, received \(value)")
+            switch value {
+            case .idle:
+                break
+            default:
+                XCTFail("Not expecting a successful call, received \(value)")
+            }
         })
 
         subscriptionEventsSubject.send(completion: completion)
@@ -497,4 +513,4 @@ enum EventState {
     case notStarted
     case processing
     case finished
-}
+} // swiftlint:disable:this file_length

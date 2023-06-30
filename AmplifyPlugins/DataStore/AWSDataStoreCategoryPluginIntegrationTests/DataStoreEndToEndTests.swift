@@ -15,6 +15,7 @@ import Combine
 @testable import AmplifyTestCommon
 @testable import AWSDataStoreCategoryPlugin
 
+// swiftlint:disable type_body_length
 @available(iOS 13.0, *)
 class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
 
@@ -27,9 +28,10 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
         let version: String = "1"
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func testCreate() throws {
         setUp(withModels: TestModelRegistration())
-        try startAmplifyAndWaitForSync()
+        try startAmplifyAndWaitForReady()
         var cancellables = Set<AnyCancellable>()
         let date = Temporal.DateTime.now()
         let newPost = Post(
@@ -61,7 +63,6 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
                     outboxMutationProcessed.fulfill()
                 case .syncReceived(let mutationEvent):
                     guard let post = try? mutationEvent.decodeModel() as? Post, post.id == newPost.id else {
-                        XCTFail("Could not decode to expected post")
                         return
                     }
                     if mutationEvent.mutationType == GraphQLMutationType.create.rawValue {
@@ -367,6 +368,188 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
 
     }
 
+    /// Ensure DataStore.stop followed by DataStore.start is successful
+    ///
+    /// - Given:  DataStore has just configured, but not started
+    /// - When:
+    ///    - DataStore.stop
+    ///    - Followed by DataStore.start in the completion of the stop
+    /// - Then:
+    ///    - Datastore should be started successfully
+    ///
+    func testConfigureAmplifyThenStopStart() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplify()
+        let stopStartSuccess = expectation(description: "stop then start successful")
+        Amplify.DataStore.stop { result in
+            switch result {
+            case .success:
+                Amplify.DataStore.start { result in
+                    switch result {
+                    case .success:
+                        stopStartSuccess.fulfill()
+                    case .failure(let error):
+                        XCTFail("\(error)")
+                    }
+                }
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        wait(for: [stopStartSuccess], timeout: networkTimeout)
+
+    }
+
+    /// Ensure DataStore.clear followed by DataStore.start is successful
+    ///
+    /// - Given:  DataStore has just configured, but not started
+    /// - When:
+    ///    - DataStore.clear
+    ///    - Followed by DataStore.start in the completion of the stop
+    /// - Then:
+    ///    - Datastore should be started successfully
+    ///
+    func testConfigureAmplifyThenClearStart() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplify()
+        let clearStartSuccess = expectation(description: "clear then start successful")
+        Amplify.DataStore.clear { result in
+            switch result {
+            case .success:
+                Amplify.DataStore.start { result in
+                    switch result {
+                    case .success:
+                        clearStartSuccess.fulfill()
+                    case .failure(let error):
+                        XCTFail("\(error)")
+                    }
+                }
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        wait(for: [clearStartSuccess], timeout: networkTimeout)
+
+    }
+
+    /// Ensure DataStore.stop followed by DataStore.start on a DispatchQueue
+    ///  of a background thread is successful
+    ///
+    /// - Given:  DataStore has just configured, but not started
+    /// - When:
+    ///    - DataStore.stop
+    ///    - Followed by DataStore.start on a background thread in the completion of the stop
+    /// - Then:
+    ///    - Datastore should be started successfully
+    ///
+    func testConfigureAmplifyThenStopStartonDispatch() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplify()
+        let stopStartSuccess = expectation(description: "stop then start successful")
+            Amplify.DataStore.stop { result in
+                switch result {
+                case .success:
+                    DispatchQueue.global(qos: .background).async {
+                        Amplify.DataStore.start { result in
+                            switch result {
+                            case .success:
+                                stopStartSuccess.fulfill()
+                            case .failure(let error):
+                                XCTFail("\(error)")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    XCTFail("\(error)")
+                }
+            }
+        wait(for: [stopStartSuccess], timeout: networkTimeout)
+
+    }
+
+    /// Ensure DataStore.clear followed by DataStore.start on a DispatchQueue
+    /// of a background thread is successful
+    ///
+    /// - Given:  DataStore has just configured, but not started
+    /// - When:
+    ///    - DataStore.clear
+    ///    - Followed by DataStore.start on a background thread in the completion of the stop
+    /// - Then:
+    ///    - Datastore should be started successfully
+    ///
+    func testConfigureAmplifyThenClearStartOnDispatch() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplify()
+        let clearStartSuccess = expectation(description: "clear then start successful on DispatchQueue")
+        DispatchQueue.global(qos: .background).async {
+            Amplify.DataStore.clear { result in
+                switch result {
+                case .success:
+                    DispatchQueue.global(qos: .background).async {
+                        Amplify.DataStore.start { result in
+                            switch result {
+                            case .success:
+                                clearStartSuccess.fulfill()
+                            case .failure(let error):
+                                XCTFail("\(error)")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    XCTFail("\(error)")
+                }
+            }
+        }
+        wait(for: [clearStartSuccess], timeout: networkTimeout)
+
+    }
+
+    /// Ensure DataStore.start followed by DataStore.stop & restarting with
+    /// DataStore.start is successful
+    ///
+    /// - Given:  DataStore has has just configured, but not started
+    /// - When:
+    ///    - DataStore.start
+    ///    - DataStore.stop
+    ///    - Followed by DataStore.start
+    /// - Then:
+    ///    - Datastore should be started successfully
+    ///
+    func testConfigureAmplifyThenStartStopStart() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplify()
+        let startSuccess = expectation(description: "Start twice")
+        startSuccess.expectedFulfillmentCount = 2
+        let stopSuccess = expectation(description: "stop successful")
+
+        Amplify.DataStore.start { result in
+            switch result {
+            case .success:
+                startSuccess.fulfill()
+                Amplify.DataStore.stop { result in
+                    switch result {
+                    case .success:
+                        Amplify.DataStore.start { result in
+                            switch result {
+                            case .success:
+                                startSuccess.fulfill()
+                            case .failure(let error):
+                                XCTFail("\(error)")
+                            }
+                        }
+                        stopSuccess.fulfill()
+                    case .failure(let error):
+                        XCTFail("\(error)")
+                    }
+                }
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        wait(for: [startSuccess, stopSuccess], timeout: networkTimeout)
+
+    }
+
     /// Ensure the DataStore is automatically started when querying for the first time
     ///
     /// - Given: DataStore is configured but not started
@@ -403,7 +586,15 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
     ///    - Saving a post should be successful
     ///
     func testClearStart() throws {
-        setUp(withModels: TestModelRegistration())
+        let startTime = Temporal.DateTime.now()
+        let syncExpression = DataStoreSyncExpression(modelSchema: Post.schema) {
+            Post.keys.createdAt >= startTime
+        }
+        setUp(
+            withModels: TestModelRegistration(),
+            dataStoreConfiguration: .custom(syncExpressions: [syncExpression])
+        )
+
         try startAmplifyAndWaitForSync()
         let clearStartSuccess = expectation(description: "clear then start successful")
         Amplify.DataStore.clear { result in
@@ -421,7 +612,7 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
                 XCTFail("\(error)")
             }
         }
-        wait(for: [clearStartSuccess], timeout: networkTimeout)
+        wait(for: [clearStartSuccess], timeout: 10)
         try validateSavePost()
     }
 
@@ -441,17 +632,26 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
         try startAmplifyAndWaitForSync()
 
         var posts = [Post]()
-        let count = 5
-        for _ in 0 ..< count {
-            let post = Post(title: "title",
+        let count = 2
+        for index in 0 ..< count {
+            let post = Post(title: "title \(index)",
                             content: "content",
                             createdAt: .now())
             posts.append(post)
         }
         let postsSyncedToCloud = expectation(description: "All posts saved and synced to cloud")
+        postsSyncedToCloud.expectedFulfillmentCount = count
         var postsSyncedToCloudCount = 0
+
+        let postsDeletedLocally = expectation(description: "All posts deleted locally")
+        postsDeletedLocally.expectedFulfillmentCount = count
+
         let postsDeletedFromCloud = expectation(description: "All posts deleted and synced to cloud")
+        postsDeletedFromCloud.expectedFulfillmentCount = count
         var postsDeletedFromCloudCount = 0
+
+        log.debug("Created posts: [\(posts.map { $0.identifier })]")
+
         let sink = Amplify.DataStore.publisher(for: Post.self).sink { completed in
             switch completed {
             case .finished:
@@ -460,40 +660,211 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
                 XCTFail("\(error)")
             }
         } receiveValue: { mutationEvent in
+            guard posts.contains(where: { $0.id == mutationEvent.modelId }) else {
+                return
+            }
+
             if mutationEvent.mutationType == MutationEvent.MutationType.create.rawValue,
-               posts.contains(where: { $0.id == mutationEvent.modelId }),
                mutationEvent.version == 1 {
                 postsSyncedToCloudCount += 1
                 self.log.debug("Post saved and synced from cloud \(mutationEvent.modelId) \(postsSyncedToCloudCount)")
-                if postsSyncedToCloudCount == count {
-                    postsSyncedToCloud.fulfill()
-                }
+                postsSyncedToCloud.fulfill()
             } else if mutationEvent.mutationType == MutationEvent.MutationType.delete.rawValue,
-                      posts.contains(where: { $0.id == mutationEvent.modelId }),
+                      mutationEvent.version == 1 {
+                self.log.debug(
+                    "Post deleted locally \(mutationEvent.modelId)")
+                postsDeletedLocally.fulfill()
+            } else if mutationEvent.mutationType == MutationEvent.MutationType.delete.rawValue,
                       mutationEvent.version == 2 {
                 postsDeletedFromCloudCount += 1
                 self.log.debug(
                     "Post deleted and synced from cloud \(mutationEvent.modelId) \(postsDeletedFromCloudCount)")
-                if postsDeletedFromCloudCount == count {
-                    postsDeletedFromCloud.fulfill()
-                }
+                postsDeletedFromCloud.fulfill()
             }
         }
 
         DispatchQueue.concurrentPerform(iterations: count) { index in
-            _ = Amplify.DataStore.save(posts[index])
+            self.log.debug("save \(index)")
+            Amplify.DataStore.save(posts[index]) { _ in }
         }
 
         wait(for: [postsSyncedToCloud], timeout: 100)
 
         DispatchQueue.concurrentPerform(iterations: count) { index in
-            _ = Amplify.DataStore.delete(posts[index])
+            self.log.debug("delete \(index)")
+            Amplify.DataStore.delete(posts[index]) { _ in }
         }
-        wait(for: [postsDeletedFromCloud], timeout: 100)
+        wait(for: [postsDeletedLocally, postsDeletedFromCloud], timeout: 100)
         sink.cancel()
     }
 
+    /// Create model instances for different models but same primary key value
+    ///
+    /// Given - DataStore with clean state
+    /// When
+    ///     - create post and comment with the same random id
+    /// Then
+    ///     - all instances should be created successfully with the same id
+    func testCreateModelInstances_withSamePrimaryKeyForDifferentModels_allSucceed() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplifyAndWaitForSync()
+
+        let uuid = UUID().uuidString
+        let newPost = Post(
+            id: uuid,
+            title: UUID().uuidString,
+            content: UUID().uuidString,
+            createdAt: .now()
+        )
+
+        let postCreateExpectation = expectation(description: "Post is created")
+        var createdPost: Post?
+        Amplify.DataStore.save(newPost) { result in
+            defer { postCreateExpectation.fulfill() }
+            if case .success(let post) = result {
+                createdPost = post
+            }
+        }
+        let newComment = Comment(
+            id: uuid,
+            content: UUID().uuidString,
+            createdAt: .now(),
+            post: newPost
+        )
+        var createdComment: Comment?
+        let commentCreateExpectation = expectation(description: "Comment is created")
+        Amplify.DataStore.save(newComment) { result in
+            defer { commentCreateExpectation.fulfill() }
+            if case .success(let comment) = result {
+                createdComment = comment
+            }
+        }
+        wait(for: [postCreateExpectation, commentCreateExpectation], timeout: 5)
+
+        XCTAssertNotNil(createdPost)
+        XCTAssertNotNil(createdComment)
+        XCTAssertEqual(createdPost?.id, createdComment?.id)
+    }
+
+    ///
+    /// - Given: DataStore with clean state
+    /// - When:
+    ///     - do some mutaions to ensure MutationEventPublisher works fine
+    ///     - wait 1 second for OutgoingMutationQueue stateMachine transform to waitingForEventToProcess state
+    ///     - do some mutations in parallel
+    /// - Then: verify no mutaiton loss
+    func testParallelMutations_whenWaitingForEventToProcess_noMutationLoss() throws {
+        setUp(withModels: TestModelRegistration())
+        try startAmplifyAndWaitForReady()
+        let parallelSize = 100
+        let initExpectation = expectation(description: "expect MutationEventPublisher works fine")
+        let parallelExpectation = expectation(description: "expect parallel processing no data loss")
+
+        let newPost = Post(title: UUID().uuidString, content: UUID().uuidString, createdAt: .now())
+
+        let titlePrefix = UUID().uuidString
+        let posts = (0 ..< parallelSize).map {
+            Post(title: "\(titlePrefix)-\($0)", content: UUID().uuidString, createdAt: .now())
+        }
+        var expectedResult = Set<String>()
+        let cancellable = Amplify.Hub.publisher(for: .dataStore)
+            .sink { payload in
+                let event = DataStoreHubEvent(payload: payload)
+                switch event {
+                case .outboxMutationProcessed(let mutationEvent):
+                    guard mutationEvent.modelName == Post.modelName,
+                          let post = mutationEvent.element.model as? Post
+                    else { break }
+
+                    if post.title == newPost.title {
+                        initExpectation.fulfill()
+                    }
+
+                    if post.title.hasPrefix(titlePrefix) {
+                        expectedResult.insert(post.title)
+                    }
+
+                    if expectedResult.count == parallelSize {
+                        parallelExpectation.fulfill()
+                    }
+                default: break
+                }
+            }
+        _ = Amplify.DataStore.save(newPost)
+        wait(for: [initExpectation], timeout: 5)
+        wait(for: 1)
+
+        for post in posts {
+            _ = Amplify.DataStore.save(post)
+        }
+
+        wait(for: [parallelExpectation], timeout: Double(parallelSize))
+        cancellable.cancel()
+        XCTAssertEqual(expectedResult, Set(posts.map(\.title)))
+    }
+
+    func testStop_whenSavingInProgress() throws {
+        let startTime = Temporal.DateTime.now()
+        let syncExpression = DataStoreSyncExpression(modelSchema: Post.schema) {
+            Post.keys.createdAt >= startTime
+        }
+        setUp(
+            withModels: TestModelRegistration(),
+            dataStoreConfiguration: .custom(syncExpressions: [syncExpression])
+        )
+        try startAmplifyAndWaitForSync()
+
+        let postCount = 1_000
+        let posts = (0 ..< postCount).map { _ in
+            Post(title: UUID().uuidString, content: UUID().uuidString, createdAt: .now())
+        }
+
+        let saveFinished = expectation(description: "Posts are saved")
+        saveFinished.expectedFulfillmentCount = postCount
+        let stopped = expectation(description: "DataStore plugin stopped")
+
+        let queryLocalFinished = expectation(description: "Query local finished")
+        queryLocalFinished.expectedFulfillmentCount = postCount
+
+        for post in posts {
+            Task {
+                try await sleepMill(UInt64.random(in: 50 ..< 150))
+                Amplify.DataStore.save(post) { result in
+                    defer { saveFinished.fulfill() }
+                    if case .success(let savedPost) = result {
+                        XCTAssertEqual(post, savedPost)
+                    }
+                }
+            }
+        }
+
+        Task {
+            try await sleepMill(100)
+            Amplify.DataStore.stop { _ in
+                stopped.fulfill()
+            }
+        }
+
+        wait(for: [saveFinished, stopped], timeout: 30)
+
+        var localSuccess = 0
+        for post in posts {
+            Amplify.DataStore.query(Post.self, byId: post.id) { result in
+                defer { queryLocalFinished.fulfill() }
+                if case .success(let savedPost) = result {
+                    XCTAssertEqual(post, savedPost)
+                    localSuccess += 1
+                }
+            }
+        }
+        wait(for: [queryLocalFinished], timeout: 30)
+        XCTAssertEqual(localSuccess, postCount)
+    }
+
     // MARK: - Helpers
+    private func sleepMill(_ milliseconds: UInt64) async throws {
+        try await Task.sleep(nanoseconds: milliseconds * NSEC_PER_MSEC)
+    }
 
     func validateSavePost() throws {
         let date = Temporal.DateTime.now()
@@ -504,7 +875,8 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
         let createReceived = expectation(description: "Create notification received")
         let hubListener = Amplify.Hub.listen(
             to: .dataStore,
-            eventName: HubPayload.EventName.DataStore.syncReceived) { payload in
+            eventName: HubPayload.EventName.DataStore.syncReceived
+        ) { payload in
                 guard let mutationEvent = payload.data as? MutationEvent
                     else {
                         XCTFail("Can't cast payload as mutation event")
@@ -531,11 +903,11 @@ class DataStoreEndToEndTests: SyncEngineIntegrationTestBase {
         }
 
         Amplify.DataStore.save(newPost) { _ in }
-        wait(for: [createReceived], timeout: networkTimeout)
+        wait(for: [createReceived], timeout: 10)
     }
 }
 
 @available(iOS 13.0, *)
 extension DataStoreEndToEndTests: DefaultLogger {
 
-}
+} // swiftlint:disable:this file_length

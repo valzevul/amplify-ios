@@ -34,20 +34,26 @@ extension RemoteSyncEngine {
     func onReceive(receiveValue: IncomingEventReconciliationQueueEvent) {
         switch receiveValue {
         case .initialized:
+            log.verbose("[InitializeSubscription.5] RemoteSyncEngine IncomingEventReconciliationQueueEvent.initialized")
+            log.verbose("[Lifecycle event 1]: subscriptionsEstablished")
             let payload = HubPayload(eventName: HubPayload.EventName.DataStore.subscriptionsEstablished)
             Amplify.Hub.dispatch(to: .dataStore, payload: payload)
             remoteSyncTopicPublisher.send(.subscriptionsInitialized)
             stateMachine.notify(action: .initializedSubscriptions)
         case .started:
-            remoteSyncTopicPublisher.send(.subscriptionsActivated)
-            if let api = self.api {
-                stateMachine.notify(action: .activatedCloudSubscriptions(api,
-                                                                         mutationEventPublisher,
-                                                                         reconciliationQueue))
+            log.verbose("[InitializeSubscription.6] RemoteSyncEngine IncomingEventReconciliationQueueEvent.started")
+            guard let api = self.api else {
+                let error = DataStoreError.internalOperation("api is unexpectedly `nil`", "", nil)
+                stateMachine.notify(action: .errored(error))
+                return
             }
+            remoteSyncTopicPublisher.send(.subscriptionsActivated)
+            stateMachine.notify(action: .activatedCloudSubscriptions(api,
+                                                                     mutationEventPublisher,
+                                                                     reconciliationQueue))
         case .paused:
             remoteSyncTopicPublisher.send(.subscriptionsPaused)
-        case .mutationEventDropped, .mutationEventApplied:
+        case .idle, .mutationEventDropped, .mutationEventApplied:
             break
         }
     }

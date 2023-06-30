@@ -20,15 +20,16 @@ typealias StorageEngineBehaviorFactory =
 
 // swiftlint:disable type_body_length
 final class StorageEngine: StorageEngineBehavior {
-
+    // swiftlint:disable:next todo
     // TODO: Make this private once we get a mutation flow that passes the type of mutation as needed
     let storageAdapter: StorageEngineAdapter
     var syncEngine: RemoteSyncEngineBehavior?
     let validAPIPluginKey: String
     let validAuthPluginKey: String
     var signInListener: UnsubscribeToken?
+    let isSyncEnabled: Bool
 
-    private let dataStoreConfiguration: DataStoreConfiguration
+    let dataStoreConfiguration: DataStoreConfiguration
     private let operationQueue: OperationQueue
 
     var iSyncEngineSink: Any?
@@ -79,12 +80,15 @@ final class StorageEngine: StorageEngineBehavior {
          dataStoreConfiguration: DataStoreConfiguration,
          syncEngine: RemoteSyncEngineBehavior?,
          validAPIPluginKey: String,
-         validAuthPluginKey: String) {
+         validAuthPluginKey: String,
+         isSyncEnabled: Bool = false
+    ) {
         self.storageAdapter = storageAdapter
         self.dataStoreConfiguration = dataStoreConfiguration
         self.syncEngine = syncEngine
         self.validAPIPluginKey = validAPIPluginKey
         self.validAuthPluginKey = validAuthPluginKey
+        self.isSyncEnabled = isSyncEnabled
 
         let operationQueue = OperationQueue()
         operationQueue.name = "com.amazonaws.StorageEngine"
@@ -105,36 +109,47 @@ final class StorageEngine: StorageEngineBehavior {
 
         try storageAdapter.setUp(modelSchemas: StorageEngine.systemModelSchemas)
         if #available(iOS 13.0, *) {
-            let syncEngine = isSyncEnabled ? try? RemoteSyncEngine(storageAdapter: storageAdapter,
-                                                                   dataStoreConfiguration: dataStoreConfiguration) : nil
             self.init(storageAdapter: storageAdapter,
                       dataStoreConfiguration: dataStoreConfiguration,
-                      syncEngine: syncEngine,
+                      syncEngine: nil,
                       validAPIPluginKey: validAPIPluginKey,
-                      validAuthPluginKey: validAuthPluginKey)
+                      validAuthPluginKey: validAuthPluginKey,
+                      isSyncEnabled: isSyncEnabled
+            )
             self.storageEnginePublisher = PassthroughSubject<StorageEngineEvent, DataStoreError>()
-            syncEngineSink = syncEngine?.publisher.sink(receiveCompletion: onReceiveCompletion(receiveCompletion:),
-                                                        receiveValue: onReceive(receiveValue:))
+
         } else {
             self.init(storageAdapter: storageAdapter,
                       dataStoreConfiguration: dataStoreConfiguration,
                       syncEngine: nil,
                       validAPIPluginKey: validAPIPluginKey,
-                      validAuthPluginKey: validAuthPluginKey)
+                      validAuthPluginKey: validAuthPluginKey,
+                      isSyncEnabled: isSyncEnabled
+            )
         }
     }
 
     @available(iOS 13.0, *)
-    private func onReceiveCompletion(receiveCompletion: Subscribers.Completion<DataStoreError>) {
+    func onReceiveCompletion(receiveCompletion: Subscribers.Completion<DataStoreError>) {
         switch receiveCompletion {
         case .failure(let dataStoreError):
-            storageEnginePublisher.send(completion: .failure(dataStoreError))
+            log.error("RemoteSyncEngine completed with error \(dataStoreError)")
         case .finished:
-            storageEnginePublisher.send(completion: .finished)
+            log.debug("RemoteSyncEngine completed successfully")
+        }
+
+        stopSync { result in
+            switch result {
+            case .success:
+                self.log.info("Stopping SyncEngine successful.")
+            case .failure(let error):
+                self.log.error("Failed to stop SyncEngine with error: \(error)")
+            }
         }
     }
 
     @available(iOS 13.0, *)
+    // swiftlint:disable:next cyclomatic_complexity
     func onReceive(receiveValue: RemoteSyncEngineEvent) {
         switch receiveValue {
         case .storageAdapterAvailable:
@@ -167,6 +182,8 @@ final class StorageEngine: StorageEngineBehavior {
             storageEnginePublisher.send(.syncQueriesReadyEvent)
         case .readyEvent:
             storageEnginePublisher.send(.readyEvent)
+        case .schedulingRestart:
+            break
         }
     }
 
@@ -183,11 +200,14 @@ final class StorageEngine: StorageEngineBehavior {
                                condition: QueryPredicate? = nil,
                                completion: @escaping DataStoreCallback<M>) {
 
+        // swiftlint:disable:next todo
         // TODO: Refactor this into a proper request/result where the result includes metadata like the derived
         // mutation type
         let modelExists: Bool
         do {
-            modelExists = try storageAdapter.exists(modelSchema, withId: model.id, predicate: nil)
+            modelExists = try storageAdapter.exists(modelSchema,
+                                                    withIdentifier: model.identifier(schema: modelSchema),
+                                                    predicate: nil)
         } catch {
             let dataStoreError = DataStoreError.invalidOperation(causedBy: error)
             completion(.failure(dataStoreError))
@@ -238,17 +258,35 @@ final class StorageEngine: StorageEngineBehavior {
         save(model, modelSchema: model.schema, condition: condition, completion: completion)
     }
 
+    @available(*, deprecated, message: "Use delete(:modelSchema:withIdentifier:predicate:completion")
     func delete<M: Model>(_ modelType: M.Type,
                           modelSchema: ModelSchema,
                           withId id: Model.Identifier,
                           condition: QueryPredicate? = nil,
                           completion: @escaping (DataStoreResult<M?>) -> Void) {
+        let cascadeDeleteOperation = CascadeDeleteOperation(
+            storageAdapter: storageAdapter,
+            syncEngine: syncEngine,
+            modelType: modelType, modelSchema: modelSchema,
+            withIdentifier: DefaultModelIdentifier<M>.makeDefault(id: id),
+            condition: condition,
+            completion: { completion($0) }
+        )
+        operationQueue.addOperation(cascadeDeleteOperation)
+    }
+
+    func delete<M: Model>(_ modelType: M.Type,
+                          modelSchema: ModelSchema,
+                          withIdentifier identifier: ModelIdentifierProtocol,
+                          condition: QueryPredicate?,
+                          completion: @escaping DataStoreCallback<M?>) {
         let cascadeDeleteOperation = CascadeDeleteOperation(storageAdapter: storageAdapter,
                                                             syncEngine: syncEngine,
                                                             modelType: modelType, modelSchema: modelSchema,
-                                                            withId: id,
+                                                            withIdentifier: identifier,
                                                             condition: condition) { completion($0) }
         operationQueue.addOperation(cascadeDeleteOperation)
+
     }
 
     func delete<M: Model>(_ modelType: M.Type,
@@ -263,6 +301,7 @@ final class StorageEngine: StorageEngineBehavior {
         operationQueue.addOperation(cascadeDeleteOperation)
     }
 
+    // swiftlint:disable:next function_parameter_count
     func query<M: Model>(_ modelType: M.Type,
                          modelSchema: ModelSchema,
                          predicate: QueryPredicate?,
@@ -293,6 +332,7 @@ final class StorageEngine: StorageEngineBehavior {
     func clear(completion: @escaping DataStoreCallback<Void>) {
         if let syncEngine = syncEngine {
             syncEngine.stop(completion: { _ in
+                self.syncEngine = nil
                 self.storageAdapter.clear(completion: completion)
             })
         } else {
@@ -303,6 +343,7 @@ final class StorageEngine: StorageEngineBehavior {
     func stopSync(completion: @escaping DataStoreCallback<Void>) {
         if let syncEngine = syncEngine {
             syncEngine.stop { _ in
+                self.syncEngine = nil
                 completion(.successfulVoid)
             }
         } else {
@@ -395,4 +436,4 @@ extension StorageEngine: Resettable {
     }
 }
 
-extension StorageEngine: DefaultLogger { }
+extension StorageEngine: DefaultLogger { } // swiftlint:disable:this file_length

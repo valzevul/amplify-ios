@@ -95,6 +95,12 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
                           completion: @escaping DataStoreCallback<[M]>) {
         XCTFail("Not expected to execute")
     }
+    func delete<M>(_ modelType: M.Type,
+                   modelSchema: ModelSchema,
+                   withIdentifier identifier: ModelIdentifierProtocol,
+                   condition: QueryPredicate?, completion: @escaping DataStoreCallback<M?>) where M: Model {
+        XCTFail("Not expected to execute")
+    }
 
     func delete(untypedModelType modelType: Model.Type,
                 modelSchema: ModelSchema,
@@ -126,6 +132,7 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
         XCTFail("Not expected to execute")
     }
 
+    // swiftlint:disable:next function_parameter_count
     func query<M: Model>(_ modelType: M.Type,
                          modelSchema: ModelSchema,
                          predicate: QueryPredicate?,
@@ -141,6 +148,13 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
     }
 
     func exists(_ modelSchema: ModelSchema, withId id: Model.Identifier, predicate: QueryPredicate?) throws -> Bool {
+        XCTFail("Not expected to execute")
+        return true
+    }
+
+    func exists(_ modelSchema: ModelSchema,
+                withIdentifier id: ModelIdentifierProtocol,
+                predicate: QueryPredicate?) throws -> Bool {
         XCTFail("Not expected to execute")
         return true
     }
@@ -268,9 +282,11 @@ class MockSQLiteStorageEngineAdapter: StorageEngineAdapter {
 }
 
 class MockStorageEngineBehavior: StorageEngineBehavior {
+
     static let mockStorageEngineBehaviorFactory =
-        MockStorageEngineBehavior.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:)
+        MockStorageEngineBehavior.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:) // swiftlint:disable:this line_length
     var responders = [ResponderKeys: Any]()
+    var startedSync = false
 
     init() {
     }
@@ -287,22 +303,42 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
 
     }
 
-    var publisher: AnyPublisher<StorageEngineEvent, DataStoreError> {
-        return PassthroughSubject<StorageEngineEvent, DataStoreError>().eraseToAnyPublisher()
+    var mockSyncEnginePublisher: PassthroughSubject<RemoteSyncEngineEvent, DataStoreError>!
+    var mockSyncEngineSubscription: AnyCancellable! {
+        willSet {
+            if let subscription = mockSyncEngineSubscription {
+                subscription.cancel()
+            }
+        }
     }
 
-    func startSync(completion: @escaping DataStoreCallback<Void>) {
-        completion(.successfulVoid)
-        if let responder = responders[.startSync] as? StartSyncResponder {
-            return responder.callback("")
+    var mockPublisher = PassthroughSubject<StorageEngineEvent, DataStoreError>()
+    var publisher: AnyPublisher<StorageEngineEvent, DataStoreError> {
+        mockPublisher.eraseToAnyPublisher()
+    }
+
+    func startSync() -> Result<AWSDataStoreCategoryPlugin.SyncEngineInitResult, DataStoreError> {
+        if !startedSync {
+            if let responder = responders[.startSync] as? StartSyncResponder {
+                responder.callback("")
+            }
+            startedSync = true
+            mockSyncEnginePublisher = PassthroughSubject()
+            mockSyncEngineSubscription = mockSyncEnginePublisher.sink(receiveCompletion: { completion in
+                self.stopSync(completion: { _ in })
+            }, receiveValue: { _ in })
+            return .success(.successfullyInitialized)
+        } else {
+            return .success(.alreadyInitialized)
         }
     }
 
     func stopSync(completion: @escaping DataStoreCallback<Void>) {
-        completion(.successfulVoid)
         if let responder = responders[.stopSync] as? StopSyncResponder {
-            return responder.callback("")
+            responder.callback("")
         }
+        startedSync = false
+        completion(.successfulVoid)
     }
 
     func setUp(modelSchemas: [ModelSchema]) throws {
@@ -337,6 +373,14 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
         XCTFail("Not expected to execute")
     }
 
+    func delete<M>(_ modelType: M.Type,
+                   modelSchema: ModelSchema,
+                   withIdentifier identifier: ModelIdentifierProtocol,
+                   condition: QueryPredicate?,
+                   completion: @escaping DataStoreCallback<M?>) where M: Model {
+        completion(.success(nil))
+    }
+
     func query<M: Model>(_ modelType: M.Type,
                          predicate: QueryPredicate?,
                          sort: [QuerySortDescriptor]?,
@@ -350,6 +394,7 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
         }
     }
 
+    // swiftlint:disable:next function_parameter_count
     func query<M: Model>(_ modelType: M.Type,
                          modelSchema: ModelSchema,
                          predicate: QueryPredicate?,
@@ -366,6 +411,7 @@ class MockStorageEngineBehavior: StorageEngineBehavior {
     }
 
     func clear(completion: @escaping DataStoreCallback<Void>) {
+        startedSync = false
         completion(.successfulVoid)
         if let responder = responders[.clear] as? ClearResponder {
             return responder.callback("")

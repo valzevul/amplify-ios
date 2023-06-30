@@ -15,12 +15,13 @@ enum ModelConnectionDisconnectedReason {
 }
 
 enum ModelReconciliationQueueEvent {
+    case idle
     case started
     case paused
     case connected(modelName: String)
     case disconnected(modelName: String, reason: ModelConnectionDisconnectedReason)
     case mutationEvent(MutationEvent)
-    case mutationEventDropped(modelName: String)
+    case mutationEventDropped(modelName: String, error: DataStoreError? = nil)
 }
 
 @available(iOS 13.0, *)

@@ -77,9 +77,7 @@ final class InitialSyncOperation: AsynchronousOperation {
             return nil
         }
 
-        //TODO: Update to use TimeInterval.milliseconds when it is pushed to main branch
-        // https://github.com/aws-amplify/amplify-ios/issues/398
-        let lastSyncDate = Date(timeIntervalSince1970: TimeInterval(lastSync) / 1_000)
+        let lastSyncDate = Date(timeIntervalSince1970: TimeInterval.milliseconds(Double(lastSync)))
         let secondsSinceLastSync = (lastSyncDate.timeIntervalSinceNow * -1)
         if secondsSinceLastSync < 0 {
             log.info("lastSyncTime was in the future, assuming base query")
@@ -133,6 +131,7 @@ final class InitialSyncOperation: AsynchronousOperation {
                 if self.isAuthSignedOutError(apiError: apiError) {
                     self.dataStoreConfiguration.errorHandler(DataStoreError.api(apiError))
                 }
+                // swiftlint:disable:next todo
                 // TODO: Retry query on error
                 self.finish(result: .failure(DataStoreError.api(apiError)))
             case .success(let graphQLResult):
@@ -141,20 +140,21 @@ final class InitialSyncOperation: AsynchronousOperation {
         }
 
         var authTypes = authModeStrategy.authTypesFor(schema: modelSchema,
-                                                                             operation: .read)
+                                                      operation: .read)
 
-        RetryableGraphQLOperation(requestFactory: {
-            GraphQLRequest<SyncQueryResult>.syncQuery(modelSchema: self.modelSchema,
-                                                      where: queryPredicate,
-                                                      limit: limit,
-                                                      nextToken: nextToken,
-                                                      lastSync: lastSyncTime,
-                                                      authType: authTypes.next())
+        RetryableGraphQLOperation(requestFactory: { completion in
+            completion(GraphQLRequest<SyncQueryResult>.syncQuery(modelSchema: self.modelSchema,
+                                                                 where: queryPredicate,
+                                                                 limit: limit,
+                                                                 nextToken: nextToken,
+                                                                 lastSync: lastSyncTime,
+                                                                 authType: authTypes.next()))
+
         },
                                   maxRetries: authTypes.count,
-                                  resultListener: completionListener) { nextRequest, wrappedCompletionListener in
+                                  resultListener: completionListener, { nextRequest, wrappedCompletionListener in
             api.query(request: nextRequest, listener: wrappedCompletionListener)
-        }.main()
+        }).main()
     }
 
     /// Disposes of the query results: Stops if error, reconciles results if success, and kick off a new query if there
@@ -193,7 +193,6 @@ final class InitialSyncOperation: AsynchronousOperation {
                 self.query(lastSyncTime: lastSyncTime, nextToken: nextToken)
             }
         } else {
-            initialSyncOperationTopic.send(.finished(modelName: modelSchema.name))
             updateModelSyncMetadata(lastSyncTime: syncQueryResult.startedAt)
         }
     }
@@ -233,8 +232,10 @@ final class InitialSyncOperation: AsynchronousOperation {
     private func finish(result: AWSInitialSyncOrchestrator.SyncOperationResult) {
         switch result {
         case .failure(let error):
+            initialSyncOperationTopic.send(.finished(modelName: modelSchema.name, error: error))
             initialSyncOperationTopic.send(completion: .failure(error))
         case .success:
+            initialSyncOperationTopic.send(.finished(modelName: modelSchema.name))
             initialSyncOperationTopic.send(completion: .finished)
         }
         super.finish()

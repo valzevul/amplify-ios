@@ -89,7 +89,7 @@ public class AWSAuthSignInOperation: AmplifyOperation<
         let asyncEvent = AWSAuthSignInOperation.OperationResult.failure(error)
         dispatch(result: asyncEvent)
     }
-  
+
     // Determine the auth flow type to use for the signIn flow.
     //
     // First we check if authflow type is passed as a parameter in the signIn api. If not we

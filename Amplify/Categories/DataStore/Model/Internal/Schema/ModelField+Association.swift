@@ -87,26 +87,41 @@ import Foundation
 /// - Warning: Although this has `public` access, it is intended for internal & codegen use and should not be used
 ///   directly by host applications. The behavior of this may change without warning.
 public enum ModelAssociation {
-    case hasMany(associatedFieldName: String?)
-    case hasOne(associatedFieldName: String?, targetName: String? = nil)
-    case belongsTo(associatedFieldName: String?, targetName: String?)
+    case hasMany(associatedFieldName: String?, associatedFieldNames: [String] = [])
+    case hasOne(associatedFieldName: String?, targetNames: [String])
+    case belongsTo(associatedFieldName: String?, targetNames: [String])
 
-    public static let belongsTo: ModelAssociation = .belongsTo(associatedFieldName: nil, targetName: nil)
+    public static let belongsTo: ModelAssociation = .belongsTo(associatedFieldName: nil, targetNames: [])
 
     public static func belongsTo(targetName: String? = nil) -> ModelAssociation {
-        return .belongsTo(associatedFieldName: nil, targetName: nil)
+        let targetNames = targetName.map { [$0] } ?? []
+        return .belongsTo(associatedFieldName: nil, targetNames: targetNames)
     }
 
-    public static func hasMany(associatedWith: CodingKey?) -> ModelAssociation {
-        return .hasMany(associatedFieldName: associatedWith?.stringValue)
+    public static func hasMany(associatedWith: CodingKey? = nil,
+                               associatedFields: [CodingKey] = []) -> ModelAssociation {
+        return .hasMany(associatedFieldName: associatedWith?.stringValue,
+                        associatedFieldNames: associatedFields.map { $0.stringValue })
     }
 
+    @available(*, deprecated, message: "Use hasOne(associatedWith:targetNames:)")
     public static func hasOne(associatedWith: CodingKey?, targetName: String? = nil) -> ModelAssociation {
-        return .hasOne(associatedFieldName: associatedWith?.stringValue, targetName: targetName)
+        let targetNames = targetName.map { [$0] } ?? []
+        return .hasOne(associatedWith: associatedWith, targetNames: targetNames)
     }
 
+    public static func hasOne(associatedWith: CodingKey?, targetNames: [String] = []) -> ModelAssociation {
+        return .hasOne(associatedFieldName: associatedWith?.stringValue, targetNames: targetNames)
+    }
+
+    @available(*, deprecated, message: "Use belongsTo(associatedWith:targetNames:)")
     public static func belongsTo(associatedWith: CodingKey?, targetName: String?) -> ModelAssociation {
-        return .belongsTo(associatedFieldName: associatedWith?.stringValue, targetName: targetName)
+        let targetNames = targetName.map { [$0] } ?? []
+        return .belongsTo(associatedFieldName: associatedWith?.stringValue, targetNames: targetNames)
+    }
+
+    public static func belongsTo(associatedWith: CodingKey?, targetNames: [String] = []) -> ModelAssociation {
+        return .belongsTo(associatedFieldName: associatedWith?.stringValue, targetNames: targetNames)
     }
 
 }
@@ -217,17 +232,27 @@ extension ModelField {
     ///   directly by host applications. The behavior of this may change without warning. Though it is not used by host
     ///   application making any change to these `public` types should be backward compatible, otherwise it will be a
     ///   breaking change.
+    public var _isBelongsToOrHasOne: Bool { // swiftlint:disable:this identifier_name
+        switch association {
+        case .belongsTo, .hasOne:
+            return true
+        case .hasMany, .none:
+            return false
+        }
+    }
+
+    /// - Warning: Although this has `public` access, it is intended for internal & codegen use and should not be used
+    ///   directly by host applications. The behavior of this may change without warning. Though it is not used by host
+    ///   application making any change to these `public` types should be backward compatible, otherwise it will be a
+    ///   breaking change.
     public var associatedField: ModelField? {
         if hasAssociation {
             let associatedModel = requiredAssociatedModelName
             switch association {
-            case .belongsTo(let associatedKey, _):
-                // TODO handle modelName casing (convert to camelCase)
-                let key = associatedKey ?? associatedModel
-                let schema = ModelRegistry.modelSchema(from: associatedModel)
-                return schema?.field(withName: key)
-            case .hasOne(let associatedKey, _),
-                 .hasMany(let associatedKey):
+            case .belongsTo(let associatedKey, _),
+                    .hasOne(let associatedKey, _),
+                    .hasMany(let associatedKey, _):
+                // swiftlint:disable:next todo
                 // TODO handle modelName casing (convert to camelCase)
                 let key = associatedKey ?? associatedModel
                 let schema = ModelRegistry.modelSchema(from: associatedModel)
