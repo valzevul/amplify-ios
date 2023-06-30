@@ -40,9 +40,6 @@ final public class AWSCognitoAuthPlugin: AuthCategoryPlugin {
     /// Auth configuration used during initialization
     var configuration: JSONValue!
 
-    /// Auth configuration used during initialization
-    var configuration: JSONValue!
-
     /// The unique key of the plugin within the auth category.
     public var key: PluginKey {
         return "awsCognitoAuthPlugin"

@@ -11,8 +11,6 @@ public struct AWSAuthSignInOptions {
   
     public let authFlowType: AuthFlowType
 
-    public let authFlowType: AuthFlowType
-
     public let validationData: [String: String]?
 
     public let metadata: [String: String]?
