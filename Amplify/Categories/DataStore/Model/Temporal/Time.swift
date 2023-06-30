@@ -54,7 +54,7 @@ extension Temporal {
       
       // We don't care 'cause we aint supporting lower!!!!
       if #available(iOS 15.0, *) {
-        localTimezone = TimeZone(iso8601: foundationDate.formatted(.iso8601))
+        localTimezone = TimeZone(iso8601: DateFormatter.isoFormatter.string(from: foundationDate))
       }
     }
     
