@@ -73,6 +73,7 @@ public protocol TemporalSpec {
 }
 
 extension TemporalSpec {
+  
 
     /// Create an iso8601 `String` with the desired format option for this spec.
     /// - Parameters:
@@ -122,41 +123,4 @@ extension TimeZone {
     public static var utc: TimeZone {
         TimeZone(abbreviation: "UTC")!
     }
-}
-
-extension TimeZone {
-
-  init?(iso8601String: String) {
-    var timeZone: TimeZone?
-    let supportedTimeZoneModifiers = ["+hh:mm", "-hh:mm", "Z"]
-    
-    guard let timeZoneSliceSize = supportedTimeZoneModifiers.map(\.count).max() else {
-      return nil
-    }
-    
-    let timeZoneSlice = iso8601String.suffix(timeZoneSliceSize)
-    
-    if timeZoneSlice.contains("Z") {
-      timeZone = TimeZone(secondsFromGMT: 0)
-    } else {
-      let signCharacter = timeZoneSlice.first
-      let time = timeZoneSlice.dropFirst()
-      let hours = time.prefix(2)
-      let minutes = time.suffix(2)
-      let sign: Int? = signCharacter == "+" ? +1 : (signCharacter == "-" ? -1 : nil)
-      
-      if let hours = Int(hours), let minutes = Int(minutes), let sign = sign {
-        let minutesInSeconds = minutes * 60
-        let hoursInSeconds = hours * 3600
-        let shiftInSeconds = sign * (minutesInSeconds + hoursInSeconds)
-        timeZone = TimeZone(secondsFromGMT: shiftInSeconds)
-      }
-    }
-    if let timeZone = timeZone {
-      self = timeZone
-    } else {
-      return nil
-    }
-  }
-
 }

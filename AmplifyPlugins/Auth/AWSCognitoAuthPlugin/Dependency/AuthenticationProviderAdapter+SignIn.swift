@@ -18,8 +18,6 @@ extension AuthenticationProviderAdapter {
   
     static let cognitoClientKey = "CognitoUserPoolKey"
 
-    static let cognitoClientKey = "CognitoUserPoolKey"
-
     func signIn(request: AuthSignInRequest,
                 completionHandler: @escaping SigInResultCompletion) {
 
