@@ -52,10 +52,7 @@ extension Temporal {
       self.foundationDate = calendar
         .date(from: components) ?? date
       
-      // We don't care 'cause we aint supporting lower!!!!
-      if #available(iOS 15.0, *) {
-        localTimezone = TimeZone(iso8601: DateFormatter.isoFormatter.string(from: foundationDate))
-      }
+      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
     
     @available(*, deprecated, message: """

@@ -45,10 +45,7 @@ extension Temporal {
         .iso8601Calendar
         .startOfDay(for: date)
       
-      // We don't care 'cause we aint supporting lower!!!!
-      if #available(iOS 15.0, *) {
-        localTimezone = TimeZone(iso8601: DateFormatter.isoFormatter.string(from: foundationDate))
-      }
+      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
   }
 }
@@ -56,31 +53,38 @@ extension Temporal {
 // Allow date unit operations on `Temporal.Date`
 extension Temporal.Date: DateUnitOperable {}
 extension TimeZone {
-  init?(iso8601: String) {
-    let tz = iso8601.dropFirst(19) // remove yyyy-MM-ddTHH:mm:ss part
-    if tz == "Z" {
-      self.init(secondsFromGMT: 0)
-    } else if tz.count == 3 { // assume +/-HH
-      if let hour = Int(tz) {
-        self.init(secondsFromGMT: hour * 3600)
-        return
-      }
-    } else if tz.count == 5 { // assume +/-HHMM
-      if let hour = Int(tz.dropLast(2)), var min = Int(tz.dropFirst(3)) {
-        min = (hour < 0) ? -1 * min : min
-        self.init(secondsFromGMT: (hour * 60 + min) * 60)
-        return
-      }
-    } else if tz.count == 6 { // assime +/-HH:MM
-      let parts = tz.components(separatedBy: ":")
-      if parts.count == 2 {
-        if let hour = Int(parts[0]), var min = Int(parts[1]) {
-          min = (hour < 0) ? -1 * min : min
-          self.init(secondsFromGMT: (hour * 60 + min) * 60)
-          return
-        }
+  
+  init?(iso8601String: String) {
+    var timeZone: TimeZone?
+    let supportedTimeZoneModifiers = ["+hh:mm", "-hh:mm", "Z"]
+    
+    guard let timeZoneSliceSize = supportedTimeZoneModifiers.map(\.count).max() else {
+      return nil
+    }
+    
+    let timeZoneSlice = iso8601String.suffix(timeZoneSliceSize)
+    
+    if timeZoneSlice.contains("Z") {
+      timeZone = TimeZone(secondsFromGMT: 0)
+    } else {
+      let signCharacter = timeZoneSlice.first
+      let time = timeZoneSlice.dropFirst()
+      let hours = time.prefix(2)
+      let minutes = time.suffix(2)
+      let sign: Int? = signCharacter == "+" ? +1 : (signCharacter == "-" ? -1 : nil)
+      
+      if let hours = Int(hours), let minutes = Int(minutes), let sign = sign {
+        let minutesInSeconds = minutes * 60
+        let hoursInSeconds = hours * 3600
+        let shiftInSeconds = sign * (minutesInSeconds + hoursInSeconds)
+        timeZone = TimeZone(secondsFromGMT: shiftInSeconds)
       }
     }
-    return nil
+    if let timeZone = timeZone {
+      self = timeZone
+    } else {
+      return nil
+    }
   }
+  
 }
