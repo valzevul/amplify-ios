@@ -64,6 +64,7 @@ public struct MutationSync<ModelType: Model>: Decodable {
               case let .number(lastChangedAt) = json["_lastChangedAt"],
               case let .number(version) = json["_version"] else {
 
+                  // swiftlint:disable:next todo
                   // TODO query name could be useful for the message, but re-creating it here is not great
                   let queryName = modelType.schema.syncPluralName ?? modelType.schema.pluralName ?? modelType.modelName
                   throw DataStoreError.decodingError(
@@ -77,7 +78,14 @@ public struct MutationSync<ModelType: Model>: Decodable {
                   )
               }
 
-        self.syncMetadata = MutationSyncMetadata(modelId: model.id,
+        // get the schema of the resolved model
+        guard let modelSchema = ModelRegistry.modelSchema(from: resolvedModelName) else {
+            throw DataStoreError.invalidModelName(resolvedModelName)
+        }
+
+        let modelIdentifier = model.identifier(schema: modelSchema).stringValue
+
+        self.syncMetadata = MutationSyncMetadata(modelId: modelIdentifier,
                                                  modelName: resolvedModelName,
                                                  deleted: deleted,
                                                  lastChangedAt: Int(lastChangedAt),

@@ -13,6 +13,7 @@ import AWSPluginsCore
 /// Reconciles an incoming model mutation with the stored model. If there is no conflict (e.g., the incoming model has
 /// a later version than the stored model), then write the new data to the store.
 @available(iOS 13.0, *)
+// swiftlint:disable:next type_body_length
 class ReconcileAndLocalSaveOperation: AsynchronousOperation {
 
     /// Disambiguation for the version of the model incoming from the remote API
@@ -112,7 +113,9 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
         }
 
         guard let storageAdapter = storageAdapter else {
-            stateMachine.notify(action: .errored(DataStoreError.nilStorageAdapter()))
+            let error = DataStoreError.nilStorageAdapter()
+            notifyDropped(count: remoteModels.count, error: error)
+            stateMachine.notify(action: .errored(error))
             return
         }
 
@@ -121,11 +124,9 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
             return
         }
 
-        let remoteModelIds = remoteModels.map { $0.model.id }
-
         do {
             try storageAdapter.transaction {
-                queryPendingMutations(forModelIds: remoteModelIds)
+                queryPendingMutations(forModels: remoteModels.map(\.model))
                     .subscribe(on: workQueue)
                     .flatMap { mutationEvents -> Future<([RemoteModel], [LocalMetadata]), DataStoreError> in
                         let remoteModelsToApply = self.reconcile(remoteModels, pendingMutations: mutationEvents)
@@ -156,7 +157,7 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
         }
     }
 
-    func queryPendingMutations(forModelIds modelIds: [Model.Identifier]) -> Future<[MutationEvent], DataStoreError> {
+    func queryPendingMutations(forModels models: [Model]) -> Future<[MutationEvent], DataStoreError> {
         Future<[MutationEvent], DataStoreError> { promise in
             var result: Result<[MutationEvent], DataStoreError> = .failure(Self.unfulfilledDataStoreError())
             defer {
@@ -168,19 +169,24 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
                 return
             }
             guard let storageAdapter = self.storageAdapter else {
-                result = .failure(DataStoreError.nilStorageAdapter())
+                let error = DataStoreError.nilStorageAdapter()
+                self.notifyDropped(count: models.count, error: error)
+                result = .failure(error)
                 return
             }
 
-            guard !modelIds.isEmpty else {
+            guard !models.isEmpty else {
                 result = .success([])
                 return
             }
 
-            MutationEvent.pendingMutationEvents(for: modelIds,
-                                                storageAdapter: storageAdapter) { queryResult in
+            MutationEvent.pendingMutationEvents(
+                forModels: models,
+                storageAdapter: storageAdapter
+            ) { queryResult in
                 switch queryResult {
                 case .failure(let dataStoreError):
+                    self.notifyDropped(count: models.count, error: dataStoreError)
                     result = .failure(dataStoreError)
                 case .success(let mutationEvents):
                     result = .success(mutationEvents)
@@ -190,17 +196,13 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
     }
 
     func reconcile(_ remoteModels: [RemoteModel], pendingMutations: [MutationEvent]) -> [RemoteModel] {
-        guard let remoteModel = remoteModels.first else {
+        guard !remoteModels.isEmpty else {
             return []
         }
 
         let remoteModelsToApply = RemoteSyncReconciler.filter(remoteModels,
                                                               pendingMutations: pendingMutations)
-
-        for _ in 0 ..< (remoteModels.count - remoteModelsToApply.count) {
-            notifyDropped()
-        }
-
+        notifyDropped(count: remoteModels.count - remoteModelsToApply.count)
         return remoteModelsToApply
     }
 
@@ -217,7 +219,9 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
                 return
             }
             guard let storageAdapter = self.storageAdapter else {
-                result = .failure(DataStoreError.nilStorageAdapter())
+                let error = DataStoreError.nilStorageAdapter()
+                self.notifyDropped(count: remoteModels.count, error: error)
+                result = .failure(error)
                 return
             }
 
@@ -228,11 +232,13 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
 
             do {
                 let localMetadatas = try storageAdapter.queryMutationSyncMetadata(
-                    for: remoteModels.map { $0.model.id },
+                    for: remoteModels.map { $0.model.identifier },
                        modelName: self.modelSchema.name)
                 result = .success((remoteModels, localMetadatas))
             } catch {
-                result = .failure(DataStoreError(error: error))
+                let error = DataStoreError(error: error)
+                self.notifyDropped(count: remoteModels.count, error: error)
+                result = .failure(error)
                 return
             }
         }
@@ -240,19 +246,17 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
 
     func getDispositions(for remoteModels: [RemoteModel],
                          localMetadatas: [LocalMetadata]) -> [RemoteSyncReconciler.Disposition] {
-        guard let remoteModel = remoteModels.first else {
+        guard !remoteModels.isEmpty else {
             return []
         }
 
         let dispositions = RemoteSyncReconciler.getDispositions(remoteModels,
                                                                 localMetadatas: localMetadatas)
-        for _ in 0 ..< (remoteModels.count - dispositions.count) {
-            notifyDropped()
-        }
-
+        notifyDropped(count: remoteModels.count - dispositions.count)
         return dispositions
     }
 
+    // swiftlint:disable:next todo
     // TODO: refactor - move each the publisher constructions to its own utility method for readability of the
     // `switch` and a single method that you can invoke in the `map`
     func applyRemoteModelsDispositions(
@@ -268,7 +272,9 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
                 return
             }
             guard let storageAdapter = self.storageAdapter else {
-                result = .failure(DataStoreError.nilStorageAdapter())
+                let error = DataStoreError.nilStorageAdapter()
+                self.notifyDropped(count: dispositions.count, error: error)
+                result = .failure(error)
                 return
             }
 
@@ -344,12 +350,12 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
 
             storageAdapter.delete(untypedModelType: modelType,
                                   modelSchema: self.modelSchema,
-                                  withId: remoteModel.model.id,
+                                  withId: remoteModel.model.identifier,
                                   condition: nil) { response in
                 switch response {
                 case .failure(let dataStoreError):
+                    self.notifyDropped(error: dataStoreError)
                     if storageAdapter.shouldIgnoreError(error: dataStoreError) {
-                        self.notifyDropped()
                         promise(.success(.dropped))
                     } else {
                         promise(.failure(dataStoreError))
@@ -367,8 +373,8 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
             storageAdapter.save(untypedModel: remoteModel.model.instance) { response in
                 switch response {
                 case .failure(let dataStoreError):
+                    self.notifyDropped(error: dataStoreError)
                     if storageAdapter.shouldIgnoreError(error: dataStoreError) {
-                        self.notifyDropped()
                         promise(.success(.dropped))
                     } else {
                         promise(.failure(dataStoreError))
@@ -379,6 +385,7 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
                         anyModel = try savedModel.eraseToAnyModel()
                     } catch {
                         let dataStoreError = DataStoreError(error: error)
+                        self.notifyDropped(error: dataStoreError)
                         promise(.failure(dataStoreError))
                         return
                     }
@@ -401,6 +408,7 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
             storageAdapter.save(inProcessModel.syncMetadata, condition: nil) { result in
                 switch result {
                 case .failure(let dataStoreError):
+                    self.notifyDropped(error: dataStoreError)
                     promise(.failure(dataStoreError))
                 case .success(let syncMetadata):
                     let appliedModel = MutationSync(model: inProcessModel.model, syncMetadata: syncMetadata)
@@ -411,21 +419,25 @@ class ReconcileAndLocalSaveOperation: AsynchronousOperation {
         }
     }
 
-    private func notifyDropped() {
-        mutationEventPublisher.send(.mutationEventDropped(modelName: modelSchema.name))
+    private func notifyDropped(count: Int = 1, error: DataStoreError? = nil) {
+        for _ in 0 ..< count {
+            mutationEventPublisher.send(.mutationEventDropped(modelName: modelSchema.name, error: error))
+        }
     }
 
     private func notify(savedModel: AppliedModel,
                         mutationType: MutationEvent.MutationType) {
         let version = savedModel.syncMetadata.version
 
+        // swiftlint:disable:next todo
         // TODO: Dispatch/notify error if we can't erase to any model? Would imply an error in JSON decoding,
         // which shouldn't be possible this late in the process. Possibly notify global conflict/error handler?
         guard let json = try? savedModel.model.instance.toJSON() else {
             log.error("Could not notify mutation event")
             return
         }
-        let mutationEvent = MutationEvent(modelId: savedModel.model.instance.id,
+        let modelIdentifier = savedModel.model.instance.identifier(schema: modelSchema).stringValue
+        let mutationEvent = MutationEvent(modelId: modelIdentifier,
                                           modelName: modelSchema.name,
                                           json: json,
                                           mutationType: mutationType,
@@ -456,5 +468,5 @@ extension ReconcileAndLocalSaveOperation: DefaultLogger { }
 
 enum ReconcileAndLocalSaveOperationEvent {
     case mutationEvent(MutationEvent)
-    case mutationEventDropped(modelName: String)
-}
+    case mutationEventDropped(modelName: String, error: DataStoreError? = nil)
+} // swiftlint:disable:this file_length

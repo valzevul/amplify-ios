@@ -16,6 +16,7 @@ import AWSPinpoint
 // swiftlint:disable:next type_name
 class AWSPinpointAnalyticsPluginIntergrationTests: XCTestCase {
 
+    // swiftlint:disable:next line_length
     static let amplifyConfiguration = "testconfiguration/AWSPinpointAnalyticsPluginIntegrationTests-amplifyconfiguration"
     static let analyticsPluginKey = "awsPinpointAnalyticsPlugin"
 
@@ -70,15 +71,51 @@ class AWSPinpointAnalyticsPluginIntergrationTests: XCTestCase {
         Amplify.Analytics.identifyUser(userId, withProfile: userProfile)
 
         wait(for: [identifyUserEvent], timeout: TestCommonConstants.networkTimeout)
+
+        // Remove userId from the current endpoint
+        let targetingClient = escapeHatch().targetingClient
+        let currentProfile = targetingClient.currentEndpointProfile()
+        currentProfile.user?.userId = ""
+        targetingClient.update(currentProfile)
+    }
+
+    /// Run this test when the number of endpoints for the userId exceeds the limit.
+    /// The profile should have permissions to run the "mobiletargeting:DeleteUserEndpoints" action.
+    func skip_testDeleteEndpointsForUser() throws {
+        let userId = "userId"
+        let escapeHatch = escapeHatch()
+        let applicationId = escapeHatch.configuration.appId
+        guard let targetingConfiguration = escapeHatch.configuration.targetingServiceConfiguration else {
+            XCTFail("Targeting configuration is not defined.")
+            return
+        }
+
+        let deleteEndpointsRequest = AWSPinpointTargetingDeleteUserEndpointsRequest()!
+        deleteEndpointsRequest.userId = userId
+        deleteEndpointsRequest.applicationId = applicationId
+
+        let deleteExpectation = expectation(description: "Delete endpoints")
+        let lowLevelClient = lowLevelClient(from: targetingConfiguration)
+        lowLevelClient.deleteUserEndpoints(deleteEndpointsRequest) { _, error in
+            guard error == nil else {
+                XCTFail("Unexpected error when attempting to delete endpoints")
+                deleteExpectation.fulfill()
+                return
+            }
+            deleteExpectation.fulfill()
+        }
+        wait(for: [deleteExpectation], timeout: 1)
     }
 
     func testRecordEventsAreFlushed() {
         let flushEventsInvoked = expectation(description: "Flush events invoked")
         _ = Amplify.Hub.listen(to: .analytics, isIncluded: nil) { payload in
             if payload.eventName == HubPayload.EventName.Analytics.flushEvents {
+                // swiftlint:disable:next todo
                 // TODO: Remove exposing AWSPinpointEvent
                 guard let pinpointEvents = payload.data as? [AWSPinpointEvent] else {
                     XCTFail("Missing data")
+                    flushEventsInvoked.fulfill()
                     return
                 }
                 XCTAssertNotNil(pinpointEvents)
@@ -116,5 +153,18 @@ class AWSPinpointAnalyticsPluginIntergrationTests: XCTestCase {
         XCTAssertNotNil(awsPinpoint.sessionClient)
         XCTAssertNotNil(awsPinpoint.configuration)
         XCTAssertTrue(awsPinpoint.configuration.enableAutoSessionRecording)
+    }
+
+    private func escapeHatch() -> AWSPinpoint {
+        guard let plugin = try? Amplify.Analytics.getPlugin(for: "awsPinpointAnalyticsPlugin"),
+              let analyticsPlugin = plugin as? AWSPinpointAnalyticsPlugin else {
+            fatalError("Unable to retrieve configuration")
+        }
+        return analyticsPlugin.getEscapeHatch()
+    }
+
+    private func lowLevelClient(from configuration: AWSServiceConfiguration) -> AWSPinpointTargeting {
+        AWSPinpointTargeting.register(with: configuration, forKey: "integrationTestsTargetingConfiguration")
+        return AWSPinpointTargeting.init(forKey: "integrationTestsTargetingConfiguration")
     }
 }

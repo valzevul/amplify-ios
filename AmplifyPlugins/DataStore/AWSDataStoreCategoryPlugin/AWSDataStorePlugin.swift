@@ -40,6 +40,7 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
 
     var storageEngine: StorageEngineBehavior!
     var storageEngineInitQueue = DispatchQueue(label: "AWSDataStorePlugin.storageEngineInitQueue")
+    let queue = DispatchQueue(label: "AWSDataStorePlugin.queue", target: DispatchQueue.global())
     var storageEngineBehaviorFactory: StorageEngineBehaviorFactory
 
     var iStorageEngineSink: Any?
@@ -66,7 +67,7 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
         self.validAPIPluginKey =  "awsAPIPlugin"
         self.validAuthPluginKey = "awsCognitoAuthPlugin"
         self.storageEngineBehaviorFactory =
-            StorageEngine.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:)
+            StorageEngine.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:) // swiftlint:disable:this line_length
         if #available(iOS 13.0, *) {
             self.dataStorePublisher = DataStorePublisher()
         } else {
@@ -88,7 +89,7 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
         self.operationQueue = operationQueue
         self.isSyncEnabled = false
         self.storageEngineBehaviorFactory = storageEngineBehaviorFactory ??
-            StorageEngine.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:)
+            StorageEngine.init(isSyncEnabled:dataStoreConfiguration:validAPIPluginKey:validAuthPluginKey:modelRegistryVersion:userDefault:) // swiftlint:disable:this line_length
         self.dataStorePublisher = dataStorePublisher
         self.dispatchedModelSyncedEvents = [:]
         self.validAPIPluginKey = validAPIPluginKey
@@ -110,52 +111,49 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
     /// Initializes the underlying storage engine
     /// - Returns: success if the engine is successfully initialized or
     ///            a failure with a DataStoreError
-    func initStorageEngine() -> DataStoreResult<Void> {
-        storageEngineInitQueue.sync {
-            if storageEngine != nil {
-                return .successfulVoid
-            }
-            var result: DataStoreResult<Void>
-            do {
-                if #available(iOS 13.0, *) {
-                    if self.dataStorePublisher == nil {
-                        self.dataStorePublisher = DataStorePublisher()
-                    }
-                }
-                try resolveStorageEngine(dataStoreConfiguration: dataStoreConfiguration)
-                try storageEngine.setUp(modelSchemas: ModelRegistry.modelSchemas)
-                try storageEngine.applyModelMigrations(modelSchemas: ModelRegistry.modelSchemas)
-                result = .successfulVoid
-            } catch {
-                result = .failure(causedBy: error)
-                log.error(error: error)
-            }
-            return result
+    func initStorageEngine() -> Result<StorageEngineBehavior, DataStoreError> {
+        if let storageEngine = storageEngine {
+            return .success(storageEngine)
         }
+
+        do {
+            if #available(iOS 13.0, *) {
+                if self.dataStorePublisher == nil {
+                    self.dataStorePublisher = DataStorePublisher()
+                }
+            }
+            try resolveStorageEngine(dataStoreConfiguration: dataStoreConfiguration)
+            try storageEngine.setUp(modelSchemas: ModelRegistry.modelSchemas)
+            try storageEngine.applyModelMigrations(modelSchemas: ModelRegistry.modelSchemas)
+
+            return .success(storageEngine)
+        } catch {
+            log.error(error: error)
+            return .failure(.invalidOperation(causedBy: error))
+        }
+
     }
 
     /// Initializes the underlying storage engine and starts the syncing process
     /// - Parameter completion: completion handler called with a success if the sync process started
     ///                         or with a DataStoreError in case of failure
     func initStorageEngineAndStartSync(completion: @escaping DataStoreCallback<Void> = { _ in }) {
-        if storageEngine != nil {
-            completion(.successfulVoid)
-            return
-        }
-
-        switch initStorageEngine() {
-        case .success:
-            storageEngine.startSync { result in
-
-                self.operationQueue.operations.forEach { operation in
-                    if let operation = operation as? DataStoreObserveQueryOperation {
-                        operation.startObserveQuery(with: self.storageEngine)
+        storageEngineInitQueue.sync {
+            completion(initStorageEngine().flatMap { $0.startSync() }.flatMap { result in
+                switch result {
+                case .alreadyInitialized:
+                    return .successfulVoid
+                case .successfullyInitialized:
+                    self.operationQueue.operations.forEach { operation in
+                        if let operation = operation as? DataStoreObserveQueryOperation {
+                            operation.startObserveQuery(with: self.storageEngine)
+                        }
                     }
+                    return .successfulVoid
+                case let .failure(error):
+                    return .failure(error)
                 }
-                completion(result)
-            }
-        case .failure(let error):
-            completion(.failure(causedBy: error))
+            })
         }
     }
 
@@ -200,7 +198,7 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
         case .failure(let dataStoreError):
             log.error("StorageEngine completed with error: \(dataStoreError)")
         case .finished:
-            break
+            log.debug("StorageEngine completed successfully")
         }
     }
 
@@ -217,14 +215,17 @@ final public class AWSDataStorePlugin: DataStoreCategoryPlugin {
         case .mutationEvent(let mutationEvent):
             dataStorePublisher.send(input: mutationEvent)
         case .modelSyncedEvent(let modelSyncedEvent):
+            log.verbose("Emitting DataStore event: modelSyncedEvent \(modelSyncedEvent)")
+            dispatchedModelSyncedEvents[modelSyncedEvent.modelName]?.set(true)
             let modelSyncedEventPayload = HubPayload(eventName: HubPayload.EventName.DataStore.modelSynced,
                                                      data: modelSyncedEvent)
             Amplify.Hub.dispatch(to: .dataStore, payload: modelSyncedEventPayload)
-            dispatchedModelSyncedEvents[modelSyncedEvent.modelName]?.set(true)
         case .syncQueriesReadyEvent:
+            log.verbose("[Lifecycle event 4]: syncQueriesReady")
             let syncQueriesReadyEventPayload = HubPayload(eventName: HubPayload.EventName.DataStore.syncQueriesReady)
             Amplify.Hub.dispatch(to: .dataStore, payload: syncQueriesReadyEventPayload)
         case .readyEvent:
+            log.verbose("[Lifecycle event 6]: ready")
             let readyEventPayload = HubPayload(eventName: HubPayload.EventName.DataStore.ready)
             Amplify.Hub.dispatch(to: .dataStore, payload: readyEventPayload)
         }

@@ -12,7 +12,7 @@ import Foundation
 
 enum IncomingModelSyncedEmitterEvent {
     case mutationEventApplied(MutationEvent)
-    case mutationEventDropped(modelName: String)
+    case mutationEventDropped(modelName: String, error: DataStoreError? = nil)
     case modelSyncedEvent(ModelSyncedEvent)
 }
 
@@ -28,7 +28,6 @@ enum IncomingModelSyncedEmitterEvent {
 final class ModelSyncedEventEmitter {
     private let queue = DispatchQueue(label: "com.amazonaws.ModelSyncedEventEmitterQueue",
                                       target: DispatchQueue.global())
-    private let dispatchedModelSyncedEventLock = NSLock()
 
     private var syncOrchestratorSink: AnyCancellable?
     private var reconciliationQueueSink: AnyCancellable?
@@ -90,7 +89,7 @@ final class ModelSyncedEventEmitter {
             return modelSchema.name == modelName
         case .enqueued(_, let modelName):
             return modelSchema.name == modelName
-        case .finished(let modelName):
+        case .finished(let modelName, _):
             return modelSchema.name == modelName
         }
     }
@@ -101,9 +100,9 @@ final class ModelSyncedEventEmitter {
         switch value {
         case .mutationEventApplied(let event):
             return modelSchema.name == event.modelName
-        case .mutationEventDropped(let modelName):
+        case .mutationEventDropped(let modelName, _):
             return modelSchema.name == modelName
-        case .initialized, .started, .paused:
+        case .idle, .initialized, .started, .paused:
             return false
         }
     }
@@ -116,21 +115,23 @@ final class ModelSyncedEventEmitter {
         case .enqueued:
             recordsReceived += 1
         case .finished:
-            initialSyncOperationFinished = true
-            if recordsReceived == 0 {
+            if recordsReceived == 0 || recordsReceived == reconciledReceived {
                 sendModelSyncedEvent()
+            } else {
+                initialSyncOperationFinished = true
             }
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     private func onReceiveReconciliationEvent(value: IncomingEventReconciliationQueueEvent) {
         guard !dispatchedModelSyncedEvent else {
             switch value {
             case .mutationEventApplied(let event):
                 modelSyncedEventTopic.send(.mutationEventApplied(event))
-            case .mutationEventDropped(let modelName):
-                modelSyncedEventTopic.send(.mutationEventDropped(modelName: modelName))
-            case .initialized, .started, .paused:
+            case .mutationEventDropped(let modelName, let error):
+                modelSyncedEventTopic.send(.mutationEventDropped(modelName: modelName, error: error))
+            case .idle, .initialized, .started, .paused:
                 return
             }
             return
@@ -155,15 +156,13 @@ final class ModelSyncedEventEmitter {
             if shouldSendModelSyncedEvent {
                 sendModelSyncedEvent()
             }
-        case .mutationEventDropped(let modelName):
+        case .mutationEventDropped(let modelName, let error):
             reconciledReceived += 1
-
-            modelSyncedEventTopic.send(.mutationEventDropped(modelName: modelName))
-
+            modelSyncedEventTopic.send(.mutationEventDropped(modelName: modelName, error: error))
             if shouldSendModelSyncedEvent {
                 sendModelSyncedEvent()
             }
-        case .initialized, .started, .paused:
+        case .idle, .initialized, .started, .paused:
             return
         }
     }
@@ -171,6 +170,7 @@ final class ModelSyncedEventEmitter {
     private func sendModelSyncedEvent() {
         modelSyncedEventBuilder.modelName = modelSchema.name
         let modelSyncedEvent = modelSyncedEventBuilder.build()
+        log.verbose("[Lifecycle event 3]: modelSyncedEvent model: \(modelSchema.name)")
         modelSyncedEventTopic.send(.modelSyncedEvent(modelSyncedEvent))
         dispatchedModelSyncedEvent = true
         syncOrchestratorSink?.cancel()

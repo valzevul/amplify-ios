@@ -30,6 +30,8 @@ class AWSAPICategoryPluginTestBase: XCTestCase {
     let testPath = "testPath"
 
     override func setUp() {
+        Amplify.reset()
+        wait(for: 1)
         apiPlugin = AWSAPIPlugin()
 
         let authService = MockAWSAuthService()
@@ -62,7 +64,6 @@ class AWSAPICategoryPluginTestBase: XCTestCase {
             XCTFail("Failed to create endpoint config")
         }
 
-        Amplify.reset()
         let config = AmplifyConfiguration()
         do {
             try Amplify.configure(config)
@@ -71,10 +72,12 @@ class AWSAPICategoryPluginTestBase: XCTestCase {
         }
     }
 
-    override func tearDown() {
-        if let api = apiPlugin {
-            api.reset {
-            }
+    private func wait(for duration: TimeInterval) {
+        let expectation = expectation(description: "Sleep for \(duration) seconds")
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + duration) {
+            expectation.fulfill()
         }
+
+        wait(for: [expectation], timeout: duration + 0.5)
     }
 }

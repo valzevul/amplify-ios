@@ -10,11 +10,12 @@ import AWSPluginsCore
 import Combine
 
 enum IncomingEventReconciliationQueueEvent {
+    case idle
     case initialized
     case started
     case paused
     case mutationEventApplied(MutationEvent)
-    case mutationEventDropped(modelName: String)
+    case mutationEventDropped(modelName: String, error: DataStoreError? = nil)
 }
 
 /// A queue that reconciles all incoming events for a model: responses from locally-sourced mutations, and subscription

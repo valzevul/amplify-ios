@@ -11,6 +11,7 @@ import Foundation
 import AWSPluginsCore
 
 @available(iOS 13.0, *)
+// swiftlint:disable:next type_body_length
 class RemoteSyncEngine: RemoteSyncEngineBehavior {
 
     weak var storageAdapter: StorageEngineAdapter?
@@ -88,10 +89,10 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
                                   authModeStrategy: resolvedAuthStrategy)
 
         let reconciliationQueueFactory = reconciliationQueueFactory ??
-            AWSIncomingEventReconciliationQueue.init(modelSchemas:api:storageAdapter:syncExpressions:auth:authModeStrategy:modelReconciliationQueueFactory:)
+            AWSIncomingEventReconciliationQueue.init(modelSchemas:api:storageAdapter:syncExpressions:auth:authModeStrategy:modelReconciliationQueueFactory:) // swiftlint:disable:this line_length
 
         let initialSyncOrchestratorFactory = initialSyncOrchestratorFactory ??
-            AWSInitialSyncOrchestrator.init(dataStoreConfiguration:authModeStrategy:api:reconciliationQueue:storageAdapter:)
+            AWSInitialSyncOrchestrator.init(dataStoreConfiguration:authModeStrategy:api:reconciliationQueue:storageAdapter:) // swiftlint:disable:this line_length
 
         let resolver = RemoteSyncEngine.Resolver.resolve(currentState:action:)
         let stateMachine = stateMachine ?? StateMachine(initialState: .notStarted,
@@ -181,7 +182,7 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
             notifySyncStarted()
 
         case .syncEngineActive:
-            break
+            log.debug("RemoteSyncEngine SyncEngineActive")
 
         case .cleaningUp(let error):
             cleanup(error: error)
@@ -231,6 +232,13 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
         stateMachine.notify(action: .finished)
     }
 
+    func isSyncing() -> Bool {
+        if case .notStarted = stateMachine.state {
+            return false
+        }
+        return true
+    }
+
     func terminate() {
         remoteSyncTopicPublisher.send(completion: .finished)
         cleanup()
@@ -276,7 +284,7 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
 
     private func initializeSubscriptions(api: APICategoryGraphQLBehavior,
                                          storageAdapter: StorageEngineAdapter) {
-        log.debug(#function)
+        log.debug("[InitializeSubscription] \(#function)")
         let syncableModelSchemas = ModelRegistry.modelSchemas.filter { $0.isSyncable }
         reconciliationQueue = reconciliationQueueFactory(syncableModelSchemas,
                                                          api,
@@ -294,6 +302,7 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
     }
 
     private func performInitialSync() {
+        log.debug("[InitializeSubscription.6] performInitialSync")
         log.debug(#function)
 
         let initialSyncOrchestrator = initialSyncOrchestratorFactory(dataStoreConfiguration,
@@ -322,6 +331,7 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
                 receiveValue: { [weak self] in self?.onReceive(receiveValue: $0) }
             )
 
+        // swiftlint:disable:next todo
         // TODO: This should be an AsynchronousOperation, not a semaphore-waited block
         let semaphore = DispatchSemaphore(value: 0)
 
@@ -356,7 +366,13 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
 
     private func activateCloudSubscriptions() {
         log.debug(#function)
-        reconciliationQueue?.start()
+        guard let reconciliationQueue = reconciliationQueue else {
+            let error = DataStoreError.internalOperation("reconciliationQueue is unexpectedly `nil`", "", nil)
+            stateMachine.notify(action: .errored(error))
+            return
+        }
+
+        reconciliationQueue.start()
     }
 
     private func startMutationQueue(api: APICategoryGraphQLBehavior,
@@ -391,6 +407,7 @@ class RemoteSyncEngine: RemoteSyncEngineBehavior {
     /// Must be invoked from workQueue (as in during a `respond` call
     private func notifySyncStarted() {
         resetCurrentAttemptNumber()
+        log.verbose("[Lifecycle event 5]: syncStarted")
         Amplify.Hub.dispatch(to: .dataStore,
                              payload: HubPayload(eventName: HubPayload.EventName.DataStore.syncStarted))
 
@@ -446,4 +463,4 @@ extension RemoteSyncEngine: Resettable {
         group.wait()
         onComplete()
     }
-}
+} // swiftlint:disable:this file_length

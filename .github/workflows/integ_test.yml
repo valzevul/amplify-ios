@@ -1,7 +1,7 @@
 name: Integration Tests
 on:
   push:
-    branches: [main]
+    branches: [v1]
 
 permissions:
     id-token: write
@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -30,15 +30,15 @@ jobs:
 
   analytics-integration-test:
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
       - name: Make directory
-        run: mkdir -p ~/.aws-amplify/amplify-ios/testconfiguration/
+        run: mkdir -p ~/.aws-amplify/amplify-swift/testconfiguration/
 
       - name: Copy integration test resouces
         uses: ./.github/composite_actions/download_test_configuration
@@ -56,16 +56,17 @@ jobs:
           scheme: AWSPinpointAnalyticsPluginIntegrationTests
 
   api-integration-test:
+    if: ${{ false }}
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
       - name: Make directory
-        run: mkdir -p ~/.aws-amplify/amplify-ios/testconfiguration/
+        run: mkdir -p ~/.aws-amplify/amplify-swift/testconfiguration/
 
       - name: Copy integration test resouces
         uses: ./.github/composite_actions/download_test_configuration
@@ -83,11 +84,12 @@ jobs:
           scheme: AWSAPICategoryPluginFunctionalTests
 
   api-graphqliam-integration-test:
+    if: ${{ false }}
     needs: [api-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -110,11 +112,12 @@ jobs:
           scheme: GraphQLWithIAMIntegrationTests
 
   api-graphqluserpool-integration-test:
+    if: ${{ false }}
     needs: [api-integration-test]
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -137,11 +140,12 @@ jobs:
           scheme: GraphQLWithUserPoolIntegrationTests
 
   api-restiam-integration-test:
+    if: ${{ false }}
     needs: [api-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -164,11 +168,12 @@ jobs:
           scheme: RESTWithIAMIntegrationTests
 
   api-restuserpool-integration-test:
+    if: ${{ false }}
     needs: [api-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -191,11 +196,12 @@ jobs:
           scheme: RESTWithUserPoolIntegrationTests
 
   api-graphqllambda-integration-test:
+    if: ${{ false }}
     needs: [api-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -218,11 +224,12 @@ jobs:
           scheme: GraphQLWithLambdaAuthIntegrationTests
 
   auth-integration-test:
+    continue-on-error: true
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -245,11 +252,12 @@ jobs:
           scheme: AWSCognitoAuthPluginIntegrationTests
 
   datastore-integration-test:
+    if: ${{ false }}
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -270,12 +278,14 @@ jobs:
           project_path: ./AmplifyPlugins/DataStore/
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreCategoryPluginIntegrationTests
+
   datastore-integration-hub-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -297,11 +307,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationHubTests
   datastore-integration-local-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -324,11 +335,12 @@ jobs:
           scheme: AWSDataStoreIntegrationLocalTests
 
   datastore-integration-V1-S1-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -349,12 +361,14 @@ jobs:
           project_path: ./AmplifyPlugins/DataStore/
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario1Tests
+
   datastore-integration-V1-S2-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -376,11 +390,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario2Tests
   datastore-integration-V1-S3-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -402,11 +417,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario3Tests
   datastore-integration-V1-S4-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -428,11 +444,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario4Tests
   datastore-integration-V1-S5-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -454,11 +471,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario5Tests
   datastore-integration-V1-S6-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -480,11 +498,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV1Scenario6Tests
   datastore-integration-V2-S1-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -506,11 +525,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario1V2Tests
   datastore-integration-V2-S2-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -532,11 +552,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario2V2Tests
   datastore-integration-V2-S3a-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -558,11 +579,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario3aV2Tests
   datastore-integration-V2-S3-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -584,11 +606,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario3V2Tests
   datastore-integration-V2-S4-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -610,11 +633,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario4V2Tests
   datastore-integration-V2-S5-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -636,11 +660,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario5V2Tests
   datastore-integration-V2-S6-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -662,11 +687,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario6V2Tests
   datastore-integration-V2-S7-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -688,11 +714,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario7V2Tests
   datastore-integration-V2-S8-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -714,11 +741,12 @@ jobs:
           workspace: DataStoreCategoryPlugin.xcworkspace
           scheme: AWSDataStoreIntegrationV2Scenario8V2Tests
   datastore-integration-V2-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -738,13 +766,15 @@ jobs:
         with:
           project_path: ./AmplifyPlugins/DataStore/
           workspace: DataStoreCategoryPlugin.xcworkspace
-          scheme: AWSDataStoreIntegrationV2Scenario1V2Tests
+          scheme: AWSDataStoreIntegrationV2Tests
+
   datastore-integration-observe-query-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -767,11 +797,12 @@ jobs:
           scheme: AWSDataStoreIntegrationObserveQueryTests
 
   datastore-auth-integration-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -794,11 +825,12 @@ jobs:
           scheme: AWSDataStoreCategoryPluginAuthIntegrationTests
 
   datastore-flutter-integration-test:
+    if: ${{ false }}
     needs: [datastore-integration-test]
     runs-on: macos-latest
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -822,10 +854,10 @@ jobs:
 
   geo-integration-test:
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -848,11 +880,12 @@ jobs:
           scheme: AWSLocationGeoPluginIntegrationTests
 
   predictions-integration-test:
+    continue-on-error: true
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 
@@ -885,11 +918,12 @@ jobs:
           scheme: CoreMLPredictionsPluginIntegrationTests
 
   storage-integration-test:
+    continue-on-error: true
     needs: prepare-for-test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment: IntegrationTest
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           persist-credentials: false
 

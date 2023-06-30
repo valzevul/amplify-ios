@@ -13,6 +13,7 @@ import SQLite
 @testable import AWSDataStoreCategoryPlugin
 @testable import AWSPluginsCore
 
+// swiftlint:disable:next type_name
 class SQLiteMutationSyncMetadataMigrationDelegateTests: MutationSyncMetadataMigrationTestBase {
 
     // MARK: - Clear tests
@@ -120,7 +121,9 @@ class SQLiteMutationSyncMetadataMigrationDelegateTests: MutationSyncMetadataMigr
         // Dropping the table without the table in the database is successful
         let drop = try delegate.removeMutationSyncMetadataCopyStore()
 
-        XCTAssertEqual(drop, "DROP TABLE IF EXISTS MutationSyncMetadataCopy")
+        XCTAssertEqual(drop, """
+        DROP TABLE IF EXISTS "MutationSyncMetadataCopy"
+        """)
 
         // Creating the table is successful
         let create = try delegate.createMutationSyncMetadataCopyStore()

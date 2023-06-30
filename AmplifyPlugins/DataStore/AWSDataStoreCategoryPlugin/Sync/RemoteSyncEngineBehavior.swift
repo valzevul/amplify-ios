@@ -24,6 +24,7 @@ enum RemoteSyncEngineEvent {
     case modelSyncedEvent(ModelSyncedEvent)
     case syncQueriesReadyEvent
     case readyEvent
+    case schedulingRestart
 }
 
 /// Behavior to sync mutation events to the remote API, and to subscribe to mutations from the remote API
@@ -42,6 +43,8 @@ protocol RemoteSyncEngineBehavior: AnyObject {
     func start(api: APICategoryGraphQLBehavior, auth: AuthCategoryBehavior?)
 
     func stop(completion: @escaping DataStoreCallback<Void>)
+
+    func isSyncing() -> Bool
 
     /// Submits a new mutation for synchronization to the remote API. The response will be handled by the appropriate
     /// reconciliation queue

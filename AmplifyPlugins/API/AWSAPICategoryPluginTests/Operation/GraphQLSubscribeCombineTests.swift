@@ -214,8 +214,7 @@ class GraphQLSubscribeCombineTests: OperationTestBase {
     /// self.subscriptionItem and self.subscriptionEventHandler, then fulfills
     /// self.onSubscribeInvoked
     func setUpMocksAndSubscriptionItems() throws {
-        let onSubscribe: MockSubscriptionConnection.OnSubscribe = {
-            requestString, variables, eventHandler in
+        let onSubscribe: MockSubscriptionConnection.OnSubscribe = { requestString, variables, eventHandler in
             let item = SubscriptionItem(
                 requestString: requestString,
                 variables: variables,
@@ -228,7 +227,7 @@ class GraphQLSubscribeCombineTests: OperationTestBase {
             return item
         }
 
-        let onGetOrCreateConnection: MockSubscriptionConnectionFactory.OnGetOrCreateConnection = { _, _, _, _  in
+        let onGetOrCreateConnection: MockSubscriptionConnectionFactory.OnGetOrCreateConnection = { _, _, _, _, _  in
             MockSubscriptionConnection(onSubscribe: onSubscribe, onUnsubscribe: { _ in })
         }
 

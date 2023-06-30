@@ -1,5 +1,161 @@
 # Changelog
 ## Unreleased
+## 1.30.4 (2023-06-29)
+
+### Bug Fixes
+
+- **datastore**: Enable subscription selection set to contain required fields only (#3016)
+
+## 1.30.3 (2023-06-28)
+
+### Bug Fixes
+
+- **datastore-v1**: Multi auth rule for read subscription (#3029)
+
+## 1.30.2 (2023-06-16)
+
+## 1.30.1 (2023-05-11)
+
+### Bug Fixes
+
+- **datastore-v1**: stop storageEngine do not publish completion event (#2939)
+
+## 1.30.0 (2023-05-01)
+
+### Features
+
+- **api**: Update URL interceptor to be async (#2876)
+- **api**: Add async protocol method for request interceptors IAM signing (#2871)
+- **api**: Add async protocol implementation for token request interceptors (#2870)
+
+## 1.29.3 (2023-04-21)
+
+### Bug Fixes
+
+- **datastore-v1**: stop datastore only stop sync engine (#2863)
+
+## 1.29.2 (2023-04-14)
+
+### Bug Fixes
+
+- **api**: Change the getToken to async (#2856)
+- **datastore-v1**: detect duplicate mutation event by both modelName and modelId (#2835)
+
+## 1.29.1 (2023-03-21)
+
+### Bug Fixes
+
+- **datastore**: v1 swap `like` for `instr` in sql queries (#2819)
+- **datastore-v1**: mutation event got ignored while executing parallel saving (#2782)
+- revert CPK has-one associatedFields (#2750)
+- **v1**: CPK has-many has-one associatedFields (#2734)
+
+## 1.29.0 (2023-01-30)
+
+### Features
+
+- **api**: Add no store for the cache in urlsession for API category (#2641)
+
+### Bug Fixes
+
+- **test**: data race on reseting in test case tearDown (#2710)
+- **auth**: Restore non-normalized keychain namespace in AuthSessionHelper.
+- **api**: add default user-agent header value for subscription requests (#2700)
+- **datastore-v1**: skip has-many model to graphQL translation (#2663)
+
+## 1.28.4 (2022-12-30)
+
+### Bug Fixes
+
+- update SDK to v2.29.1 (#2649)
+- **datastore-v1**: retry on subscription connection error (#2581)
+
+## 1.28.3 (2022-11-10)
+
+### Bug Fixes
+
+- **datastore**: improve sync event error handling - cannotParseResponse (#2532)
+- **datastore**: fix stop then start API call pattern (#2517)
+- **Analytics**: Fixing issues when calling flushEvents (#2518)
+
+## 1.28.2 (2022-10-26)
+
+### Bug Fixes
+
+- **datastore-v1**: observeQuery snapshot on .modelSynced event (#2367)
+- **datastore-v1**: synchronize multiple storageEngine initializations (#2389)
+- **datastore**: Setting nil values for empty associated models (#2358)
+- **datastore**: InitializeSubscription race condition disconnected event (#2319)
+- **storage**: update expectation timeout in integration test (#2342)
+- **Storage**: getUrl to use function parameter 'options'
+- **datastore**: refactor to use TimeInterval.milliseconds (#2034)
+- fix issue that causes SwiftUI previews to crash in certain scenarios (#2317)
+
+## 1.28.1 (2022-09-15)
+
+## 1.28.0 (2022-08-08)
+
+### Features
+
+- **datastore**: support for custom primary key (#1752)
+
+### Bug Fixes
+
+- **datastore**: Rename ModelIdentifiable.Identifier to IdentifierProtocol (#2077)
+
+## 1.27.1 (2022-07-22)
+### Bug Fixes
+- **Auth:** Mapping correct error when Device Operations fail due to user not signed in (#2023).
+
+## 1.27.0 (2022-07-14)
+
+### Features
+
+- **api**: AppSyncRTC 2.0.0 upgrade - Handle unauthorized connection (#1994)
+
+### Bug Fixes
+
+- **Auth**: Handling proper error when attempting to change password fails due to an expired session. (#1995)
+- **datastore**: stop sync engine on non-retryable errors to allow restart (#1901)
+- **datastore**: query for missing optional associations (#1849)
+- **datastore**: Test schema drift does not restart sync engine (#1868)
+
+## 1.26.2 (2022-06-10)
+
+### Bug Fixes
+
+- **datastore**: create pointer to temporal lock (#1883)
+
+## 1.26.1 (2022-06-02)
+
+### Bug Fixes
+
+- **datastore**: ModelSyncedEvent dispatch consistency (#1823)
+
+## 1.26.0 (2022-05-26)
+
+### Features
+
+- **DataStore**: Temporal performance enhancements (#1760)
+
+### Bug Fixes
+
+- **DataStore**: include table name inside quotes in SQL Update statement (#1824)
+
+## 1.25.0 (2022-05-19)
+
+### Features
+
+- **auth**: Add support for authType as runtime parameter (#1774)
+
+## 1.24.1 (2022-05-13)
+
+### Bug Fixes
+
+- **Auth**: Fixing a typo in the Auth error message (#1782) (#1798)
+- **DataStore**: retry on URLError.dataNotAllowed (#1791)
+- **DataStore**: retry initial sync network failures from RemoteSyncEngine (#1773)
+
 ## 1.24.0 (2022-05-05)
 
 ### Features

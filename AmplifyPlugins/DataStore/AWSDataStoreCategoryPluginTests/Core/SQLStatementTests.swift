@@ -14,6 +14,8 @@ import XCTest
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
+// swiftlint:disable line_length
+// swiftlint:disable:next todo
 // TODO: Refactor this into separate test suites
 class SQLStatementTests: XCTestCase {
 
@@ -37,6 +39,16 @@ class SQLStatementTests: XCTestCase {
         // Secondary Indexes
         ModelRegistry.register(modelType: CustomerSecondaryIndexV2.self)
         ModelRegistry.register(modelType: CustomerMultipleSecondaryIndexV2.self)
+
+        // Custom PK
+        ModelRegistry.register(modelType: ModelImplicitDefaultPk.self)
+        ModelRegistry.register(modelType: ModelExplicitDefaultPk.self)
+        ModelRegistry.register(modelType: ModelExplicitCustomPk.self)
+        ModelRegistry.register(modelType: ModelCompositePk.self)
+        ModelRegistry.register(modelType: ModelCompositePkBelongsTo.self)
+        ModelRegistry.register(modelType: ModelCompositePkWithAssociation.self)
+        ModelRegistry.register(modelType: PostWithCompositeKey.self)
+        ModelRegistry.register(modelType: CommentWithCompositeKey.self)
     }
 
     // MARK: - Create Table
@@ -141,6 +153,78 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(statement.stringValue, expectedStatement)
     }
 
+    func testCreateTableFromModelWithImplicitDefaultPk() {
+        let statement = CreateTableStatement(modelSchema: ModelImplicitDefaultPk.schema)
+        let expectedStatement = """
+        create table if not exists "ModelImplicitDefaultPk" (
+          "id" text primary key not null,
+          "createdAt" text,
+          "name" text,
+          "updatedAt" text
+        );
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
+    func testCreateTableFromModelWithExplicitDefaultPk() {
+        let statement = CreateTableStatement(modelSchema: ModelExplicitDefaultPk.schema)
+        let expectedStatement = """
+        create table if not exists "ModelExplicitDefaultPk" (
+          "id" text primary key not null,
+          "createdAt" text,
+          "name" text,
+          "updatedAt" text
+        );
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
+    func testCreateTableFromModelWithCustomPk() {
+        let statement = CreateTableStatement(modelSchema: ModelExplicitCustomPk.schema)
+        let expectedStatement = """
+        create table if not exists "ModelExplicitCustomPk" (
+          "userId" text primary key not null,
+          "createdAt" text,
+          "name" text,
+          "updatedAt" text
+        );
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
+    func testCreateTableFromModelWithCompositePk() {
+        let statement = CreateTableStatement(modelSchema: ModelCompositePk.schema)
+        let expectedStatement = """
+        create table if not exists "ModelCompositePk" (
+          "@@primaryKey" text primary key not null,
+          "id" text not null,
+          "dob" text not null,
+          "createdAt" text,
+          "name" text,
+          "updatedAt" text
+        );
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
+    func testCreateTableFromModelWithCompositePkAndForeignKey() {
+        let statement = CreateTableStatement(modelSchema: ModelCompositePkBelongsTo.schema)
+        let expectedStatement = """
+        create table if not exists "ModelCompositePkBelongsTo" (
+          "@@primaryKey" text primary key not null,
+          "id" text not null,
+          "dob" text not null,
+          "createdAt" text,
+          "name" text,
+          "updatedAt" text,
+          "@@ownerForeignKey" text,
+          foreign key("@@ownerForeignKey") references "ModelCompositePkWithAssociation"("@@primaryKey")
+            on delete cascade
+        );
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
     // MARK: - Create Index
 
     /// - Given: a `Model` instance
@@ -167,6 +251,33 @@ class SQLStatementTests: XCTestCase {
         create index if not exists "byNameAndPhoneNumber" on "CustomerMultipleSecondaryIndexV2" ("name", "phoneNumber");\
         create index if not exists "byAgeAndPhoneNumber" on "CustomerMultipleSecondaryIndexV2" ("age", "phoneNumber");\
         create index if not exists "byRepresentative" on "CustomerMultipleSecondaryIndexV2" ("accountRepresentativeID");
+        """
+        XCTAssertEqual(statement, expectedStatement)
+    }
+
+    /// - Given: a `Model` instance with a composite primary key
+    /// - When:
+    ///     - the model is of type `ModelCompositePk`
+    /// - Then:
+    ///   - an index for the fields that make up the primary key should be generated
+    func testCreateIndexStatementFromModelWithCustomPKIndex() {
+        let statement = ModelCompositePk.schema.createIndexStatements()
+        let expectedStatement = """
+        create index if not exists "id_dob_pk" on "ModelCompositePk" ("id", "dob");
+        """
+        XCTAssertEqual(statement, expectedStatement)
+    }
+
+    /// - Given: a `Model` instance with a composite primary key and a belongsTo association.
+    /// - When:
+    ///     - the model is of type `CommentWithCompositeKeyAndIndex`
+    ///     - there's a secondary index involving on or more fields part of the foreign key
+    /// - Then:
+    ///   - ONLY an index for the fields that make up the primary key should be generated
+    func testShouldNotCreateIndexOnForeignKeyField() {
+        let statement = CommentWithCompositeKeyAndIndex.schema.createIndexStatements()
+        let expectedStatement = """
+        create index if not exists "id_content_pk" on "CommentWithCompositeKeyAndIndex" ("id", "content");
         """
         XCTAssertEqual(statement, expectedStatement)
     }
@@ -200,6 +311,34 @@ class SQLStatementTests: XCTestCase {
 
     /// - Given: a `Model` instance
     /// - When:
+    ///   - the model has a composite pk
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    func testInsertStatementFromModelWithCompositePK() {
+
+        let modelId = "the-id"
+        let dob = Temporal.DateTime.now()
+        let model = ModelCompositePk(id: modelId,
+                                     dob: dob,
+                                     name: "the-name")
+        let statement = InsertStatement(model: model, modelSchema: model.schema)
+
+        let expectedStatement = """
+        insert into "ModelCompositePk" ("@@primaryKey", "id", "dob", "createdAt", "name", "updatedAt")
+        values (?, ?, ?, ?, ?, ?)
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, "\"\(modelId)\"#\"\(dob.iso8601String)\"")
+        XCTAssertEqual(variables[1] as? String, modelId)
+        XCTAssertEqual(variables[2] as? String, dob.iso8601String)
+        XCTAssertEqual(variables[4] as? String, "the-name")
+    }
+
+    /// - Given: a `Model` instance
+    /// - When:
     ///   - the model is of type `Comment`
     ///   - it has a reference to another `Post`
     /// - Then:
@@ -222,6 +361,68 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(variables[3] as? String, post.id)
     }
 
+    /// - Given: a `Model` instance
+    /// - When:
+    ///   - the model is of type `ModelCompositePkBelongsTo`
+    ///   - it has a reference to another `ModelCompositePkWithAssociation`
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    ///   - check if the foreign key matches `ModelCompositePkWithAssociation` PK
+    func testInsertStatementModelWithCompositeKeyAndHasManyBidirectional() {
+        let parentModel = ModelCompositePkWithAssociation(id: "parent-id",
+                                                          dob: .now(),
+                                                          name: "parent-name")
+        let childModel = ModelCompositePkBelongsTo(id: "child-id",
+                                               dob: .now(),
+                                               name: "child-name",
+                                               owner: parentModel)
+
+        let statement = InsertStatement(model: childModel, modelSchema: childModel.schema)
+
+        let expectedStatement = """
+        insert into "ModelCompositePkBelongsTo" ("@@primaryKey", "id", "dob", "createdAt", "name", "updatedAt", "@@ownerForeignKey")
+        values (?, ?, ?, ?, ?, ?, ?)
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, childModel.identifier)
+        XCTAssertEqual(variables[1] as? String, childModel.id)
+        XCTAssertEqual(variables[2] as? String, childModel.dob.iso8601String)
+        XCTAssertEqual(variables[4] as? String, childModel.name)
+        XCTAssertEqual(variables[6] as? String, parentModel.identifier)
+    }
+
+    /// - Given: a `Model` instance
+    /// - When:
+    ///   - the model is of type `CommentWithCompositeKey`
+    ///   - it has a reference to another `PostWithCompositeKey`
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    ///   - check if the foreign key matches `PostWithCompositeKey` PK
+    func testInsertStatementModelWithCompositeKeyAndHasManyBidirectional2() {
+        let parentModel = PostWithCompositeKey(id: "post-id", title: "post-title")
+        let childModel = CommentWithCompositeKey(id: "comment-id",
+                                                 content: "content",
+                                                 post: parentModel)
+
+        let statement = InsertStatement(model: childModel, modelSchema: childModel.schema)
+
+        let expectedStatement = """
+        insert into "CommentWithCompositeKey" ("@@primaryKey", "id", "content", "createdAt", "updatedAt", "@@postForeignKey")
+        values (?, ?, ?, ?, ?, ?)
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, childModel.identifier)
+        XCTAssertEqual(variables[1] as? String, childModel.id)
+        XCTAssertEqual(variables[2] as? String, childModel.content)
+        XCTAssertEqual(variables[5] as? String, parentModel.identifier)
+    }
+
     // MARK: - Update Statements
 
     /// - Given: a `Model` instance
@@ -235,7 +436,7 @@ class SQLStatementTests: XCTestCase {
         let statement = UpdateStatement(model: post, modelSchema: post.schema)
 
         let expectedStatement = """
-        update Post
+        update "Post"
         set
           "content" = ?,
           "createdAt" = ?,
@@ -266,7 +467,7 @@ class SQLStatementTests: XCTestCase {
         let statement = UpdateStatement(model: post, modelSchema: post.schema, condition: condition)
 
         let expectedStatement = """
-        update Post
+        update "Post"
         set
           "content" = ?,
           "createdAt" = ?,
@@ -286,6 +487,70 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(variables[7] as? String, post.id)
     }
 
+    /// - Given: a `Model` instance
+    /// - When:
+    ///   - the model has a custom primary key defined as a model schema attribute
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    func testUpdateStatementFromModelWithDefinedCustomPK() {
+        let modelId = "the-id"
+        let dob = Temporal.DateTime.now()
+        let model = ModelCustomPkDefined(id: modelId,
+                                         dob: dob,
+                                         name: "the-name")
+        let statement = UpdateStatement(model: model, modelSchema: model.schema)
+        let expectedStatement = """
+        update "ModelCustomPkDefined"
+        set
+          "id" = ?,
+          "dob" = ?,
+          "createdAt" = ?,
+          "name" = ?,
+          "updatedAt" = ?
+        where "@@primaryKey" = ?
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, modelId)
+        XCTAssertEqual(variables[1] as? String, dob.iso8601String)
+        XCTAssertEqual(variables[3] as? String, "the-name")
+        XCTAssertEqual(variables[5] as? String, model.identifier(schema: model.schema).stringValue)
+    }
+
+    /// - Given: a `Model` instance
+    /// - When:
+    ///   - the model has a custom primary key defined with indexes (backward compatibility)
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    func testUpdateStatementFromModelWithCustomPKBasedOnIndexes() {
+        let modelId = "the-id"
+        let dob = Temporal.DateTime.now()
+        let model = ModelCompositePk(id: modelId,
+                                     dob: dob,
+                                     name: "the-name")
+        let statement = UpdateStatement(model: model, modelSchema: model.schema)
+        let expectedStatement = """
+        update "ModelCompositePk"
+        set
+          "id" = ?,
+          "dob" = ?,
+          "createdAt" = ?,
+          "name" = ?,
+          "updatedAt" = ?
+        where "@@primaryKey" = ?
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, modelId)
+        XCTAssertEqual(variables[1] as? String, dob.iso8601String)
+        XCTAssertEqual(variables[3] as? String, "the-name")
+        XCTAssertEqual(variables[5] as? String, model.identifier(schema: model.schema).stringValue)
+    }
+
     // MARK: - Delete Statements
 
     /// - Given: a `Model` type and an `id`
@@ -296,7 +561,9 @@ class SQLStatementTests: XCTestCase {
     ///   - check if the variables match the expected values
     func testDeleteStatementFromModel() {
         let id = UUID().uuidString
-        let statement = DeleteStatement(modelSchema: Post.schema, withId: id)
+        let statement = DeleteStatement(Post.self,
+                                        modelSchema: Post.schema,
+                                        withId: id)
 
         let expectedStatement = """
         delete from "Post" as root
@@ -317,7 +584,8 @@ class SQLStatementTests: XCTestCase {
     ///   - check if the variables match the expected values
     func testDeleteStatementFromModelWithCondition() {
         let id = UUID().uuidString
-        let statement = DeleteStatement(modelSchema: Post.schema,
+        let statement = DeleteStatement(Post.self,
+                                        modelSchema: Post.schema,
                                         withId: id,
                                         predicate: Post.keys.content == "content")
 
@@ -336,6 +604,51 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(variables[1] as? String, "content")
     }
 
+    /// - Given: a `Model` type
+    /// - When:
+    ///   - the model is of type `ModelExplicitCustomPk` and has a custom PK
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    func testDeleteStatementFromModelWithCustomPK() {
+        let identifier = ModelExplicitCustomPk.IdentifierProtocol.identifier(userId: "userId")
+        let statement = DeleteStatement(modelSchema: ModelExplicitCustomPk.schema,
+                                        withIdentifier: identifier)
+
+        let expectedStatement = """
+        delete from "ModelExplicitCustomPk" as root
+        where 1 = 1
+          and "root"."userId" = ?
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, identifier.stringValue)
+    }
+
+    /// - Given: a `Model` type
+    /// - When:
+    ///   - the model is of type `ModelCompositePk` and has a composite PK
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    ///   - check if the variables match the expected values
+    func testDeleteStatementFromModelWithCompositePK() {
+        let identifier = ModelCompositePk.IdentifierProtocol.identifier(id: "id",
+                                                                        dob: Temporal.DateTime.now())
+        let statement = DeleteStatement(modelSchema: ModelCompositePk.schema,
+                                        withIdentifier: identifier)
+
+        let expectedStatement = """
+        delete from "ModelCompositePk" as root
+        where 1 = 1
+          and "root"."@@primaryKey" = ?
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+
+        let variables = statement.variables
+        XCTAssertEqual(variables[0] as? String, identifier.stringValue)
+    }
+
     // MARK: - Select Statements
 
     /// - Given: a `Model` type
@@ -351,6 +664,22 @@ class SQLStatementTests: XCTestCase {
           "root"."draft" as "draft", "root"."rating" as "rating", "root"."status" as "status",
           "root"."title" as "title", "root"."updatedAt" as "updatedAt"
         from "Post" as "root"
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
+    /// - Given: a `Model` type
+    /// - When:
+    ///   - the model is of type `ModelCompositePk` and has a composite PK
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    func testSelectStatementFromModelWithCompositePK() {
+        let statement = SelectStatement(from: ModelCompositePk.schema)
+        let expectedStatement = """
+        select
+          "root"."@@primaryKey" as "@@primaryKey", "root"."id" as "id", "root"."dob" as "dob",
+          "root"."createdAt" as "createdAt", "root"."name" as "name", "root"."updatedAt" as "updatedAt"
+        from "ModelCompositePk" as "root"
         """
         XCTAssertEqual(statement.stringValue, expectedStatement)
     }
@@ -383,6 +712,34 @@ class SQLStatementTests: XCTestCase {
         let variables = statement.variables
         XCTAssertEqual(variables[0] as? Int, 0)
         XCTAssertEqual(variables[1] as? Int, 3)
+    }
+
+    /// - Given: a `Model` type
+    /// - When:
+    ///   - the model is of type `Post`
+    /// - Then:
+    ///   - check if the generated SQL statement is valid
+    func testSelectStatementWithPredicateFromModelWithCompositePK() {
+        let keys = ModelCompositePk.keys
+        let modelId = "an-id"
+        let dob = "2022-02-22"
+        let statement = SelectStatement(from: ModelCompositePk.schema,
+                                        predicate: keys.id == modelId && keys.dob == dob)
+        let expectedStatement = """
+        select
+          "root"."@@primaryKey" as "@@primaryKey", "root"."id" as "id", "root"."dob" as "dob",
+          "root"."createdAt" as "createdAt", "root"."name" as "name", "root"."updatedAt" as "updatedAt"
+        from "ModelCompositePk" as "root"
+        where 1 = 1
+          and (
+            "root"."id" = ?
+            and "root"."dob" = ?
+          )
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+        XCTAssertEqual(statement.variables.count, 2)
+        XCTAssertEqual(statement.variables[0] as? String, modelId)
+        XCTAssertEqual(statement.variables[1] as? String, dob)
     }
 
     /// - Given: a `Model` type
@@ -594,6 +951,27 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(statement.stringValue, expectedStatement)
     }
 
+    func testSelectStatementWithPredicateCompositePrimaryKey() {
+        let comment = CommentWithCompositeKey.keys
+        let post = PostWithCompositeKey(id: "id", title: "title")
+        let predicate = comment.post == post.identifier
+
+        let statement = SelectStatement(from: CommentWithCompositeKey.schema, predicate: predicate)
+        let expectedStatement = """
+        select
+          "root"."@@primaryKey" as "@@primaryKey", "root"."id" as "id", "root"."content" as "content",
+          "root"."createdAt" as "createdAt", "root"."updatedAt" as "updatedAt", "root"."@@postForeignKey" as "@@postForeignKey",
+          "post"."@@primaryKey" as "post.@@primaryKey", "post"."id" as "post.id", "post"."title" as "post.title",
+          "post"."createdAt" as "post.createdAt", "post"."updatedAt" as "post.updatedAt"
+        from "CommentWithCompositeKey" as "root"
+        left outer join "PostWithCompositeKey" as "post"
+          on "post"."@@primaryKey" = "root"."@@postForeignKey"
+        where 1 = 1
+          and "root"."@@postForeignKey" = ?
+        """
+        XCTAssertEqual(statement.stringValue, expectedStatement)
+    }
+
     // MARK: - Query Predicates
 
     /// - Given: a simple predicate
@@ -648,6 +1026,7 @@ class SQLStatementTests: XCTestCase {
                 XCTAssertEqual(bindings.count, statement.variables.count)
                 bindings.enumerated().forEach {
                     if let one = $0.element, let other = statement.variables[$0.offset] {
+                        // swiftlint:disable:next todo
                         // TODO find better way to test `Binding` equality
                         XCTAssertEqual(String(describing: one), String(describing: other))
                     }
@@ -668,11 +1047,11 @@ class SQLStatementTests: XCTestCase {
                         matches: "\"root\".\"rating\" between ? and ?",
                         bindings: [3, 5])
         assertPredicate(post.title.beginsWith("gelato"),
-                        matches: "\"root\".\"title\" like ?",
-                        bindings: ["gelato%"])
+                        matches: "instr(\"root\".\"title\", ?) = 1",
+                        bindings: ["gelato"])
         assertPredicate(post.title ~= "gelato",
-                        matches: "\"root\".\"title\" like ?",
-                        bindings: ["%gelato%"])
+                        matches: "instr(\"root\".\"title\", ?) > 0",
+                        bindings: ["gelato"])
     }
 
     /// - Given: a grouped predicate
@@ -702,8 +1081,8 @@ class SQLStatementTests: XCTestCase {
             and "status" <> ?
             and "updatedAt" is null
             and (
-              "content" like ?
-              or "title" like ?
+              instr("content", ?) > 0
+              or instr("title", ?) = 1
             )
           )
         """, statement.stringValue)
@@ -714,8 +1093,8 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(variables[2] as? Int, 2)
         XCTAssertEqual(variables[3] as? Int, 4)
         XCTAssertEqual(variables[4] as? String, PostStatus.draft.rawValue)
-        XCTAssertEqual(variables[5] as? String, "%gelato%")
-        XCTAssertEqual(variables[6] as? String, "ice cream%")
+        XCTAssertEqual(variables[5] as? String, "gelato")
+        XCTAssertEqual(variables[6] as? String, "ice cream")
     }
 
     /// - Given: a `Model` type
@@ -935,11 +1314,12 @@ class SQLStatementTests: XCTestCase {
                 and "root"."rating" between ? and ?
                 and "root"."updatedAt" is null
                 and (
-                  "root"."content" like ?
-                  or "root"."title" like ?
+                  instr("root"."content", ?) > 0
+                  or instr("root"."title", ?) = 1
                 )
               )
             """
+
         XCTAssertEqual(statement.stringValue, expectedStatement)
 
         let variables = statement.variables
@@ -947,8 +1327,8 @@ class SQLStatementTests: XCTestCase {
         XCTAssertEqual(variables[1] as? Int, 0)
         XCTAssertEqual(variables[2] as? Int, 2)
         XCTAssertEqual(variables[3] as? Int, 4)
-        XCTAssertEqual(variables[4] as? String, "%gelato%")
-        XCTAssertEqual(variables[5] as? String, "ice cream%")
+        XCTAssertEqual(variables[4] as? String, "gelato")
+        XCTAssertEqual(variables[5] as? String, "ice cream")
     }
 
     func testTranslateQueryPredicateWithNameSpaceWhenFieldNameSpecified() {

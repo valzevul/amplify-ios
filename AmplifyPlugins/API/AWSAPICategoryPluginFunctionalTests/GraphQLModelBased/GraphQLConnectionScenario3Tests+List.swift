@@ -31,6 +31,7 @@ import XCTest
  */
 extension GraphQLConnectionScenario3Tests {
 
+    // swiftlint:disable:next cyclomatic_complexity
     func testGetPostThenIterateComments() {
         guard let post = createPost(title: "title"),
               createComment(postID: post.id, content: "content") != nil,
@@ -89,6 +90,7 @@ extension GraphQLConnectionScenario3Tests {
         XCTAssertEqual(resultsArray.count, 2)
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func testGetPostThenFetchComments() {
         guard let post = createPost(title: "title"),
               createComment(postID: post.id, content: "content") != nil,
@@ -194,12 +196,26 @@ extension GraphQLConnectionScenario3Tests {
         let requestInvokedSuccessfully = expectation(description: "request completed")
         let post = Post3.keys
         let predicate = post.id == uuid && post.title == uniqueTitle
-        _ = Amplify.API.query(request: .list(Post3.self, where: predicate)) { event in
+        _ = Amplify.API.query(request: .paginatedList(Post3.self, where: predicate)) { event in
             switch event {
             case .success(let graphQLResponse):
-                guard case let .success(posts) = graphQLResponse else {
+                guard case var .success(posts) = graphQLResponse else {
                     XCTFail("Missing successful response")
                     return
+                }
+
+                while posts.isEmpty, posts.hasNextPage() {
+                    let getNextPageCompleted = self.expectation(description: "get next page completed")
+                    posts.getNextPage { result in
+                        switch result {
+                        case .success(let nextPage):
+                            posts = nextPage
+                            getNextPageCompleted.fulfill()
+                        case .failure(let error):
+                            XCTFail("Failed with error \(error)")
+                        }
+                    }
+                    self.wait(for: [getNextPageCompleted], timeout: TestCommonConstants.networkTimeout)
                 }
                 XCTAssertEqual(posts.count, 1)
                 guard let singlePost = posts.first else {
@@ -257,6 +273,7 @@ extension GraphQLConnectionScenario3Tests {
     /// - Then:
     ///    - the in-memory Array is a populated with exactly two comments.
     func testPaginatedListCommentsByPostID() {
+        // swiftlint:disable:previous cyclomatic_complexity
         guard let post = createPost(title: "title") else {
             XCTFail("Could not create post")
             return
@@ -322,6 +339,7 @@ extension GraphQLConnectionScenario3Tests {
     /// - Then:
     ///    - A validation error is returned
     func testPaginatedListFetchValidationError() throws {
+        // swiftlint:disable:previous cyclomatic_complexity
         let uuid1 = UUID().uuidString
         guard createPost(id: uuid1, title: "title") != nil else {
             XCTFail("Failed to create post")
@@ -386,4 +404,4 @@ extension GraphQLConnectionScenario3Tests {
 
         wait(for: [invalidFetchCompleted], timeout: TestCommonConstants.networkTimeout)
     }
-}
+} // swiftlint:disable:this file_length

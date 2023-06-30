@@ -16,6 +16,7 @@ import AWSMobileClient
 
 class SyncEngineIntegrationTestBase: DataStoreTestBase {
 
+    // swiftlint:disable:next line_length
     static let amplifyConfigurationFile = "testconfiguration/AWSDataStoreCategoryPluginIntegrationTests-amplifyconfiguration"
 
     static let networkTimeout = TimeInterval(180)
@@ -34,7 +35,11 @@ class SyncEngineIntegrationTestBase: DataStoreTestBase {
     // swiftlint:enable force_try
     // swiftlint:enable force_cast
 
-    func setUp(withModels models: AmplifyModelRegistration, logLevel: LogLevel = .error) {
+    func setUp(
+        withModels models: AmplifyModelRegistration,
+        logLevel: LogLevel = .error,
+        dataStoreConfiguration: DataStoreConfiguration? = nil
+    ) {
 
         continueAfterFailure = false
 
@@ -44,7 +49,12 @@ class SyncEngineIntegrationTestBase: DataStoreTestBase {
 
         do {
             try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: models))
-            try Amplify.add(plugin: AWSDataStorePlugin(modelRegistration: models))
+            try Amplify.add(
+                plugin: AWSDataStorePlugin(
+                    modelRegistration: models,
+                    configuration: dataStoreConfiguration ?? .default
+                )
+            )
         } catch {
             XCTFail(String(describing: error))
             return
@@ -111,13 +121,26 @@ class SyncEngineIntegrationTestBase: DataStoreTestBase {
         }
 
         try startAmplify()
-        Amplify.DataStore.start { result in
+        Amplify.DataStore.delete(MutationEvent.self, where: QueryPredicateConstant.all) { result in
             if case .failure(let error) = result {
                 XCTFail("\(error)")
             }
         }
 
-        wait(for: [eventReceived], timeout: 100.0)
+        wait(for: [eventReceived], timeout: networkTimeout)
     }
 
+}
+
+extension XCTestCase {
+
+  func wait(for seconds: TimeInterval) {
+      let waitExpectation = expectation(description: "Waiting")
+
+      let when = DispatchTime.now() + seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+          waitExpectation.fulfill()
+      }
+      wait(for: [waitExpectation], timeout: seconds + 0.5)
+  }
 }
