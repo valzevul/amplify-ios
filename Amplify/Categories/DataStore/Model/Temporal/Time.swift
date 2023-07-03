@@ -26,7 +26,8 @@ extension Temporal {
       Temporal.Time(Foundation.Date())
     }
     
-    public init(date: Foundation.Date) {
+    // Inherits documentation from `TemporalSpec`
+    public init(_ date: Foundation.Date) {
       // Sets the date to a fixed instant so time-only operations are safe
       let calendar = Temporal.iso8601Calendar
       var components = calendar.dateComponents(
@@ -52,12 +53,6 @@ extension Temporal {
         .date(from: components) ?? date
     }
     
-    // Inherits documentation from `TemporalSpec`
-    public init(_ date: Foundation.Date) {
-      self.init(date: date)
-      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
-    }
-    
     @available(*, deprecated, message: """
         iso8601DateComponents will be removed from the public API in the future. This isn't
         used to interact with any other public APIs and doesn't provide any value. If you
@@ -70,6 +65,12 @@ extension Temporal {
         """)
     public static var iso8601DateComponents: Set<Calendar.Component> {
       [.hour, .minute, .second, .nanosecond, .timeZone]
+    }
+    
+    /// Creates a date with timezone
+    public init(date: Foundation.Date) {
+      self.init(date)
+      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
   }
 }

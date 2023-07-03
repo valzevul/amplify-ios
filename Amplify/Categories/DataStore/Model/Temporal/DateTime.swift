@@ -30,8 +30,9 @@ extension Temporal {
     public var time: Time {
       Time(foundationDate)
     }
-    
-    public init(date: Foundation.Date) {
+  
+    // Inherits documentation from `TemporalSpec`
+    public init(_ date: Foundation.Date) {
       let calendar = Temporal.iso8601Calendar
       let components = calendar.dateComponents(
         DateTime.iso8601DateComponents,
@@ -42,9 +43,9 @@ extension Temporal {
         .date(from: components) ?? date
     }
     
-    // Inherits documentation from `TemporalSpec`
-    public init(_ date: Foundation.Date) {
-      self.init(date: date)
+    /// Creates a date with timezone
+    public init(date: Foundation.Date) {
+      self.init(date)
       localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
     
