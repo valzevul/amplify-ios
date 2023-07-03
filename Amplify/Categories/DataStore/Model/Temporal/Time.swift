@@ -28,6 +28,26 @@ extension Temporal {
     
     // Inherits documentation from `TemporalSpec`
     public init(_ date: Foundation.Date) {
+      self.init(date: date)
+      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
+    }
+    
+    @available(*, deprecated, message: """
+        iso8601DateComponents will be removed from the public API in the future. This isn't
+        used to interact with any other public APIs and doesn't provide any value. If you
+        believe otherwise, please open an issue at
+        `https://github.com/aws-amplify/amplify-ios/issues/new/choose`
+        outlining your use case.
+        
+        If you're currently using this, please make a property in your own
+        module to replace the use of this one.
+        """)
+    public static var iso8601DateComponents: Set<Calendar.Component> {
+      [.hour, .minute, .second, .nanosecond, .timeZone]
+    }
+    
+    /// Creates a date without timezone
+    public init(date: Foundation.Date) {
       // Sets the date to a fixed instant so time-only operations are safe
       let calendar = Temporal.iso8601Calendar
       var components = calendar.dateComponents(
@@ -51,26 +71,6 @@ extension Temporal {
       
       self.foundationDate = calendar
         .date(from: components) ?? date
-    }
-    
-    @available(*, deprecated, message: """
-        iso8601DateComponents will be removed from the public API in the future. This isn't
-        used to interact with any other public APIs and doesn't provide any value. If you
-        believe otherwise, please open an issue at
-        `https://github.com/aws-amplify/amplify-ios/issues/new/choose`
-        outlining your use case.
-        
-        If you're currently using this, please make a property in your own
-        module to replace the use of this one.
-        """)
-    public static var iso8601DateComponents: Set<Calendar.Component> {
-      [.hour, .minute, .second, .nanosecond, .timeZone]
-    }
-    
-    /// Creates a date with timezone
-    public init(date: Foundation.Date) {
-      self.init(date)
-      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
   }
 }
