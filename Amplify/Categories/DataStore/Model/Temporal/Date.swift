@@ -39,13 +39,18 @@ extension Temporal {
       Temporal.Date(Foundation.Date())
     }
     
+    
     // Inherits documentation from `TemporalSpec`
     public init(_ date: Foundation.Date) {
+      self.init(date: date)
+      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
+    }
+    
+    /// Creates a date without timezone
+    public init(date: Foundation.Date) {
       self.foundationDate = Temporal
         .iso8601Calendar
         .startOfDay(for: date)
-      
-      localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
   }
 }
