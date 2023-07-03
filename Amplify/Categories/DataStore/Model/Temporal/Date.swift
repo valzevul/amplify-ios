@@ -39,12 +39,15 @@ extension Temporal {
       Temporal.Date(Foundation.Date())
     }
     
-    // Inherits documentation from `TemporalSpec`
     public init(_ date: Foundation.Date) {
       self.foundationDate = Temporal
         .iso8601Calendar
         .startOfDay(for: date)
-      
+    }
+    
+    // Inherits documentation from `TemporalSpec`
+    public init(date: Foundation.Date) {
+      self.init(date)
       localTimezone = TimeZone(iso8601String: DateFormatter.isoFormatter.string(from: foundationDate))
     }
   }
